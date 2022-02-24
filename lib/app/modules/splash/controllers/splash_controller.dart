@@ -1,5 +1,8 @@
 import 'package:get/get.dart';
+import 'package:gym_app/app/data/repositories/session_repository.dart';
+import 'package:gym_app/app/data/repositories/user_repository.dart';
 import 'package:gym_app/app/routes/app_pages.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashController extends GetxController with StateMixin<dynamic>{
   //TODO: Implement SplashController
@@ -14,7 +17,16 @@ class SplashController extends GetxController with StateMixin<dynamic>{
   loader() async {
 
     Future.delayed(const Duration(seconds: 3)).then((value) async{
-
+      SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+      UserRepository repository = UserRepository(prefs: sharedPreferences);
+      final logged = await repository.isLoggedIn();
+      if (logged) {
+        final token = await repository.getAccessToken();
+        SessionRepository.instance.setAccessToken(token);
+        Get.offNamed(Routes.HOME);
+      } else {
+        Get.offNamed(Routes.AUTH);
+      }
       change(value, status: RxStatus.success());
     });
   }
