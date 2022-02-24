@@ -18,4 +18,16 @@ dev_dependencies:
 
 flutter: 
   uses-material-design: true
-
+  assets:
+    - assets/
+  fonts:
+    - family: Poppins
+      fonts:
+        - asset: font/Poppins/Poppins-Light.ttf
+        - asset: font/Poppins/Poppins-Thin.ttf
+        - asset: font/Poppins/Poppins-Medium.ttf
+        - asset: font/Poppins/Poppins-Regular.ttf
+        - asset: font/Poppins/Poppins-SemiBold.ttf
+        - asset: font/Poppins/Poppins-Bold.ttf
+        - asset: font/Poppins/Poppins-ExtraBold.ttf
+          weight: 600
