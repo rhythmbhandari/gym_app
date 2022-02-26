@@ -25,7 +25,7 @@ class SplashController extends GetxController with StateMixin<dynamic>{
         SessionRepository.instance.setAccessToken(token);
         Get.offNamed(Routes.HOME);
       } else {
-        Get.offNamed(Routes.HOME);
+        Get.offNamed(Routes.AUTH);
       }
       change(value, status: RxStatus.success());
     });

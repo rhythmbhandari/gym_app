@@ -1,4 +1,7 @@
 import 'package:get/get.dart';
+import 'package:gym_app/app/modules/gym/views/gym_details.dart';
+import 'package:gym_app/app/modules/subscription/views/subscription_details.dart';
+import 'package:gym_app/app/modules/subscription/views/subscription_payment.dart';
 
 import '../modules/auth/bindings/auth_binding.dart';
 import '../modules/auth/views/auth_view.dart';
@@ -71,6 +74,18 @@ class AppPages {
       name: _Paths.CHECK_IN,
       page: () => CheckInView(),
       binding: CheckInBinding(),
+    ),
+    GetPage(
+      name: SubscriptionDetails.id,
+      page: () => const SubscriptionDetails(),
+    ),
+    GetPage(
+      name: SubscriptionPayment.id,
+      page: () => const SubscriptionPayment(),
+    ),
+    GetPage(
+      name: GymDetails.id,
+      page: () => const GymDetails(),
     ),
   ];
 }

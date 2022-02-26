@@ -24,8 +24,7 @@ class _HomeViewState extends State<HomeView> {
     SubscriptionView(),
     GymView(),
     GymMapView(),
-    CheckInView(),
-    ProfileView()
+    CheckInView()
   ];
 
   void changeNavBarIndex(int index) {
@@ -73,11 +72,11 @@ class _HomeViewState extends State<HomeView> {
             label: 'Check-In',
             backgroundColor: Colors.white,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.perm_identity_rounded),
-            label: 'Profile',
-            backgroundColor: Colors.white,
-          ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.perm_identity_rounded),
+          //   label: 'Profile',
+          //   backgroundColor: Colors.white,
+          // ),
         ],
         currentIndex: selectedIndex,
         selectedItemColor: primaryColor,
