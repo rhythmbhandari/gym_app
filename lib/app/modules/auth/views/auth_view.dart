@@ -83,7 +83,7 @@ class AuthView extends GetView<AuthController> {
                     Row(
                       children: [
                         Text(
-                          'Password ',
+                          'Password `',
                           style: Get.textTheme.headline5.copyWith(
                               color: Colors.white,fontFamily: 'Poppins',
                               fontWeight: FontWeight.w600,
@@ -146,7 +146,7 @@ class AuthView extends GetView<AuthController> {
                                         //     .getUserDetails()
                                         //     .then((_) => profileController
                                         //     .updateUserData());
-                                        Navigator.pop(context, true);
+                                        Get.offAllNamed(Routes.HOME);
                                         controller.loginButtonEnabled.value =
                                             true;
                                       } else {
