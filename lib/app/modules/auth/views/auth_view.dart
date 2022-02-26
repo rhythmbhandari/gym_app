@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:gym_app/app/config/theme_colors.dart';
+import 'package:gym_app/app/routes/app_pages.dart';
 import 'package:gym_app/app/widgets/custom_button.dart';
 import 'package:gym_app/app/widgets/email_input_textfield.dart';
 import 'package:gym_app/app/widgets/password_input_textfield.dart';
@@ -30,7 +31,7 @@ class AuthView extends GetView<AuthController> {
                     Text(
                       'Sign In',
                       style: Get.textTheme.headline5.copyWith(
-                          color: Colors.white,
+                          color: Colors.white,fontFamily: 'Poppins',
                           fontWeight: FontWeight.w600,
                           fontSize: 28),
                     ),
@@ -38,7 +39,7 @@ class AuthView extends GetView<AuthController> {
                     Text(
                       'Enter your Username and Password',
                       style: Get.textTheme.headline5.copyWith(
-                          color: Colors.white,
+                          color: Colors.white,fontFamily: 'Poppins',
                           fontWeight: FontWeight.w500,
                           fontSize: 13),
                     ),
@@ -49,14 +50,14 @@ class AuthView extends GetView<AuthController> {
                         Text(
                           'Username',
                           style: Get.textTheme.headline5.copyWith(
-                              color: Colors.white,
+                              color: Colors.white,fontFamily: 'Poppins',
                               fontWeight: FontWeight.w600,
                               fontSize: 16),
                         ),
                         SizedBox(width: 20),
                         Flexible(
                           child: ConstrainedBox(
-                            constraints: BoxConstraints.tightFor(height: 30),
+                            constraints: const BoxConstraints.tightFor(height: 30),
                             child: EmailInputField(
                               focusNode: usernameNode,
                               hintText: 'Enter your username'.tr,
@@ -82,9 +83,9 @@ class AuthView extends GetView<AuthController> {
                     Row(
                       children: [
                         Text(
-                          'Password',
+                          'Password ',
                           style: Get.textTheme.headline5.copyWith(
-                              color: Colors.white,
+                              color: Colors.white,fontFamily: 'Poppins',
                               fontWeight: FontWeight.w600,
                               fontSize: 16),
                         ),
@@ -130,7 +131,7 @@ class AuthView extends GetView<AuthController> {
                       ],
                     ),
                     SizedBox(height: Get.height * 0.05),
-                    Container(
+                    SizedBox(
                       width: 150,
                       child: Obx(() => CustomButton(
                             radius: 10,
@@ -159,7 +160,7 @@ class AuthView extends GetView<AuthController> {
                                 : null,
                             text: 'Login',
                             backgroundColor: controller.loginButtonEnabled.value
-                                ? Color(0xff6779BA)
+                                ? const Color(0xff6779BA)
                                 : Colors.grey,
                           )),
                     ),
@@ -167,12 +168,18 @@ class AuthView extends GetView<AuthController> {
                     Row(
                       children: [
                         const Expanded(child: SizedBox()),
-                        Text(
-                          "Don't have an account Yet? signup",
-                          style: Get.textTheme.headline5.copyWith(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 13),
+                        GestureDetector(
+                          onTap: (){
+                            Get.toNamed(Routes.SIGNUP, preventDuplicates: true);
+                            node.unfocus();
+                          },
+                          child: Text(
+                            "Don't have an account Yet? signup",
+                            style: Get.textTheme.headline5.copyWith(
+                                color: Colors.white,fontFamily: 'Poppins',
+                                fontWeight: FontWeight.w500,
+                                fontSize: 13),
+                          ),
                         ),
                       ],
                     ),

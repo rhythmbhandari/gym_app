@@ -82,7 +82,7 @@ class AuthController extends GetxController {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     UserRepository userRepository = UserRepository(prefs: sharedPreferences);
     userRepository.login(SessionRepository.instance.accessToken);
-    // final detailStatus = await getUserDetails();
+    //final detailStatus = await getUserDetails();
     final detailStatus = true;
     hideProgressBar();
     if (detailStatus)
