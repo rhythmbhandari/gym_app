@@ -68,6 +68,7 @@ class AuthController extends GetxController {
 
   Future<bool> loginUser() async {
     showProgressBar();
+    print('here');
     final status =
     await AuthRepository.verifyLogin(username, password).catchError((error) {
       if(error.contains('full header')){

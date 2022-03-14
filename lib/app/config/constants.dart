@@ -1,1 +1,1 @@
-const String baseUrl = 'API_URL';
+const String baseUrl = 'http://10.0.2.2:8000';

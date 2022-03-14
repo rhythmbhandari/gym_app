@@ -48,7 +48,7 @@ class AuthView extends GetView<AuthController> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          'Username',
+                          'Email         ',
                           style: Get.textTheme.headline5.copyWith(
                               color: Colors.white,fontFamily: 'Poppins',
                               fontWeight: FontWeight.w600,
@@ -60,8 +60,8 @@ class AuthView extends GetView<AuthController> {
                             constraints: const BoxConstraints.tightFor(height: 30),
                             child: EmailInputField(
                               focusNode: usernameNode,
-                              hintText: 'Enter your username'.tr,
-                              labelText: 'Username'.tr,
+                              hintText: 'Enter your email'.tr,
+                              labelText: 'Email'.tr,
                               icon: Icons.email,
                               textInputType: TextInputType.emailAddress,
                               onChanged: (_) {
@@ -83,7 +83,7 @@ class AuthView extends GetView<AuthController> {
                     Row(
                       children: [
                         Text(
-                          'Password `',
+                          'Password',
                           style: Get.textTheme.headline5.copyWith(
                               color: Colors.white,fontFamily: 'Poppins',
                               fontWeight: FontWeight.w600,
@@ -139,6 +139,7 @@ class AuthView extends GetView<AuthController> {
                                 ? () async {
                                     controller.loginButtonEnabled.value = false;
                                     if (controller.validate()) {
+                                      print('here validate');
                                       final status =
                                           await controller.loginUser();
                                       if (status) {
