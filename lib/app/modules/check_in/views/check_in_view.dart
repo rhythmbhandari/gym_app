@@ -4,7 +4,10 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 import 'package:get/get.dart';
 import 'package:gym_app/app/config/theme_colors.dart';
+import 'package:gym_app/app/data/repositories/session_repository.dart';
+import 'package:gym_app/app/data/repositories/user_repository.dart';
 import 'package:gym_app/app/routes/app_pages.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../controllers/check_in_controller.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
@@ -98,10 +101,15 @@ class _CheckInViewState extends State<CheckInView> {
             children: [
               const Expanded(child: SizedBox(width: 16)),
               GestureDetector(
-                  onTap: () {
-                    Get.toNamed(Routes.PROFILE, preventDuplicates: true);
+                  onTap: () async {
+                    // Get.toNamed(Routes.PROFILE, preventDuplicates: true);
+                    UserRepository repository = UserRepository(
+                        prefs: await SharedPreferences.getInstance());
+                    await repository.logout();
+                    SessionRepository.instance.setAccessToken(null);
+                    Get.offAllNamed(Routes.AUTH);
                   },
-                  child: const Icon(Icons.perm_identity,
+                  child: const Icon(Icons.logout,
                       color: Color(0xff667C8A))),
               const SizedBox(width: 23)
             ],
@@ -140,7 +148,8 @@ class _CheckInViewState extends State<CheckInView> {
               ),
               child: Row(
                 children: [
-                  const Icon(Icons.qr_code_scanner_rounded, color: Colors.white),
+                  const Icon(Icons.qr_code_scanner_rounded,
+                      color: Colors.white),
                   const SizedBox(width: 13),
                   Text(
                     'Check-In',
