@@ -26,16 +26,19 @@ class GymView extends GetView<GymController> {
       ),
       backgroundColor: const Color(0xffE5E5E5).withOpacity(0.5),
       body: SafeArea(
-        child: Column(
+        child: Obx(() => !controller.refreshValue.value
+    ? Column(
           children: [
             Row(
               children: [
                 const Expanded(child: SizedBox(width: 16)),
                 GestureDetector(
-                    onTap: () {
-                      Get.toNamed(Routes.PROFILE, preventDuplicates: true);
+                    onTap: () async {
+                      controller.refreshValue.value = true;
+                      await controller.getGymList();
+                      controller.refreshValue.value = false;
                     },
-                    child: const Icon(Icons.perm_identity,
+                    child: const Icon(Icons.refresh,
                         color: Color(0xff667C8A))),
                 const SizedBox(width: 23)
               ],
@@ -49,12 +52,17 @@ class GymView extends GetView<GymController> {
                   return GestureDetector(
                     onTap: (){
                       controller.selectedIndex.value = index;
+                      controller
+                          .setSelectedGym(
+                          controller
+                              .gymList[
+                          index]);
                       Get.toNamed(GymDetails.id, preventDuplicates: true);
                     },
                     child: GymWidget(
-                      name: controller.name[index],
-                      location: controller.location[index],
-                      phone: controller.phone[index],
+                      name: controller.gymList[index].companyName,
+                      location: controller.gymList[index].location,
+                      phone: "98********",
                     ),
                   );
                 },
@@ -62,7 +70,23 @@ class GymView extends GetView<GymController> {
               ),
             ),
           ],
-        ),
+        ): Center(
+          child: Container(
+            height: Get.height,
+            width: Get.width,
+            color: Colors.white.withOpacity(0.4),
+            child: const Center(
+              child: SizedBox(
+                height: 75,
+                width: 75,
+                child: CircularProgressIndicator(
+                    strokeWidth: 8,
+                    valueColor:
+                    AlwaysStoppedAnimation<Color>(primaryColor)),
+              ),
+            ),
+          ),
+        )),
       ),
     );
   }

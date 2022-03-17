@@ -48,7 +48,7 @@ class GymDetails extends GetView<GymController> {
                     ),
                     const SizedBox(height: 37),
                     Text(
-                      "${controller.name[controller.selectedIndex.value]}",
+                      "${controller.gymList[controller.selectedIndex.value].companyName}",
                       style: Get.textTheme.headline5.copyWith(
                           color: const Color(0xff000000),
                           fontFamily: 'Poppins',
@@ -59,7 +59,7 @@ class GymDetails extends GetView<GymController> {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 35),
                       child: Text(
-                        "We are located in ${controller.location[controller.selectedIndex.value]}. Our services are cardio, weightlifting, sauna etc.",
+                        "${controller.gymList[controller.selectedIndex.value].description}",
                         textAlign: TextAlign.center,
                         style: Get.textTheme.headline5.copyWith(
                             color: const Color(0xff435D6B),
