@@ -19,6 +19,7 @@ class HomeController extends GetxController {
   final count = 0.obs;
   @override
   void onInit() async{
+    profileController.refreshValue.value = true;
     await Future.wait([
       subscriptionController.getSubscriptionList(),
       gymController.getGymList(),
@@ -26,6 +27,7 @@ class HomeController extends GetxController {
       profileController.getCustomerDetails(),
     ]);
     profileController.updateUserData();
+    profileController.refreshValue.value = false;
     super.onInit();
   }
 

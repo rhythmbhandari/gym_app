@@ -39,8 +39,10 @@ class SubscriptionController extends GetxController {
   void increment() => count.value++;
 
   Future<List<Subscription>> getSubscriptionList() async {
+    refreshValue.value = true;
     await DashboardRequest.getSubscription().catchError((error) {
       this.error = error;
+      refreshValue.value = false;
     }).then((value) {
       if (value == null) {
         return [];
@@ -53,6 +55,7 @@ class SubscriptionController extends GetxController {
       setSelectedSubscription(subscriptionList[0]);
 
     });
+    refreshValue.value = false;
     return subscriptionListModel;
   }
 }

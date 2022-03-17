@@ -34,9 +34,9 @@ class SubscriptionView extends GetView<SubscriptionController> {
                       const Expanded(child: SizedBox(width: 16)),
                       GestureDetector(
                           onTap: () async {
-                            controller.refreshValue.value = true;
+                            // controller.refreshValue.value = true;
                             await controller.getSubscriptionList();
-                            controller.refreshValue.value = false;
+                            // controller.refreshValue.value = false;
                           },
                           child: const Icon(Icons.refresh,
                               color: Color(0xff667C8A))),

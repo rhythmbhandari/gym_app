@@ -38,8 +38,10 @@ class GymController extends GetxController {
   void increment() => count.value++;
 
   Future<List<Gym>> getGymList() async {
+    refreshValue.value = true;
     await DashboardRequest.getGym().catchError((error) {
       this.error = error;
+      refreshValue.value = false;
     }).then((value) {
       if (value == null) {
         return [];
@@ -52,6 +54,7 @@ class GymController extends GetxController {
       setSelectedGym(gymList[0]);
 
     });
+    refreshValue.value = false;
     return gymListModel;
   }
 }
