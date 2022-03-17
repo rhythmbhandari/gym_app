@@ -13,24 +13,31 @@ class ProfileController extends GetxController {
   final profilePic = ''.obs;
 
   @override
-  void onInit() {
+  void onInit() async {
+    await Future.wait([
+      getUserDetails(),
+      getCustomerDetails(),
+    ]);
     updateUserData();
     super.onInit();
   }
 
   updateUserData() {
-    name.value = SessionRepository.instance.user.name ;
-    email.value = SessionRepository.instance.user.email ?? '';
-    phone.value = SessionRepository.instance.user.phone;
+    if (SessionRepository.instance.user != null) {
+      name.value = SessionRepository.instance.user.name;
+      email.value = SessionRepository.instance.user.email ?? '';
+      phone.value = SessionRepository.instance.user.phone;
+    }
+
     // profilePic.value = SessionRepository.instance.user.;
   }
 
-
   Future<bool> getUserDetails() async {
     var response = await ProfileRequest.getUserDetail().catchError((error) {
-      if(error.contains('full header')){
-        authError.value = 'Internet failed to establish proper connection. Try again.';
-      }else{
+      if (error.contains('full header')) {
+        authError.value =
+            'Internet failed to establish proper connection. Try again.';
+      } else {
         authError.value = error;
       }
     });
@@ -41,12 +48,13 @@ class ProfileController extends GetxController {
     return true;
   }
 
-
   Future<bool> getCustomerDetails() async {
-    var response = await ProfileRequest.getCustomerDetails().catchError((error) {
-      if(error.contains('full header')){
-        authError.value = 'Internet failed to establish proper connection. Try again.';
-      }else{
+    var response =
+        await ProfileRequest.getCustomerDetails().catchError((error) {
+      if (error.contains('full header')) {
+        authError.value =
+            'Internet failed to establish proper connection. Try again.';
+      } else {
         authError.value = error;
       }
     });

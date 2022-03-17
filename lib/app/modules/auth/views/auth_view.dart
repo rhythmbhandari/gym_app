@@ -12,10 +12,10 @@ import 'package:gym_app/app/widgets/password_input_textfield.dart';
 import 'package:gym_app/app/widgets/top_snack_bar.dart';
 
 import '../controllers/auth_controller.dart';
+import 'auth_customer_view.dart';
+import 'auth_gym_view.dart';
 
 class AuthView extends GetView<AuthController> {
-  final FocusNode usernameNode = FocusNode();
-  final FocusNode passwordNode = FocusNode();
   final profileController = Get.put(ProfileController());
 
   @override
@@ -43,138 +43,44 @@ class AuthView extends GetView<AuthController> {
                     ),
                     SizedBox(height: Get.height * 0.055),
                     Text(
-                      'Enter your Username and Password',
+                      'Choose your sign in type.',
                       style: Get.textTheme.headline5.copyWith(
                           color: Colors.white,
                           fontFamily: 'Poppins',
                           fontWeight: FontWeight.w500,
                           fontSize: 13),
                     ),
-                    SizedBox(height: Get.height * 0.09),
-                    Text(
-                      'Email         ',
-                      style: Get.textTheme.headline5.copyWith(
-                          color: Colors.white,
-                          fontFamily: 'Poppins',
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16),
-                    ),
-                    SizedBox(height: Get.height * 0.005),
-                    EmailInputField(
-                      focusNode: usernameNode,
-                      hintText: 'Enter your email'.tr,
-                      labelText: 'Email'.tr,
-                      icon: Icons.email,
-                      textInputType: TextInputType.emailAddress,
-                      onChanged: (_) {
-                        controller.setUsernameError(null);
-                        controller.checkLoginButtonEnabled();
-                      },
-                      onSubmit: (_) => node.requestFocus(passwordNode),
-                      errorText: controller.usernameError.value,
-                      controller: controller.usernameInputController,
-                      inputColor: const Color(0xffC4C4C4),
-                      radius: 0,
-                      focusedRadius: 0,
-                    ),
-                    SizedBox(height: Get.height * 0.05),
-                    Text(
-                      'Password',
-                      style: Get.textTheme.headline5.copyWith(
-                          color: Colors.white,
-                          fontFamily: 'Poppins',
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16),
-                    ),
-                    SizedBox(height: Get.height * 0.005),
-                    Obx(() => PasswordTextField(
-                          textInputType: TextInputType.visiblePassword,
-                          labelText: 'Password'.tr,
-                          hintText: 'Enter password'.tr,
-                          focusNode: passwordNode,
-                          onChanged: (_) {
-                            controller.checkLoginButtonEnabled();
-                            controller.setPasswordError(null);
-                          },
-                          onSubmit: (_) => node.unfocus(),
-                          suffix: IconButton(
-                              icon: Icon(
-                                controller.passwordInvisible.value
-                                    ? Icons.visibility_off
-                                    : Icons.visibility,
-                                size: 18,
-                              ),
-                              color: passwordNode.hasFocus
-                                  ? primaryColor
-                                  : passwordNode.hasFocus &&
-                                          controller.passwordError != null
-                                      ? Colors.red
-                                      : Colors.grey,
-                              onPressed: () =>
-                                  controller.changePasswordVisibility(
-                                      !controller.passwordInvisible.value)),
-                          obscureText: controller.passwordInvisible.value,
-                          errorText: controller.passwordError.value,
-                          controller: controller.passwordInputController,
-                        )),
-                    SizedBox(height: Get.height * 0.05),
-                    SizedBox(
-                      width: 150,
-                      child: Obx(() => CustomButton(
-                            radius: 10,
-                            onPressed: controller.loginButtonEnabled.value
-                                ? () async {
-                                    controller.loginButtonEnabled.value = false;
-                                    if (controller.validate()) {
-                                      // print('here validate');
-                                      final status =
-                                          await controller.loginUser();
-                                      if (status) {
-                                        showTopSnackBar(
-                                          context,
-                                          const CustomSnackBar.success(
-                                            message: "Login successful",
-                                          ),
-                                        );
-                                        profileController.getCustomerDetails();
-                                        await profileController
-                                            .getUserDetails()
-                                            .then((_) async {
-                                          await profileController
-                                              .updateUserData();
-                                          Get.offAllNamed(Routes.HOME);
-                                        });
-
-                                        controller.loginButtonEnabled.value =
-                                            true;
-                                      } else {
-                                        showTopSnackBar(
-                                          context,
-                                          CustomSnackBar.error(
-                                            message: controller.authError.value,
-                                          ),
-                                        );
-                                        controller.loginButtonEnabled.value =
-                                            true;
-                                      }
-                                    } else {
-                                      showTopSnackBar(
-                                        context,
-                                        CustomSnackBar.error(
-                                          message:
-                                              "Error. ${controller.authError}",
-                                        ),
-                                      );
-                                      controller.loginButtonEnabled.value =
-                                          true;
-                                    }
-                                  }
-                                : null,
-                            text: 'Login',
-                            backgroundColor: controller.loginButtonEnabled.value
-                                ? const Color(0xff6779BA)
-                                : Colors.grey,
-                          )),
+                    SizedBox(height: Get.height * 0.1),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: SizedBox(
+                            child: CustomButton(
+                                  radius: 10,
+                                  onPressed: () {
+                                    Get.to(AuthGymView(), preventDuplicates: true);
+                                  },
+                                  text: 'Gym',
+                                  backgroundColor:  Color(0xff6779BA),
+                                ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: SizedBox(
+                            child: CustomButton(
+                              radius: 10,
+                              onPressed: () {
+                                Get.to(AuthCustomerView(), preventDuplicates: true);
+                              },
+                              text: 'Customer',
+                              backgroundColor: const Color(0xff6779BA),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                     SizedBox(height: Get.height * 0.05),
                     Row(
