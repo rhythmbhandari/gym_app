@@ -133,23 +133,25 @@ class AuthView extends GetView<AuthController> {
                                         showTopSnackBar(
                                           context,
                                           const CustomSnackBar.success(
-                                            message:
-                                            "Login successful",
+                                            message: "Login successful",
                                           ),
                                         );
+                                        profileController.getCustomerDetails();
                                         await profileController
                                             .getUserDetails()
-                                            .then((_) => profileController
-                                            .updateUserData());
-                                        // Get.offAllNamed(Routes.HOME);
+                                            .then((_) async {
+                                          await profileController
+                                              .updateUserData();
+                                          Get.offAllNamed(Routes.HOME);
+                                        });
+
                                         controller.loginButtonEnabled.value =
                                             true;
                                       } else {
                                         showTopSnackBar(
                                           context,
                                           CustomSnackBar.error(
-                                            message:
-                                            controller.authError.value,
+                                            message: controller.authError.value,
                                           ),
                                         );
                                         controller.loginButtonEnabled.value =
@@ -158,13 +160,13 @@ class AuthView extends GetView<AuthController> {
                                     } else {
                                       showTopSnackBar(
                                         context,
-                                         CustomSnackBar.error(
+                                        CustomSnackBar.error(
                                           message:
-                                          "Error. ${controller.authError}",
+                                              "Error. ${controller.authError}",
                                         ),
                                       );
                                       controller.loginButtonEnabled.value =
-                                      true;
+                                          true;
                                     }
                                   }
                                 : null,

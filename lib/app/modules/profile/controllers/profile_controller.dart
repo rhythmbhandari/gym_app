@@ -14,6 +14,7 @@ class ProfileController extends GetxController {
 
   @override
   void onInit() {
+    updateUserData();
     super.onInit();
   }
 
@@ -34,6 +35,22 @@ class ProfileController extends GetxController {
       }
     });
     print('get user profile $response');
+    if (response == null) {
+      return false;
+    }
+    return true;
+  }
+
+
+  Future<bool> getCustomerDetails() async {
+    var response = await ProfileRequest.getCustomerDetails().catchError((error) {
+      if(error.contains('full header')){
+        authError.value = 'Internet failed to establish proper connection. Try again.';
+      }else{
+        authError.value = error;
+      }
+    });
+    print('get customer profile $response');
     if (response == null) {
       return false;
     }

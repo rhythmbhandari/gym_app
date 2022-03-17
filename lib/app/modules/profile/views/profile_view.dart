@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:gym_app/app/config/theme_colors.dart';
+import 'package:gym_app/app/data/repositories/session_repository.dart';
 
 import '../controllers/profile_controller.dart';
 
@@ -42,16 +43,17 @@ class ProfileView extends GetView<ProfileController> {
             ),
             Container(
               margin: EdgeInsets.symmetric(horizontal: 22),
-              padding: EdgeInsets.symmetric( vertical: 31),
+              padding: EdgeInsets.symmetric(vertical: 31),
               decoration: BoxDecoration(
-                  color: Color(0xffE5E5E5).withOpacity(0.4), borderRadius: BorderRadius.circular(0)),
+                  color: Color(0xffE5E5E5).withOpacity(0.4),
+                  borderRadius: BorderRadius.circular(0)),
               child: Column(
                 children: [
                   Row(
                     children: [
                       Expanded(
                         child: Text(
-                          'User Name: ',
+                          'User Name:',
                           textAlign: TextAlign.center,
                           style: Get.textTheme.headline5.copyWith(
                               color: Color(0xff435D6B),
@@ -62,7 +64,39 @@ class ProfileView extends GetView<ProfileController> {
                       ),
                       Expanded(
                         child: Text(
-                          'Test User',
+                          '${controller.name}',
+                          style: Get.textTheme.headline5.copyWith(
+                              color: Colors.black,
+                              fontFamily: 'Poppins',
+                              fontWeight: FontWeight.w400,
+                              fontSize: 14),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 32,
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          'Subscription:',
+                          textAlign: TextAlign.center,
+                          style: Get.textTheme.headline5.copyWith(
+                              color: Color(0xff435D6B),
+                              fontFamily: 'Poppins',
+                              fontWeight: FontWeight.w400,
+                              fontSize: 14),
+                        ),
+                      ),
+                      Expanded(
+                        child: Text(
+                          SessionRepository.instance.customer.subscription ==
+                                  null
+                              ? 'XX'
+                              : SessionRepository.instance.customer.subscription
+                                  .toString(),
                           style: Get.textTheme.headline5.copyWith(
                               color: Color(0xff000000),
                               fontFamily: 'Poppins',
@@ -72,7 +106,9 @@ class ProfileView extends GetView<ProfileController> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 32,),
+                  SizedBox(
+                    height: 32,
+                  ),
                   Row(
                     children: [
                       Expanded(
@@ -85,9 +121,11 @@ class ProfileView extends GetView<ProfileController> {
                               fontWeight: FontWeight.w400,
                               fontSize: 14),
                         ),
-                      ),Expanded(
+                      ),
+                      Expanded(
                         child: Text(
-                          'XX',
+                          SessionRepository.instance.customer.remainingCheckIns
+                              .toString(),
                           style: Get.textTheme.headline5.copyWith(
                               color: Color(0xff000000),
                               fontFamily: 'Poppins',
@@ -97,7 +135,9 @@ class ProfileView extends GetView<ProfileController> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 32,),
+                  SizedBox(
+                    height: 32,
+                  ),
                   Row(
                     children: [
                       Expanded(
@@ -113,32 +153,8 @@ class ProfileView extends GetView<ProfileController> {
                       ),
                       Expanded(
                         child: Text(
-                          'XX',
-                          style: Get.textTheme.headline5.copyWith(
-                              color: Color(0xff000000),
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.w400,
-                              fontSize: 14),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 32,),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          'Total \nGym Visited:',
-                          textAlign: TextAlign.center,
-                          style: Get.textTheme.headline5.copyWith(
-                              color: Color(0xff435D6B),
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.w400,
-                              fontSize: 14),
-                        ),
-                      ),Expanded(
-                        child: Text(
-                          'XX',
+                          SessionRepository.instance.customer.totalCheckIns
+                              .toString(),
                           style: Get.textTheme.headline5.copyWith(
                               color: Color(0xff000000),
                               fontFamily: 'Poppins',
