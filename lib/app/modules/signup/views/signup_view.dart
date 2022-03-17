@@ -264,24 +264,6 @@ class SignupView extends GetView<SignupController> {
                           )),
                         ),
                         SizedBox(height: Get.height * 0.05),
-                        Row(
-                          children: [
-                            const Expanded(child: SizedBox()),
-                            GestureDetector(
-                              onTap: (){
-                                Get.offAllNamed(Routes.HOME);
-                                node.unfocus();
-                              },
-                              child: Text(
-                                "Skip",
-                                style: Get.textTheme.headline5.copyWith(
-                                    color: Colors.white,fontFamily: 'Poppins',
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 13),
-                              ),
-                            ),
-                          ],
-                        ),
                       ],
                     ),
                   )

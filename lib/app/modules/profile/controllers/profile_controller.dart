@@ -8,17 +8,17 @@ class ProfileController extends GetxController {
   final count = 0.obs;
   final authError = ''.obs;
   final name = ''.obs;
+  final subscription = ''.obs;
+  final remainingCheckIns = ''.obs;
+  final totalCheckIns = ''.obs;
   final email = ''.obs;
   final phone = ''.obs;
   final profilePic = ''.obs;
+  final refreshValue = false.obs;
 
   @override
-  void onInit() async {
-    await Future.wait([
-      getUserDetails(),
-      getCustomerDetails(),
-    ]);
-    updateUserData();
+  void onInit() {
+
     super.onInit();
   }
 
@@ -27,6 +27,11 @@ class ProfileController extends GetxController {
       name.value = SessionRepository.instance.user.name;
       email.value = SessionRepository.instance.user.email ?? '';
       phone.value = SessionRepository.instance.user.phone;
+    }
+    if(SessionRepository.instance.customer != null){
+      subscription.value = SessionRepository.instance.customer.subscription;
+      remainingCheckIns.value = SessionRepository.instance.customer.remainingCheckIns.toString();
+      totalCheckIns.value = SessionRepository.instance.customer.totalCheckIns.toString();
     }
 
     // profilePic.value = SessionRepository.instance.user.;

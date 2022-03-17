@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:gym_app/app/data/model/gym.dart';
+import 'package:gym_app/app/data/request/dashboard_request.dart';
 
 class GymController extends GetxController {
   //TODO: Implement GymController
@@ -7,7 +9,18 @@ class GymController extends GetxController {
   final List location = ["Balaju", "Tokha", "New Road", "Kakani"];
   final List phone = ["98********", "98********", "98********", "98********"];
 
+  String error = '';
+  final refreshValue = false.obs;
+  final gymList = [].obs;
+
   final selectedIndex = 0.obs;
+
+  List<Gym> gymListModel;
+
+  final selectedGym = Gym().obs;
+
+  setSelectedGym(Gym gym) =>
+      selectedGym.value = gym;
 
   final count = 0.obs;
   @override
@@ -23,4 +36,22 @@ class GymController extends GetxController {
   @override
   void onClose() {}
   void increment() => count.value++;
+
+  Future<List<Gym>> getGymList() async {
+    await DashboardRequest.getGym().catchError((error) {
+      this.error = error;
+    }).then((value) {
+      if (value == null) {
+        return [];
+      }
+      if (value.isEmpty) {
+        return [];
+      }
+      gymList.value = value;
+      gymListModel = value;
+      setSelectedGym(gymList[0]);
+
+    });
+    return gymListModel;
+  }
 }

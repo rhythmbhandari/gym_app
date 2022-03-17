@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:gym_app/app/modules/auth/views/auth_customer_view.dart';
+import 'package:gym_app/app/modules/auth/views/auth_gym_view.dart';
 import 'package:gym_app/app/modules/gym/views/gym_details.dart';
 import 'package:gym_app/app/modules/subscription/views/subscription_details.dart';
 import 'package:gym_app/app/modules/subscription/views/subscription_payment.dart';
@@ -38,7 +40,7 @@ class AppPages {
     GetPage(
       name: _Paths.AUTH,
       page: () => AuthView(),
-      binding: AuthBinding(),
+
     ),
     GetPage(
       name: _Paths.SPLASH,
@@ -86,6 +88,18 @@ class AppPages {
     GetPage(
       name: GymDetails.id,
       page: () => const GymDetails(),
+    ),
+    GetPage(
+      name: AuthCustomerView.id,
+      page: () => AuthCustomerView(),
+      binding: AuthBinding(),
+
+    ),
+    GetPage(
+      name: AuthGymView.id,
+      page: () =>  AuthGymView(),
+      binding: AuthBinding(),
+
     ),
   ];
 }

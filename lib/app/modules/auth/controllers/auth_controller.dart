@@ -93,6 +93,28 @@ class AuthController extends GetxController {
     return true;
   }
 
+  Future<bool> loginGym() async {
+    showProgressBar();
+    print('here');
+    final status = await AuthRepository.verifyGymLogin(username, password)
+        .catchError((error) {
+      if (error.contains('full header')) {
+        authError.value =
+        'Internet failed to establish proper connection. Try again.';
+      } else {
+        authError.value = error;
+      }
+    });
+    if (status == null) {
+      return false;
+    }
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    UserRepository userRepository = UserRepository(prefs: sharedPreferences);
+    userRepository.login(SessionRepository.instance.accessToken);
+    hideProgressBar();
+    return true;
+  }
+
   Future<void> saveToken() async {
     await _userRepository.login(SessionRepository.instance.accessToken);
   }

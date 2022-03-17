@@ -49,7 +49,7 @@ class SubscriptionDetails extends GetView<SubscriptionController> {
                     ),
                     const SizedBox(height: 37),
                     Text(
-                      "${controller.months[controller.selectedIndex.value]} Month",
+                      "${controller.subscriptionList[controller.selectedIndex.value].validFor} Days",
                       style: Get.textTheme.headline5.copyWith(
                           color: const Color(0xff000000),
                           fontFamily: 'Poppins',
@@ -60,7 +60,7 @@ class SubscriptionDetails extends GetView<SubscriptionController> {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 35),
                       child: Text(
-                        "${controller.days[controller.selectedIndex.value]} days check-in will be added to your account when you buy this item.",
+                        "${controller.subscriptionList[controller.selectedIndex.value].description}",
                         textAlign: TextAlign.center,
                         style: Get.textTheme.headline5.copyWith(
                             color: const Color(0xff435D6B),
@@ -100,7 +100,7 @@ class SubscriptionDetails extends GetView<SubscriptionController> {
                             fontSize: 16),
                       ),
                       Text(
-                        'Rs. ${controller.price[controller.selectedIndex.value]}',
+                        'Rs. ${controller.subscriptionList[controller.selectedIndex.value].price}',
                         style: Get.textTheme.headline5.copyWith(
                             color: Colors.black,
                             fontFamily: 'Poppins',

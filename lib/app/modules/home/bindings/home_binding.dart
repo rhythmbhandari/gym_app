@@ -13,20 +13,18 @@ class HomeBinding extends Bindings {
     Get.lazyPut<HomeController>(
       () => HomeController(),
     );
-    Get.lazyPut<SubscriptionController>(
-          () => SubscriptionController(),
-    );
-    Get.lazyPut<GymMapController>(
-          () => GymMapController(),
-    );
+
     Get.lazyPut<ProfileController>(
-          () => ProfileController(),
-    );Get.lazyPut<GymController>(
-          () => GymController(),
+      () => ProfileController(),
+    );
+    Get.lazyPut<SubscriptionController>(
+      () => SubscriptionController(),
+    );
+    Get.lazyPut<GymController>(
+      () => GymController(),
     );
     Get.lazyPut<CheckInController>(
-          () => CheckInController(),
+      () => CheckInController(),
     );
-
   }
 }

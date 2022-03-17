@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gym_app/app/config/theme_colors.dart';
 import 'package:gym_app/app/modules/check_in/views/check_in_view.dart';
+import 'package:gym_app/app/modules/gym/controllers/gym_controller.dart';
 import 'package:gym_app/app/modules/gym/views/gym_view.dart';
 import 'package:gym_app/app/modules/gym_map/views/gym_map_view.dart';
+import 'package:gym_app/app/modules/profile/controllers/profile_controller.dart';
 import 'package:gym_app/app/modules/profile/views/profile_view.dart';
+import 'package:gym_app/app/modules/subscription/controllers/subscription_controller.dart';
 import 'package:gym_app/app/modules/subscription/views/subscription_view.dart';
 
 import '../controllers/home_controller.dart';
@@ -17,14 +20,19 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   final HomeController controller = Get.find();
+  final GymController gymController = Get.find();
+  final SubscriptionController subscriptionController = Get.find();
 
   int selectedIndex = 0;
+
+
 
   final List<Widget> pages = [
     SubscriptionView(),
     GymView(),
-    GymMapView(),
-    CheckInView()
+    // GymMapView(),
+    CheckInView(),
+    ProfileView(),
   ];
 
   void changeNavBarIndex(int index) {
@@ -62,14 +70,15 @@ class _HomeViewState extends State<HomeView> {
             label: 'Gym',
             backgroundColor: Colors.white,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.map),
-            label: 'Map',
-            backgroundColor: Colors.white,
-          ),
+
           BottomNavigationBarItem(
             icon: Icon(Icons.qr_code),
             label: 'Check-In',
+            backgroundColor: Colors.white,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.perm_identity),
+            label: 'Profile',
             backgroundColor: Colors.white,
           ),
           // BottomNavigationBarItem(

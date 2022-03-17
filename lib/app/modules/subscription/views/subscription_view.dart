@@ -26,43 +26,70 @@ class SubscriptionView extends GetView<SubscriptionController> {
       ),
       backgroundColor: const Color(0xffE5E5E5).withOpacity(0.5),
       body: SafeArea(
-        child: Column(
-          children: [
-            Row(
-              children: [
-                const Expanded(child: SizedBox(width: 16)),
-                GestureDetector(
-                    onTap: () {
-                      Get.toNamed(Routes.PROFILE, preventDuplicates: true);
-                    },
-                    child: const Icon(Icons.perm_identity,
-                        color: Color(0xff667C8A))),
-                const SizedBox(width: 23)
-              ],
-            ),
-            Expanded(
-              child: ListView.builder(
-                shrinkWrap: true,
-                physics: const BouncingScrollPhysics(),
-                padding: const EdgeInsets.only(left: 60, top: 20, right: 60),
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: (){
-                      controller.selectedIndex.value = index;
-                      Get.toNamed(SubscriptionDetails.id, preventDuplicates: true);
-                    },
-                    child: SubscriptionWidget(
-                      month: controller.months[index],
-                      description: controller.days[index],
-                      price: controller.price[index],
+        child: Obx(() => !controller.refreshValue.value
+            ? Column(
+                children: [
+                  Row(
+                    children: [
+                      const Expanded(child: SizedBox(width: 16)),
+                      GestureDetector(
+                          onTap: () async {
+                            controller.refreshValue.value = true;
+                            await controller.getSubscriptionList();
+                            controller.refreshValue.value = false;
+                          },
+                          child: const Icon(Icons.refresh,
+                              color: Color(0xff667C8A))),
+                      const SizedBox(width: 23)
+                    ],
+                  ),
+                  Expanded(
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      physics: const BouncingScrollPhysics(),
+                      padding:
+                          const EdgeInsets.only(left: 60, top: 20, right: 60),
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                          onTap: () {
+                            controller.selectedIndex.value = index;
+                            controller
+                                .setSelectedSubscription(
+                                controller
+                                    .subscriptionList[
+                                index]);
+                            Get.toNamed(SubscriptionDetails.id,
+                                preventDuplicates: true);
+                          },
+                          child: SubscriptionWidget(
+                            days: controller.subscriptionList[index].validFor.toString(),
+                            description: controller.subscriptionList[index].description.toString(),
+                            price: controller.subscriptionList[index].price,
+                          ),
+                        );
+                      },
+                      itemCount: controller.subscriptionList.length,
                     ),
-                  );
-                },
-                itemCount: 4,
-              ),
-            ),
-          ],
-        ),
+                  ),
+                ],
+              )
+            : Center(
+                child: Container(
+                  height: Get.height,
+                  width: Get.width,
+                  color: Colors.white.withOpacity(0.4),
+                  child: const Center(
+                    child: SizedBox(
+                      height: 75,
+                      width: 75,
+                      child: CircularProgressIndicator(
+                          strokeWidth: 8,
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(primaryColor)),
+                    ),
+                  ),
+                ),
+              )),
       ),
     );
   }
@@ -71,12 +98,12 @@ class SubscriptionView extends GetView<SubscriptionController> {
 class SubscriptionWidget extends StatelessWidget {
   const SubscriptionWidget(
       {Key key,
-      @required this.month,
+      @required this.days,
       @required this.description,
       @required this.price})
       : super(key: key);
 
-  final String month;
+  final String days;
   final String description;
   final String price;
 
@@ -98,7 +125,7 @@ class SubscriptionWidget extends StatelessWidget {
                   const EdgeInsets.symmetric(horizontal: 7.43, vertical: 6.42),
               child: Center(
                   child: Text(
-                '$month Month',
+                '$days Days',
                 style: Get.textTheme.headline5.copyWith(
                     color: Colors.white,
                     fontFamily: 'Poppins',
@@ -113,7 +140,7 @@ class SubscriptionWidget extends StatelessWidget {
                 Expanded(
                   flex: 3,
                   child: Text(
-                    "You get $description days as check-ins with this purchase",
+                    "$description",
                     style: Get.textTheme.headline5.copyWith(
                         color: Colors.black,
                         fontFamily: 'Poppins',

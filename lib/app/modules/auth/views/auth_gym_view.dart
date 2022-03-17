@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:gym_app/app/config/theme_colors.dart';
+import 'package:gym_app/app/modules/auth/controllers/auth_controller.dart';
 import 'package:gym_app/app/modules/profile/controllers/profile_controller.dart';
 import 'package:gym_app/app/routes/app_pages.dart';
 import 'package:gym_app/app/widgets/custom_button.dart';
@@ -10,10 +11,14 @@ import 'package:gym_app/app/widgets/email_input_textfield.dart';
 import 'package:gym_app/app/widgets/password_input_textfield.dart';
 import 'package:gym_app/app/widgets/top_snack_bar.dart';
 
-class AuthGymView extends GetView {
+class AuthGymView extends GetView<AuthController> {
+  static String id = '/auth_gym';
+
   final FocusNode usernameNode = FocusNode();
   final FocusNode passwordNode = FocusNode();
-  final ProfileController profileController = Get.find();
+
+
+  AuthGymView({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -132,14 +137,8 @@ class AuthGymView extends GetView {
                                     const CustomSnackBar.success(
                                       message: "Login successful",
                                     ),
-                                  );profileController.getCustomerDetails();
-                                  await profileController
-                                      .getUserDetails()
-                                      .then((_) async {
-                                    await profileController
-                                        .updateUserData();
-                                    Get.offAllNamed(Routes.HOME);
-                                  });
+                                  );
+                                  Get.offAllNamed(Routes.HOME);
 
                                   controller.loginButtonEnabled.value =
                                   true;
