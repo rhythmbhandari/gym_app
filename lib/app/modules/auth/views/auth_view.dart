@@ -142,6 +142,7 @@ class AuthView extends GetView<AuthController> {
                                       print('here validate');
                                       final status =
                                           await controller.loginUser();
+                                      print(status);
                                       if (status) {
                                         // await profileController
                                         //     .getUserDetails()

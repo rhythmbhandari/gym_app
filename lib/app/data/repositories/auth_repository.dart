@@ -7,29 +7,24 @@ import 'package:gym_app/app/data/network/network_helper.dart';
 import 'session_repository.dart';
 
 class AuthRepository {
-  static Future<bool> verifyLogin(String username, String password) async {
+  static Future<bool> verifyLogin(String email, String password) async {
     const url = '$baseUrl/accounts/auth/jwt/create/';
-    final body = jsonEncode({'email': username, 'password': password});
+    final body = jsonEncode({'email': email, 'password': password});
     print(url);
     print(body);
     try {
       final response = await NetworkHelper().postRequest(url, data: body);
-      print("Response is $response");
       if (response.statusCode == 200) {
         final token = response.data['access'];
         SessionRepository.instance.setAccessToken(token);
         return true;
       } else {
-        print('Error');
         return Future.error(response.statusMessage);
       }
     } on SocketException {
-      print('Socket');
       return Future.error(
           'Please check your internet connection and try again.');
     } catch (e) {
-      // print();
-      print(e.toString());
       return Future.error(e.toString());
     }
 
