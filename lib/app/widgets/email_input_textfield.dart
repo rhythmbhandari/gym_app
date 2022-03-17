@@ -74,6 +74,7 @@ class _EmailInputFieldState extends State<EmailInputField> {
             fontSize: 16),
         decoration: InputDecoration(
           //
+          contentPadding: EdgeInsets.symmetric(vertical: 14, horizontal: 14),
           filled: true,
           fillColor: widget._inputColor,
           // errorText: widget._errorText,

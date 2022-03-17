@@ -1,17 +1,22 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:gym_app/app/config/theme_colors.dart';
+import 'package:gym_app/app/modules/profile/controllers/profile_controller.dart';
 import 'package:gym_app/app/routes/app_pages.dart';
 import 'package:gym_app/app/widgets/custom_button.dart';
+import 'package:gym_app/app/widgets/custom_snackbar.dart';
 import 'package:gym_app/app/widgets/email_input_textfield.dart';
 import 'package:gym_app/app/widgets/password_input_textfield.dart';
+import 'package:gym_app/app/widgets/top_snack_bar.dart';
 
 import '../controllers/auth_controller.dart';
 
 class AuthView extends GetView<AuthController> {
   final FocusNode usernameNode = FocusNode();
   final FocusNode passwordNode = FocusNode();
+  final profileController = Get.put(ProfileController());
 
   @override
   Widget build(BuildContext context) {
@@ -25,13 +30,14 @@ class AuthView extends GetView<AuthController> {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 36),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(height: Get.height * 0.1),
                     Text(
                       'Sign In',
                       style: Get.textTheme.headline5.copyWith(
-                          color: Colors.white,fontFamily: 'Poppins',
+                          color: Colors.white,
+                          fontFamily: 'Poppins',
                           fontWeight: FontWeight.w600,
                           fontSize: 28),
                     ),
@@ -39,97 +45,78 @@ class AuthView extends GetView<AuthController> {
                     Text(
                       'Enter your Username and Password',
                       style: Get.textTheme.headline5.copyWith(
-                          color: Colors.white,fontFamily: 'Poppins',
+                          color: Colors.white,
+                          fontFamily: 'Poppins',
                           fontWeight: FontWeight.w500,
                           fontSize: 13),
                     ),
-                    SizedBox(height: Get.height * 0.14),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Email         ',
-                          style: Get.textTheme.headline5.copyWith(
-                              color: Colors.white,fontFamily: 'Poppins',
-                              fontWeight: FontWeight.w600,
-                              fontSize: 16),
-                        ),
-                        SizedBox(width: 20),
-                        Flexible(
-                          child: ConstrainedBox(
-                            constraints: const BoxConstraints.tightFor(height: 30),
-                            child: EmailInputField(
-                              focusNode: usernameNode,
-                              hintText: 'Enter your email'.tr,
-                              labelText: 'Email'.tr,
-                              icon: Icons.email,
-                              textInputType: TextInputType.emailAddress,
-                              onChanged: (_) {
-                                controller.setUsernameError(null);
-                                controller.checkLoginButtonEnabled();
-                              },
-                              onSubmit: (_) => node.requestFocus(passwordNode),
-                              errorText: controller.usernameError.value,
-                              controller: controller.usernameInputController,
-                              inputColor: Color(0xffC4C4C4),
-                              radius: 0,
-                              focusedRadius: 0,
-                            ),
-                          ),
-                        ),
-                      ],
+                    SizedBox(height: Get.height * 0.09),
+                    Text(
+                      'Email         ',
+                      style: Get.textTheme.headline5.copyWith(
+                          color: Colors.white,
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16),
+                    ),
+                    SizedBox(height: Get.height * 0.005),
+                    EmailInputField(
+                      focusNode: usernameNode,
+                      hintText: 'Enter your email'.tr,
+                      labelText: 'Email'.tr,
+                      icon: Icons.email,
+                      textInputType: TextInputType.emailAddress,
+                      onChanged: (_) {
+                        controller.setUsernameError(null);
+                        controller.checkLoginButtonEnabled();
+                      },
+                      onSubmit: (_) => node.requestFocus(passwordNode),
+                      errorText: controller.usernameError.value,
+                      controller: controller.usernameInputController,
+                      inputColor: const Color(0xffC4C4C4),
+                      radius: 0,
+                      focusedRadius: 0,
                     ),
                     SizedBox(height: Get.height * 0.05),
-                    Row(
-                      children: [
-                        Text(
-                          'Password',
-                          style: Get.textTheme.headline5.copyWith(
-                              color: Colors.white,fontFamily: 'Poppins',
-                              fontWeight: FontWeight.w600,
-                              fontSize: 16),
-                        ),
-                        SizedBox(width: 20),
-                        Flexible(
-                          child: ConstrainedBox(
-                            constraints: BoxConstraints.tightFor(height: 30),
-                            child: Obx(() => PasswordTextField(
-                                  textInputType: TextInputType.visiblePassword,
-                                  labelText: 'Password'.tr,
-                                  hintText: 'Enter password'.tr,
-                                  focusNode: passwordNode,
-                                  onChanged: (_) {
-                                    controller.checkLoginButtonEnabled();
-                                    controller.setPasswordError(null);
-                                  },
-                                  onSubmit: (_) => node.unfocus(),
-                                  suffix: IconButton(
-                                      icon: Icon(
-                                        controller.passwordInvisible.value
-                                            ? Icons.visibility_off
-                                            : Icons.visibility,
-                                        size: 18,
-                                      ),
-                                      color: passwordNode.hasFocus
-                                          ? primaryColor
-                                          : passwordNode.hasFocus &&
-                                                  controller.passwordError !=
-                                                      null
-                                              ? Colors.red
-                                              : Colors.grey,
-                                      onPressed: () => controller
-                                          .changePasswordVisibility(!controller
-                                              .passwordInvisible.value)),
-                                  obscureText:
-                                      controller.passwordInvisible.value,
-                                  errorText: controller.passwordError.value,
-                                  controller:
-                                      controller.passwordInputController,
-                                )),
-                          ),
-                        ),
-                      ],
+                    Text(
+                      'Password',
+                      style: Get.textTheme.headline5.copyWith(
+                          color: Colors.white,
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16),
                     ),
+                    SizedBox(height: Get.height * 0.005),
+                    Obx(() => PasswordTextField(
+                          textInputType: TextInputType.visiblePassword,
+                          labelText: 'Password'.tr,
+                          hintText: 'Enter password'.tr,
+                          focusNode: passwordNode,
+                          onChanged: (_) {
+                            controller.checkLoginButtonEnabled();
+                            controller.setPasswordError(null);
+                          },
+                          onSubmit: (_) => node.unfocus(),
+                          suffix: IconButton(
+                              icon: Icon(
+                                controller.passwordInvisible.value
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
+                                size: 18,
+                              ),
+                              color: passwordNode.hasFocus
+                                  ? primaryColor
+                                  : passwordNode.hasFocus &&
+                                          controller.passwordError != null
+                                      ? Colors.red
+                                      : Colors.grey,
+                              onPressed: () =>
+                                  controller.changePasswordVisibility(
+                                      !controller.passwordInvisible.value)),
+                          obscureText: controller.passwordInvisible.value,
+                          errorText: controller.passwordError.value,
+                          controller: controller.passwordInputController,
+                        )),
                     SizedBox(height: Get.height * 0.05),
                     SizedBox(
                       width: 150,
@@ -139,25 +126,46 @@ class AuthView extends GetView<AuthController> {
                                 ? () async {
                                     controller.loginButtonEnabled.value = false;
                                     if (controller.validate()) {
-                                      print('here validate');
+                                      // print('here validate');
                                       final status =
                                           await controller.loginUser();
-                                      print(status);
                                       if (status) {
-                                        // await profileController
-                                        //     .getUserDetails()
-                                        //     .then((_) => profileController
-                                        //     .updateUserData());
-                                        Get.offAllNamed(Routes.HOME);
+                                        showTopSnackBar(
+                                          context,
+                                          const CustomSnackBar.success(
+                                            message:
+                                            "Login successful",
+                                          ),
+                                        );
+                                        await profileController
+                                            .getUserDetails()
+                                            .then((_) => profileController
+                                            .updateUserData());
+                                        // Get.offAllNamed(Routes.HOME);
                                         controller.loginButtonEnabled.value =
                                             true;
                                       } else {
-                                        // CustomSnackbar.showCustomSnackBar(
-                                        // message: 'Login Failed!');
+                                        showTopSnackBar(
+                                          context,
+                                          CustomSnackBar.error(
+                                            message:
+                                            controller.authError.value,
+                                          ),
+                                        );
                                         controller.loginButtonEnabled.value =
                                             true;
                                       }
-                                    } else {}
+                                    } else {
+                                      showTopSnackBar(
+                                        context,
+                                         CustomSnackBar.error(
+                                          message:
+                                          "Error. ${controller.authError}",
+                                        ),
+                                      );
+                                      controller.loginButtonEnabled.value =
+                                      true;
+                                    }
                                   }
                                 : null,
                             text: 'Login',
@@ -171,14 +179,15 @@ class AuthView extends GetView<AuthController> {
                       children: [
                         const Expanded(child: SizedBox()),
                         GestureDetector(
-                          onTap: (){
+                          onTap: () {
                             Get.toNamed(Routes.SIGNUP, preventDuplicates: true);
                             node.unfocus();
                           },
                           child: Text(
                             "Don't have an account Yet? signup",
                             style: Get.textTheme.headline5.copyWith(
-                                color: Colors.white,fontFamily: 'Poppins',
+                                color: Colors.white,
+                                fontFamily: 'Poppins',
                                 fontWeight: FontWeight.w500,
                                 fontSize: 13),
                           ),

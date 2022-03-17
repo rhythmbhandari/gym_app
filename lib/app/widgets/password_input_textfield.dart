@@ -61,7 +61,7 @@ class _PasswordFieldState extends State<PasswordTextField> {
           filled: true,
           fillColor: Color(0xffC4C4C4),
           // labelText: widget._labelText,
-          // contentPadding: EdgeInsets.symmetric(vertical: 14, horizontal: 14),
+          contentPadding: EdgeInsets.symmetric(vertical: 14, horizontal: 14),
           // errorText: widget._errorText,
           labelStyle: Get.textTheme.headline5.copyWith(
             color: widget._focusNode.hasFocus && widget._errorText != null
