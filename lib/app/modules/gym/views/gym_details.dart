@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_web_browser/flutter_web_browser.dart';
 import 'package:get/get.dart';
 import 'package:gym_app/app/config/theme_colors.dart';
 import 'package:gym_app/app/modules/gym/controllers/gym_controller.dart';
+import 'package:gym_app/app/modules/subscription/views/subscription_payment.dart';
+import 'package:gym_app/app/widgets/custom_snackbar.dart';
+import 'package:gym_app/app/widgets/top_snack_bar.dart';
 
 class GymDetails extends GetView<GymController> {
   static String id = '/gym_detail';
@@ -37,25 +41,28 @@ class GymDetails extends GetView<GymController> {
                                     left: 12, top: 8, bottom: 8, right: 6),
                                 child: const Center(
                                     child: Icon(
-                                      Icons.arrow_back_ios,
-                                      color: Colors.black,
-                                      size: 18,
-                                    )),
+                                  Icons.arrow_back_ios,
+                                  color: Colors.black,
+                                  size: 18,
+                                )),
                               )),
+                        ),
+                        Expanded(
+                          flex: 6,
+                          child: Text(
+                            "${controller.gymList[controller.selectedIndex.value].companyName}",
+                            textAlign: TextAlign.center,
+                            style: Get.textTheme.headline5.copyWith(
+                                color: const Color(0xff000000),
+                                fontFamily: 'Poppins',
+                                fontWeight: FontWeight.w600,
+                                fontSize: 18),
+                          ),
                         ),
                         const Expanded(child: SizedBox()),
                       ],
                     ),
-                    const SizedBox(height: 37),
-                    Text(
-                      "${controller.gymList[controller.selectedIndex.value].companyName}",
-                      style: Get.textTheme.headline5.copyWith(
-                          color: const Color(0xff000000),
-                          fontFamily: 'Poppins',
-                          fontWeight: FontWeight.w600,
-                          fontSize: 18),
-                    ),
-                    const SizedBox(height: 12),
+                    SizedBox(height: Get.height * 0.05),
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 35),
                       child: Text(
@@ -68,16 +75,89 @@ class GymDetails extends GetView<GymController> {
                             fontSize: 14),
                       ),
                     ),
-                    const Expanded(flex: 2, child: SizedBox()),
+                    SizedBox(
+                      height: Get.height * 0.1,
+                    ),
                     Center(
-                      child: Image.asset(
-                        'assets/dumb.png',
-                        height: Get.width * 0.5,
+                      child: Image.network(
+                        '${controller.gymList[controller.selectedIndex.value].image}',
+                        loadingBuilder: (BuildContext context, Widget child,
+                            ImageChunkEvent loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return Center(
+                              child: CircularProgressIndicator(
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                    loadingProgress.expectedTotalBytes
+                                : null,
+                          ));
+                        },
+                        errorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
+                          return Icon(Icons.error);
+                        },
                         width: Get.width * 1,
                         fit: BoxFit.fill,
                       ),
                     ),
-                    const Expanded(flex: 3, child: SizedBox()),
+                    SizedBox(
+                      height: Get.height * 0.1,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        print(controller.gymList[controller.selectedIndex.value]
+                            .locationMap);
+                        if (controller.gymList[controller.selectedIndex.value]
+                                .locationMap ==
+                            null) {
+                          showTopSnackBar(
+                            context,
+                            CustomSnackBar.error(
+                              message: "Gym location is not available.",
+                            ),
+                          );
+                        } else {
+                          FlutterWebBrowser.openWebPage(
+                            url:
+                                "${controller.gymList[controller.selectedIndex.value].locationMap}",
+                            customTabsOptions: const CustomTabsOptions(
+                              shareState: CustomTabsShareState.on,
+                              instantAppsEnabled: true,
+                              showTitle: true,
+                              urlBarHidingEnabled: true,
+                            ),
+                          );
+                        }
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 19, vertical: 22),
+                        decoration: const BoxDecoration(
+                            color: primaryColor,
+                            borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(10),
+                                topLeft: Radius.circular(10),
+                                topRight: Radius.circular(10),
+                                bottomRight: Radius.circular(10))),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Expanded(
+                              child: Text(
+                                'Location',
+                                textAlign: TextAlign.center,
+                                maxLines: 1,
+                                style: Get.textTheme.headline5.copyWith(
+                                    color: Colors.white,
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 17),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),

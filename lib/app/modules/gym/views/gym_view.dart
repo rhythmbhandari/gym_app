@@ -61,12 +61,12 @@ class GymView extends GetView<GymController> {
                     },
                     child: GymWidget(
                       name: controller.gymList[index].companyName,
-                      location: controller.gymList[index].location,
+                      description: controller.gymList[index].description.toString(),
                       phone: "98********",
                     ),
                   );
                 },
-                itemCount: 4,
+                itemCount: controller.gymList.length,
               ),
             ),
           ],
@@ -96,13 +96,14 @@ class GymWidget extends StatelessWidget {
   const GymWidget(
       {Key key,
         @required this.name,
-        @required this.location,
+        @required this.description,
         @required this.phone})
       : super(key: key);
 
   final String name;
-  final String location;
+  // final String location;
   final String phone;
+  final String description;
 
   @override
   Widget build(BuildContext context) {
@@ -137,7 +138,7 @@ class GymWidget extends StatelessWidget {
                 Expanded(
                   flex: 3,
                   child: Text(
-                    "Description:\n$location\n$phone",
+                    "Description:\n$description\n$phone",
                     style: Get.textTheme.headline5.copyWith(
                         color: Colors.black,
                         fontFamily: 'Poppins',
