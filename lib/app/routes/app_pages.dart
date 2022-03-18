@@ -79,7 +79,7 @@ class AppPages {
     ),
     GetPage(
       name: SubscriptionDetails.id,
-      page: () => const SubscriptionDetails(),
+      page: () => SubscriptionDetails(),
     ),
     GetPage(
       name: SubscriptionPayment.id,

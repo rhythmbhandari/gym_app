@@ -13,6 +13,7 @@ class SubscriptionController extends GetxController {
   final subscriptionList = [].obs;
 
   final refreshValue = false.obs;
+  final loading = false.obs;
 
   final selectedIndex = 0.obs;
 
@@ -24,6 +25,7 @@ class SubscriptionController extends GetxController {
       selectedSubscription.value = subscription;
 
   final count = 0.obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -36,7 +38,53 @@ class SubscriptionController extends GetxController {
 
   @override
   void onClose() {}
+
   void increment() => count.value++;
+
+  Future<bool> requestVerification(String token, int amount) async {
+    bool returnValue = false;
+    await DashboardRequest.serverVerification(token, amount)
+        .catchError((error) {
+      this.error = error;
+    }).then((value) {
+      print('Value is $value');
+      if (value is! bool) {
+        returnValue = false;
+        return;
+      }
+      if (value) {
+        returnValue = true;
+        return;
+      } else {
+        returnValue = false;
+        return;
+      }
+    });
+    return returnValue;
+  }
+
+  Future<bool> subscribe() async {
+    bool returnValue = false;
+    await DashboardRequest.buySubscription(
+            subscriptionList[selectedIndex.value].id.toString())
+        .catchError((error) {
+      this.error = error;
+    }).then((value) {
+      print('Value is $value');
+      if (value is! bool) {
+        returnValue = false;
+        return;
+      }
+      if (value) {
+        returnValue = true;
+        return;
+      } else {
+        returnValue = false;
+        return;
+      }
+    });
+    return returnValue;
+  }
 
   Future<List<Subscription>> getSubscriptionList() async {
     refreshValue.value = true;
@@ -53,7 +101,6 @@ class SubscriptionController extends GetxController {
       subscriptionList.value = value;
       subscriptionListModel = value;
       setSelectedSubscription(subscriptionList[0]);
-
     });
     refreshValue.value = false;
     return subscriptionListModel;

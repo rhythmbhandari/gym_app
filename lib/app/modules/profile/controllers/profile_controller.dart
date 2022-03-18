@@ -29,7 +29,7 @@ class ProfileController extends GetxController {
       phone.value = SessionRepository.instance.user.phone;
     }
     if(SessionRepository.instance.customer != null){
-      subscription.value = SessionRepository.instance.customer.subscription;
+      subscription.value = SessionRepository.instance.customer.subscription.toString();
       remainingCheckIns.value = SessionRepository.instance.customer.remainingCheckIns.toString();
       totalCheckIns.value = SessionRepository.instance.customer.totalCheckIns.toString();
     }
