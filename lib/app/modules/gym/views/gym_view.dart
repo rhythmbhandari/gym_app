@@ -44,7 +44,7 @@ class GymView extends GetView<GymController> {
               ],
             ),
             Expanded(
-              child: ListView.builder(
+              child: controller.gymList != null ?ListView.builder(
                 shrinkWrap: true,
                 physics: const BouncingScrollPhysics(),
                 padding: const EdgeInsets.only(left: 60, top: 20, right: 60),
@@ -67,6 +67,19 @@ class GymView extends GetView<GymController> {
                   );
                 },
                 itemCount: controller.gymList.length,
+              ): Center(
+                child: Container(
+                  padding: EdgeInsets.all(16),
+                  child: Text(
+                    'Gyms are unavailable.',
+                    textAlign: TextAlign.center,
+                    style: Get.textTheme.headline5.copyWith(
+                        color: primaryColor,
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.w600,
+                        fontSize: 18),
+                  ),
+                ),
               ),
             ),
           ],

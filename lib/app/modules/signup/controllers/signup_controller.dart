@@ -17,14 +17,16 @@ class SignupController extends GetxController {
   TextEditingController usernameInputController = TextEditingController();
   TextEditingController passwordInputController = TextEditingController();
   TextEditingController emailInputController = TextEditingController();
-  TextEditingController confirmInputController = TextEditingController();
+  TextEditingController addressInputController = TextEditingController();
+  TextEditingController phoneInputController = TextEditingController();
 
-  String username, password, confirmPassword, email;
+  String username, password, address, email, phone;
   String authError = '';
   final usernameError = ''.obs;
   final emailError = ''.obs;
-  final confirmPasswordError = ''.obs;
+  final addressError = ''.obs;
   final passwordError = ''.obs;
+  final phoneError = ''.obs;
   final passwordInvisible = true.obs;
   final confirmPasswordInvisible = true.obs;
   final signUpButtonEnabled = false.obs;
@@ -49,8 +51,9 @@ class SignupController extends GetxController {
 
   void setPasswordError(String error) => passwordError.value = error;
 
-  void setConfirmPasswordError(String error) =>
-      confirmPasswordError.value = error;
+  void setPhoneError(String error) => phoneError.value = error;
+
+  void setAddressError(String error) => addressError.value = error;
 
   void changePasswordVisibility(bool status) =>
       passwordInvisible.value = status;
@@ -64,7 +67,8 @@ class SignupController extends GetxController {
     username = usernameInputController.text;
     email = emailInputController.text;
     password = passwordInputController.text;
-    confirmPassword = confirmInputController.text;
+    address = addressInputController.text;
+    phone = phoneInputController.text;
     if (username.isEmpty) {
       print('Username cannot be empty.');
       setUsernameError('Username cannot be empty.');
@@ -73,16 +77,18 @@ class SignupController extends GetxController {
         .hasMatch(email)) {
       print('Email format is not correct');
       setEmailError('Email format is not correct');
-    } else if (password != confirmPassword) {
-      print('Password and Re-enter password do not match.');
-      setPasswordError('Password and Re-enter password do not match.');
+    } else if (phone.length != 10) {
+      print('Phone number format is not correct');
+      setPhoneError('Password and Re-enter password do not match.');
+    } else if (!RegExp(r'^-?(([0-9]*)|(([0-9]*)\.([0-9]*)))$')
+        .hasMatch(phone)) {
+      setPhoneError('Phone must contain numeric value');
     } else if (password.length < 8) {
       print('Password must contain at least 8 characters.');
       setPasswordError('Password must contain at least 8 characters.');
-    } else if (confirmPassword.length < 8) {
-      print('Re-enter Password must contain at least 8 characters.');
-      setConfirmPasswordError(
-          'Re-enter Password must contain at least 8 characters.');
+    } else if (address.length < 5) {
+      print('Please enter a valid address.');
+      setAddressError('Please enter a valid address.');
     } else {
       isValid = true;
     }
@@ -93,11 +99,11 @@ class SignupController extends GetxController {
     username = usernameInputController.text;
     email = emailInputController.text;
     password = passwordInputController.text;
-    confirmPassword = confirmInputController.text;
+    address = addressInputController.text;
     signUpButtonEnabled.value = (username.length > 3 &&
             email.length > 4 &&
             password.length > 4 &&
-            confirmPassword.length > 4)
+            address.length > 4)
         ? signUpButtonEnabled.value = true
         : false;
   }
@@ -105,7 +111,7 @@ class SignupController extends GetxController {
   Future<bool> signUpUser() async {
     showProgressBar();
     final status = await AuthRepository.registerUser(
-            username, email, password, confirmPassword)
+            username, email, password, address, phone)
         .catchError((error) {
       if (error.contains('full header')) {
         authError =
@@ -117,9 +123,6 @@ class SignupController extends GetxController {
     if (status == null) {
       return false;
     }
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    UserRepository userRepository = UserRepository(prefs: sharedPreferences);
-    userRepository.login(SessionRepository.instance.accessToken);
     //final detailStatus = await getUserDetails();
     final detailStatus = true;
     hideProgressBar();
@@ -127,10 +130,6 @@ class SignupController extends GetxController {
       return true;
     else
       return false;
-  }
-
-  Future<void> saveToken() async {
-    await _userRepository.login(SessionRepository.instance.accessToken);
   }
 
   @override

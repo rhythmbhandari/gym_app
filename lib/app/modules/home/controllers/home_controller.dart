@@ -25,6 +25,8 @@ class HomeController extends GetxController {
       gymController.getGymList(),
       profileController.getUserDetails(),
       profileController.getCustomerDetails(),
+      profileController.getSubscriptionDetails(),
+      profileController.getCheckInHistory(),
     ]);
     profileController.updateUserData();
     profileController.refreshValue.value = false;

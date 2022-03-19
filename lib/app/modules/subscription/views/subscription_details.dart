@@ -29,6 +29,7 @@ class SubscriptionDetails extends GetView<SubscriptionController> {
                         children: [
                           const SizedBox(height: 30),
                           Row(
+                            // mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               GestureDetector(
                                 onTap: () {
@@ -53,18 +54,28 @@ class SubscriptionDetails extends GetView<SubscriptionController> {
                                       )),
                                     )),
                               ),
-                              const Expanded(child: SizedBox()),
+
+                              Expanded(
+                                flex: 6,
+                                child: Text(
+                                  "${controller.subscriptionList[controller.selectedIndex.value].validFor} Days",
+                                  textAlign: TextAlign.center,
+                                    maxLines: 1,
+                                  style: Get.textTheme.headline5.copyWith(
+                                      color: const Color(0xff000000),
+                                      fontFamily: 'Poppins',
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 18),
+                                ),
+                              ),
+                              Expanded(
+                                child: SizedBox(),
+                              ),
                             ],
                           ),
-                          const SizedBox(height: 37),
-                          Text(
-                            "${controller.subscriptionList[controller.selectedIndex.value].validFor} Days",
-                            style: Get.textTheme.headline5.copyWith(
-                                color: const Color(0xff000000),
-                                fontFamily: 'Poppins',
-                                fontWeight: FontWeight.w600,
-                                fontSize: 18),
-                          ),
+
+                          // const SizedBox(height: 37),
+
                           const SizedBox(height: 12),
                           Container(
                             padding: const EdgeInsets.symmetric(horizontal: 35),
@@ -172,8 +183,8 @@ class SubscriptionDetails extends GetView<SubscriptionController> {
                                       controller.selectedIndex.value]
                                   .name,
                               productUrl: 'https://www.khalti.com/#/bazaar',
-                              // mobile: '9869191572',
-                              mobile: SessionRepository.instance.user.phone,
+                              mobile: '9869191572',
+                              // mobile: SessionRepository.instance.user.phone,
                               // Not mandatory; can be used to fill mobile number field
                               mobileReadOnly:
                                   false, // Not mandatory; makes the mobile field not editable

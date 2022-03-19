@@ -12,7 +12,8 @@ class NetworkHelper {
     CancelToken cancelToken,
   }) async {
     Dio dio = getDioClient();
-    Options options = Options(headers: contentType, responseType: ResponseType.json);
+    Options options =
+        Options(headers: contentType, responseType: ResponseType.json);
     try {
       return await dio.get(
         path,
@@ -35,7 +36,8 @@ class NetworkHelper {
     CancelToken cancelToken,
   }) async {
     Dio dio = getDioClient();
-    Options options = Options(headers: contentType, responseType: ResponseType.json);
+    Options options =
+        Options(headers: contentType, responseType: ResponseType.json);
     try {
       return await dio.post(
         path,
@@ -44,7 +46,7 @@ class NetworkHelper {
         cancelToken: cancelToken,
       );
     } on DioError catch (e) {
-      if(e.message.contains('SocketException')) {
+      if (e.message.contains('SocketException')) {
         return Response(
           data: {'status': e.error, 'message': 'No internet connection.'},
           statusCode: e.response?.statusCode,
@@ -60,13 +62,14 @@ class NetworkHelper {
   }
 
   Future<Response> patchRequest(
-      String path, {
-        dynamic data,
-        dynamic contentType,
-        CancelToken cancelToken,
-      }) async {
+    String path, {
+    dynamic data,
+    dynamic contentType,
+    CancelToken cancelToken,
+  }) async {
     Dio dio = getDioClient();
-    Options options = Options(headers: contentType, responseType: ResponseType.json);
+    Options options =
+        Options(headers: contentType, responseType: ResponseType.json);
     try {
       return await dio.patch(
         path,
@@ -75,7 +78,7 @@ class NetworkHelper {
         cancelToken: cancelToken,
       );
     } on DioError catch (e) {
-      if(e.message.contains('SocketException')) {
+      if (e.message.contains('SocketException')) {
         return Response(
           data: {'status': e.error, 'message': 'No internet connection.'},
           statusCode: e.response?.statusCode,
@@ -90,4 +93,45 @@ class NetworkHelper {
     }
   }
 
+  static Future<dynamic> multipartRequest(
+      url, FormData formData, header) async {
+    Dio dio = new Dio();
+    final response = await dio.put(url,
+        data: formData,
+        options: Options(
+            method: 'PUT', headers: header, responseType: ResponseType.json));
+    return response.data;
+  }
+
+  Future<Response> putRequest(
+    String path, {
+    dynamic data,
+    dynamic contentType,
+    CancelToken cancelToken,
+  }) async {
+    Dio dio = getDioClient();
+    Options options =
+        Options(headers: contentType, responseType: ResponseType.json);
+    try {
+      return await dio.put(
+        path,
+        data: data,
+        options: options,
+        cancelToken: cancelToken,
+      );
+    } on DioError catch (e) {
+      if (e.message.contains('SocketException')) {
+        return Response(
+          data: {'status': e.error, 'message': 'No internet connection.'},
+          statusCode: e.response?.statusCode,
+          requestOptions: e.requestOptions,
+        );
+      }
+      return Response(
+        data: {'status': e.error, 'message': e.message},
+        statusCode: e.response?.statusCode,
+        requestOptions: e.requestOptions,
+      );
+    }
+  }
 }

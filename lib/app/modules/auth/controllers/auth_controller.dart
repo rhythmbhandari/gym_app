@@ -55,7 +55,7 @@ class AuthController extends GetxController {
             r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
         .hasMatch(username)) {
       setUsernameError('Invalid Email Address');
-    } else if (password.length < 8) {
+    } else if (password.length < 6) {
       setPasswordError('Password must contain at least 8 characters.');
     } else {
       isValid = true;
@@ -88,7 +88,8 @@ class AuthController extends GetxController {
     }
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     UserRepository userRepository = UserRepository(prefs: sharedPreferences);
-    userRepository.login(SessionRepository.instance.accessToken);
+    userRepository.login(SessionRepository.instance.accessToken, SessionRepository.instance.refreshToken);
+    await userRepository.setCustomerLogin(true);
     hideProgressBar();
     return true;
   }
@@ -110,14 +111,15 @@ class AuthController extends GetxController {
     }
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     UserRepository userRepository = UserRepository(prefs: sharedPreferences);
-    userRepository.login(SessionRepository.instance.accessToken);
+    userRepository.login(SessionRepository.instance.accessToken, SessionRepository.instance.refreshToken);
+    await userRepository.setCustomerLogin(false);
     hideProgressBar();
     return true;
   }
 
-  Future<void> saveToken() async {
-    await _userRepository.login(SessionRepository.instance.accessToken);
-  }
+  // Future<void> saveToken() async {
+  //   await _userRepository.login(SessionRepository.instance.accessToken);
+  // }
 
   @override
   void onClose() {}

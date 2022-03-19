@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:gym_app/app/config/theme_colors.dart';
+import 'package:gym_app/app/data/repositories/session_repository.dart';
 import 'package:gym_app/app/modules/auth/controllers/auth_controller.dart';
 import 'package:gym_app/app/modules/profile/controllers/profile_controller.dart';
 import 'package:gym_app/app/routes/app_pages.dart';
@@ -16,7 +17,6 @@ class AuthCustomerView extends GetView<AuthController> {
 
   AuthCustomerView({Key key}) : super(key: key);
 
-
   final FocusNode usernameNode = FocusNode();
   final FocusNode passwordNode = FocusNode();
 
@@ -27,69 +27,69 @@ class AuthCustomerView extends GetView<AuthController> {
         backgroundColor: primaryColor,
         body: SafeArea(
             child: SingleChildScrollView(
-              child: Stack(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 36),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(height: Get.height * 0.1),
-                        Text(
-                          'Sign In',
-                          style: Get.textTheme.headline5.copyWith(
-                              color: Colors.white,
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.w600,
-                              fontSize: 28),
-                        ),
-                        SizedBox(height: Get.height * 0.055),
-                        Text(
-                          'Enter your Username and Password',
-                          style: Get.textTheme.headline5.copyWith(
-                              color: Colors.white,
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.w500,
-                              fontSize: 13),
-                        ),
-                        SizedBox(height: Get.height * 0.09),
-                        Text(
-                          'Email         ',
-                          style: Get.textTheme.headline5.copyWith(
-                              color: Colors.white,
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.w600,
-                              fontSize: 16),
-                        ),
-                        SizedBox(height: Get.height * 0.005),
-                        EmailInputField(
-                          focusNode: usernameNode,
-                          hintText: 'Enter your email'.tr,
-                          labelText: 'Email'.tr,
-                          icon: Icons.email,
-                          textInputType: TextInputType.emailAddress,
-                          onChanged: (_) {
-                            controller.setUsernameError(null);
-                            controller.checkLoginButtonEnabled();
-                          },
-                          onSubmit: (_) => node.requestFocus(passwordNode),
-                          errorText: controller.usernameError.value,
-                          controller: controller.usernameInputController,
-                          inputColor: const Color(0xffC4C4C4),
-                          radius: 0,
-                          focusedRadius: 0,
-                        ),
-                        SizedBox(height: Get.height * 0.05),
-                        Text(
-                          'Password',
-                          style: Get.textTheme.headline5.copyWith(
-                              color: Colors.white,
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.w600,
-                              fontSize: 16),
-                        ),
-                        SizedBox(height: Get.height * 0.005),
-                        Obx(() => PasswordTextField(
+          child: Stack(
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 36),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: Get.height * 0.1),
+                    Text(
+                      'Sign In',
+                      style: Get.textTheme.headline5.copyWith(
+                          color: Colors.white,
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w600,
+                          fontSize: 28),
+                    ),
+                    SizedBox(height: Get.height * 0.055),
+                    Text(
+                      'Enter your Username and Password',
+                      style: Get.textTheme.headline5.copyWith(
+                          color: Colors.white,
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w500,
+                          fontSize: 13),
+                    ),
+                    SizedBox(height: Get.height * 0.09),
+                    Text(
+                      'Email         ',
+                      style: Get.textTheme.headline5.copyWith(
+                          color: Colors.white,
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16),
+                    ),
+                    SizedBox(height: Get.height * 0.005),
+                    EmailInputField(
+                      focusNode: usernameNode,
+                      hintText: 'Enter your email'.tr,
+                      labelText: 'Email'.tr,
+                      icon: Icons.email,
+                      textInputType: TextInputType.emailAddress,
+                      onChanged: (_) {
+                        controller.setUsernameError(null);
+                        controller.checkLoginButtonEnabled();
+                      },
+                      onSubmit: (_) => node.requestFocus(passwordNode),
+                      errorText: controller.usernameError.value,
+                      controller: controller.usernameInputController,
+                      inputColor: const Color(0xffC4C4C4),
+                      radius: 0,
+                      focusedRadius: 0,
+                    ),
+                    SizedBox(height: Get.height * 0.05),
+                    Text(
+                      'Password',
+                      style: Get.textTheme.headline5.copyWith(
+                          color: Colors.white,
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16),
+                    ),
+                    SizedBox(height: Get.height * 0.005),
+                    Obx(() => PasswordTextField(
                           textInputType: TextInputType.visiblePassword,
                           labelText: 'Password'.tr,
                           hintText: 'Enter password'.tr,
@@ -109,9 +109,9 @@ class AuthCustomerView extends GetView<AuthController> {
                               color: passwordNode.hasFocus
                                   ? primaryColor
                                   : passwordNode.hasFocus &&
-                                  controller.passwordError != null
-                                  ? Colors.red
-                                  : Colors.grey,
+                                          controller.passwordError != null
+                                      ? Colors.red
+                                      : Colors.grey,
                               onPressed: () =>
                                   controller.changePasswordVisibility(
                                       !controller.passwordInvisible.value)),
@@ -119,83 +119,85 @@ class AuthCustomerView extends GetView<AuthController> {
                           errorText: controller.passwordError.value,
                           controller: controller.passwordInputController,
                         )),
-                        SizedBox(height: Get.height * 0.05),
-                        SizedBox(
-                          width: 150,
-                          child: Obx(() => CustomButton(
+                    SizedBox(height: Get.height * 0.05),
+                    SizedBox(
+                      width: 150,
+                      child: Obx(() => CustomButton(
                             radius: 10,
                             onPressed: controller.loginButtonEnabled.value
                                 ? () async {
-                              controller.loginButtonEnabled.value = false;
-                              if (controller.validate()) {
-                                // print('here validate');
-                                final status =
-                                await controller.loginUser();
-                                if (status) {
-                                  showTopSnackBar(
-                                    context,
-                                    const CustomSnackBar.success(
-                                      message: "Login successful",
-                                    ),
-                                  );
-                                  Get.offAllNamed(Routes.HOME);
+                                    controller.loginButtonEnabled.value = false;
+                                    if (controller.validate()) {
+                                      // print('here validate');
+                                      final status =
+                                          await controller.loginUser();
+                                      if (status) {
+                                        showTopSnackBar(
+                                          context,
+                                          const CustomSnackBar.success(
+                                            message: "Login successful",
+                                          ),
+                                        );
+                                        SessionRepository.instance
+                                            .setCustomerLogin(true);
+                                        Get.offAllNamed(Routes.HOME);
 
-                                  controller.loginButtonEnabled.value =
-                                  true;
-                                } else {
-                                  showTopSnackBar(
-                                    context,
-                                    CustomSnackBar.error(
-                                      message: controller.authError.value,
-                                    ),
-                                  );
-                                  controller.loginButtonEnabled.value =
-                                  true;
-                                }
-                              } else {
-                                showTopSnackBar(
-                                  context,
-                                  CustomSnackBar.error(
-                                    message:
-                                    "Error. ${controller.authError}",
-                                  ),
-                                );
-                                controller.loginButtonEnabled.value =
-                                true;
-                              }
-                            }
+                                        controller.loginButtonEnabled.value =
+                                            true;
+                                      } else {
+                                        showTopSnackBar(
+                                          context,
+                                          CustomSnackBar.error(
+                                            message: controller.authError.value,
+                                          ),
+                                        );
+                                        controller.loginButtonEnabled.value =
+                                            true;
+                                      }
+                                    } else {
+                                      showTopSnackBar(
+                                        context,
+                                        CustomSnackBar.error(
+                                          message:
+                                              "Error. ${controller.authError}",
+                                        ),
+                                      );
+                                      controller.loginButtonEnabled.value =
+                                          true;
+                                    }
+                                  }
                                 : null,
                             text: 'Login',
                             backgroundColor: controller.loginButtonEnabled.value
                                 ? const Color(0xff6779BA)
                                 : Colors.grey,
                           )),
-                        ),
-                        SizedBox(height: Get.height * 0.05),
-                        Row(
-                          children: [
-                            const Expanded(child: SizedBox()),
-                            GestureDetector(
-                              onTap: () {
-                                Get.toNamed(Routes.SIGNUP, preventDuplicates: true);
-                                node.unfocus();
-                              },
-                              child: Text(
-                                "Don't have an account Yet? signup",
-                                style: Get.textTheme.headline5.copyWith(
-                                    color: Colors.white,
-                                    fontFamily: 'Poppins',
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 13),
-                              ),
-                            ),
-                          ],
+                    ),
+                    SizedBox(height: Get.height * 0.05),
+                    Row(
+                      children: [
+                        const Expanded(child: SizedBox()),
+                        GestureDetector(
+                          onTap: () {
+                            Get.toNamed(Routes.SIGNUP, preventDuplicates: true);
+                            node.unfocus();
+                          },
+                          child: Text(
+                            "Don't have an account Yet? signup",
+                            style: Get.textTheme.headline5.copyWith(
+                                color: Colors.white,
+                                fontFamily: 'Poppins',
+                                fontWeight: FontWeight.w500,
+                                fontSize: 13),
+                          ),
                         ),
                       ],
                     ),
-                  )
-                ],
-              ),
-            )));
+                  ],
+                ),
+              )
+            ],
+          ),
+        )));
   }
 }

@@ -44,7 +44,7 @@ class SubscriptionView extends GetView<SubscriptionController> {
                     ],
                   ),
                   Expanded(
-                    child: ListView.builder(
+                    child: controller.subscriptionList != null ?ListView.builder(
                       shrinkWrap: true,
                       physics: const BouncingScrollPhysics(),
                       padding:
@@ -69,6 +69,19 @@ class SubscriptionView extends GetView<SubscriptionController> {
                         );
                       },
                       itemCount: controller.subscriptionList.length,
+                    ): Center(
+                      child: Container(
+                        padding: EdgeInsets.all(16),
+                        child: Text(
+                          'Subscriptions are unavailable.',
+                          textAlign: TextAlign.center,
+                          style: Get.textTheme.headline5.copyWith(
+                              color: primaryColor,
+                              fontFamily: 'Poppins',
+                              fontWeight: FontWeight.w600,
+                              fontSize: 18),
+                        ),
+                      ),
                     ),
                   ),
                 ],

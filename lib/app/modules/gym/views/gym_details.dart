@@ -79,25 +79,38 @@ class GymDetails extends GetView<GymController> {
                       height: Get.height * 0.1,
                     ),
                     Center(
-                      child: Image.network(
-                        '${controller.gymList[controller.selectedIndex.value].image}',
-                        loadingBuilder: (BuildContext context, Widget child,
-                            ImageChunkEvent loadingProgress) {
-                          if (loadingProgress == null) return child;
-                          return Center(
-                              child: CircularProgressIndicator(
-                            value: loadingProgress.expectedTotalBytes != null
-                                ? loadingProgress.cumulativeBytesLoaded /
-                                    loadingProgress.expectedTotalBytes
-                                : null,
-                          ));
-                        },
-                        errorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
-                          return Icon(Icons.error);
-                        },
-                        width: Get.width * 1,
-                        fit: BoxFit.fill,
-                      ),
+                      child: Obx(() => controller
+                                  .gymList[controller.selectedIndex.value]
+                                  .image !=
+                              null
+                          ? Image.network(
+                              '${controller.gymList[controller.selectedIndex.value].image}',
+                              loadingBuilder: (BuildContext context,
+                                  Widget child,
+                                  ImageChunkEvent loadingProgress) {
+                                if (loadingProgress == null) return child;
+                                return Center(
+                                    child: CircularProgressIndicator(
+                                  value: loadingProgress.expectedTotalBytes !=
+                                          null
+                                      ? loadingProgress.cumulativeBytesLoaded /
+                                          loadingProgress.expectedTotalBytes
+                                      : null,
+                                ));
+                              },
+                              errorBuilder: (BuildContext context,
+                                  Object exception, StackTrace stackTrace) {
+                                return Icon(Icons.error);
+                              },
+                              width: Get.width * 1,
+                              fit: BoxFit.fill,
+                            )
+                          : Image.asset(
+                              'assets/dumb.png',
+                              height: Get.width * 0.5,
+                              width: Get.width * 1,
+                              fit: BoxFit.fill,
+                            )),
                     ),
                     SizedBox(
                       height: Get.height * 0.1,

@@ -15,11 +15,15 @@ class AuthRepository {
       print("Status code is ${response}");
       print("Status code is ${response.statusCode}");
       if (response.statusCode == 200) {
+        SessionRepository.instance.setAccessToken(null);
         final token = response.data['access'];
+        final refresh = response.data['refresh'];
+        SessionRepository.instance.setRefreshToken(refresh);
         SessionRepository.instance.setAccessToken(token);
         return true;
       } else if (response.statusCode == 401) {
-        return Future.error('Invalid credentials. Please check your credentials.');
+        return Future.error(
+            'Invalid credentials. Please check your credentials.');
       } else {
         return Future.error(response.data['detail']);
       }
@@ -32,17 +36,24 @@ class AuthRepository {
   }
 
   static Future<bool> verifyGymLogin(String email, String password) async {
+    print('here');
     const url = '$baseUrl/accounts/auth/gym/jwt/create/';
     final body = jsonEncode({'email': email, 'password': password});
     try {
       final response = await NetworkHelper().postRequest(url, data: body);
       print("Status code is ${response.statusCode}");
       if (response.statusCode == 200) {
+        SessionRepository.instance.setAccessToken(null);
         final token = response.data['access'];
+        final refresh = response.data['refresh'];
+        SessionRepository.instance.setRefreshToken(refresh);
         SessionRepository.instance.setAccessToken(token);
         return true;
       } else if (response.statusCode == 401) {
-        return Future.error('Invalid credentials. Please check your credentials.');
+        return Future.error(
+            'Invalid credentials. Please check your credentials.');
+      } else if (response.statusCode == 400) {
+        return Future.error('Only Gym is Allowed to Login Here');
       } else {
         return Future.error(response.data['detail']);
       }
@@ -55,23 +66,26 @@ class AuthRepository {
   }
 
   static Future<bool> registerUser(String username, String email,
-      String password, String confirmPassword) async {
-    const url = '$baseUrl/api/login';
+      String password, String address, String phone) async {
+    const url = '$baseUrl/accounts/register-customer/';
     final body = jsonEncode({
-      'username': username,
+      'name': username,
       'email': email,
+      'address': address,
+      'phone': phone,
       'password': password,
-      'password2': confirmPassword
     });
 
     try {
       final response = await NetworkHelper().postRequest(url, data: body);
-      if (response.statusCode == 200) {
-        final token = response.data['token'];
-        SessionRepository.instance.setAccessToken(token);
+      if (response.statusCode == 201) {
+        // final token = response.data['token'];
+        // SessionRepository.instance.setAccessToken(token);
         return true;
-      } else {
-        return Future.error(response.statusMessage);
+      } else if(response.statusCode == 400){
+        return Future.error("This email has already been registered.");
+      }else{
+        return Future.error("Registration failed. Please try again");
       }
     } on SocketException {
       return Future.error(

@@ -12,6 +12,7 @@ abstract class Routes {
   static const GYM = _Paths.GYM;
   static const SUBSCRIPTION = _Paths.SUBSCRIPTION;
   static const CHECK_IN = _Paths.CHECK_IN;
+  static const GYM_SIDE = _Paths.GYM_SIDE;
 }
 
 abstract class _Paths {
@@ -25,4 +26,5 @@ abstract class _Paths {
   static const GYM = '/gym';
   static const SUBSCRIPTION = '/subscription';
   static const CHECK_IN = '/check-in';
+  static const GYM_SIDE = '/gym-side';
 }

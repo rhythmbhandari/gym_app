@@ -7,27 +7,20 @@ import 'package:gym_app/app/data/repositories/user_repository.dart';
 import 'package:gym_app/app/routes/app_pages.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../controllers/profile_controller.dart';
-import 'edit_profile.dart';
-import 'history.dart';
+import '../controllers/gym_side_controller.dart';
 
-class ProfileView extends GetView<ProfileController> {
+class GymSideView extends GetView<GymSideController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: GestureDetector(
-          onTap: () {
-            print(SessionRepository.instance.accessToken);
-          },
-          child: Text(
-            'User Profile',
-            style: Get.textTheme.headline5.copyWith(
-                color: Colors.black,
-                fontFamily: 'Poppins',
-                fontWeight: FontWeight.w600,
-                fontSize: 16),
-          ),
+        title: Text(
+          'User Profile',
+          style: Get.textTheme.headline5.copyWith(
+              color: Colors.black,
+              fontFamily: 'Poppins',
+              fontWeight: FontWeight.w600,
+              fontSize: 16),
         ),
         centerTitle: true,
         backgroundColor: Colors.white.withOpacity(0),
@@ -46,12 +39,9 @@ class ProfileView extends GetView<ProfileController> {
                             onTap: () async {
                               controller.refreshValue.value = true;
                               await Future.wait([
-                                controller.getUserDetails(),
-                                controller.getCustomerDetails(),
-                                controller.getSubscriptionDetails(),
-                                controller.getCheckInHistory(),
+                                controller.getGymDetails(),
                               ]);
-                              await controller.updateUserData();
+                              await controller.updateGymData();
                               controller.refreshValue.value = false;
                             },
                             child: const Icon(Icons.refresh,
@@ -59,8 +49,8 @@ class ProfileView extends GetView<ProfileController> {
                         const Expanded(child: SizedBox(width: 16)),
                         GestureDetector(
                             onTap: () async {
-                              Get.toNamed(EditProfile.id,
-                                  preventDuplicates: true);
+                              // Get.toNamed(EditProfile.id,
+                              //     preventDuplicates: true);
                             },
                             child: const Icon(Icons.edit,
                                 color: Color(0xff667C8A))),
@@ -70,13 +60,35 @@ class ProfileView extends GetView<ProfileController> {
                     SizedBox(
                       height: Get.height * 0.032,
                     ),
-                    Center(
-                      child: Image.asset(
-                        'assets/profile.png',
-                        height: Get.width * 0.3,
-                        width: Get.width * 0.3,
-                        fit: BoxFit.fill,
-                      ),
+                    // Center(
+                    //   child: Image.asset(
+                    //     'assets/profile.png',
+                    //     height: Get.width * 0.3,
+                    //     width: Get.width * 0.3,
+                    //     fit: BoxFit.fill,
+                    //   ),
+                    // ),
+                    Image.network(
+                      '${controller.qrCode}',
+                      loadingBuilder: (BuildContext context,
+                          Widget child,
+                          ImageChunkEvent loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return Center(
+                            child: CircularProgressIndicator(
+                              value: loadingProgress.expectedTotalBytes !=
+                                  null
+                                  ? loadingProgress.cumulativeBytesLoaded /
+                                  loadingProgress.expectedTotalBytes
+                                  : null,
+                            ));
+                      },
+                      errorBuilder: (BuildContext context,
+                          Object exception, StackTrace stackTrace) {
+                        return Icon(Icons.error);
+                      },
+                      width: Get.width * 0.65,
+                      fit: BoxFit.fill,
                     ),
                     SizedBox(
                       height: Get.height * 0.02,
@@ -104,11 +116,11 @@ class ProfileView extends GetView<ProfileController> {
                               ),
                               Expanded(
                                 child: Obx(() => Text(
-                                      controller.name.value == null
+                                      controller.companyName.value == null
                                           ? 'XX'
-                                          : controller.name.value == ''
+                                          : controller.companyName.value == ''
                                               ? 'XX'
-                                              : controller.name.value,
+                                              : controller.companyName.value,
                                       style: Get.textTheme.headline5.copyWith(
                                           color: Colors.black,
                                           fontFamily: 'Poppins',
@@ -125,7 +137,7 @@ class ProfileView extends GetView<ProfileController> {
                             children: [
                               Expanded(
                                 child: Text(
-                                  'Subscription:',
+                                  'Description:',
                                   textAlign: TextAlign.center,
                                   style: Get.textTheme.headline5.copyWith(
                                       color: Color(0xff435D6B),
@@ -136,13 +148,12 @@ class ProfileView extends GetView<ProfileController> {
                               ),
                               Expanded(
                                 child: Obx(() => Text(
-                                      controller.subscription.value == null ||
-                                              controller.subscription.value ==
+                                      controller.description.value == null ||
+                                              controller.description.value ==
                                                   "null" ||
-                                              controller.subscription.value ==
-                                                  ""
+                                              controller.description.value == ""
                                           ? "XX"
-                                          : controller.subscription.value,
+                                          : controller.description.value,
                                       maxLines: 2,
                                       style: Get.textTheme.headline5.copyWith(
                                           color: Color(0xff000000),
@@ -160,7 +171,7 @@ class ProfileView extends GetView<ProfileController> {
                             children: [
                               Expanded(
                                 child: Text(
-                                  'Remaining \nCheck-Ins:',
+                                  'Total \nEarning:',
                                   textAlign: TextAlign.center,
                                   style: Get.textTheme.headline5.copyWith(
                                       color: Color(0xff435D6B),
@@ -171,14 +182,11 @@ class ProfileView extends GetView<ProfileController> {
                               ),
                               Expanded(
                                 child: Obx(() => Text(
-                                      controller.remainingCheckIns.value == null
+                                      controller.totalEarning.value == null
                                           ? 'XX'
-                                          : controller.remainingCheckIns
-                                                      .value ==
-                                                  ''
+                                          : controller.totalEarning.value == ''
                                               ? 'XX'
-                                              : controller
-                                                  .remainingCheckIns.value,
+                                              : controller.totalEarning.value,
                                       style: Get.textTheme.headline5.copyWith(
                                           color: Color(0xff000000),
                                           fontFamily: 'Poppins',
@@ -187,45 +195,6 @@ class ProfileView extends GetView<ProfileController> {
                                     )),
                               ),
                             ],
-                          ),
-                          SizedBox(
-                            height: 32,
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              Get.toNamed(CheckInHistory.id,
-                                  preventDuplicates: true);
-                            },
-                            child: Row(
-                              children: [
-                                Expanded(
-                                    child: Text(
-                                  'Total \nCheck-Ins:',
-                                  textAlign: TextAlign.center,
-                                  style: Get.textTheme.headline5.copyWith(
-                                      color: Color(0xff435D6B),
-                                      fontFamily: 'Poppins',
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 14),
-                                )),
-                                Expanded(
-                                  child: Obx(() => Text(
-                                        controller.totalCheckIns.value == null
-                                            ? 'XX'
-                                            : controller.totalCheckIns.value ==
-                                                    ''
-                                                ? 'XX'
-                                                : controller
-                                                    .totalCheckIns.value,
-                                        style: Get.textTheme.headline5.copyWith(
-                                            color: Color(0xff000000),
-                                            fontFamily: 'Poppins',
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 14),
-                                      )),
-                                ),
-                              ],
-                            ),
                           ),
                         ],
                       ),

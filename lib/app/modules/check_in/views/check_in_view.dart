@@ -12,7 +12,6 @@ import 'package:gym_app/app/widgets/top_snack_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../controllers/check_in_controller.dart';
-import 'package:mobile_scanner/mobile_scanner.dart';
 
 class CheckInView extends StatefulWidget {
   const CheckInView({Key key}) : super(key: key);
@@ -99,22 +98,22 @@ class _CheckInViewState extends State<CheckInView> {
         backgroundColor: const Color(0xffE5E5E5).withOpacity(0.5),
         body: SafeArea(
             child: Column(children: [
-          Row(
-            children: [
-              const Expanded(child: SizedBox(width: 16)),
-              GestureDetector(
-                  onTap: () async {
-                    // Get.toNamed(Routes.PROFILE, preventDuplicates: true);
-                    UserRepository repository = UserRepository(
-                        prefs: await SharedPreferences.getInstance());
-                    await repository.logout();
-                    SessionRepository.instance.setAccessToken(null);
-                    Get.offAllNamed(Routes.AUTH);
-                  },
-                  child: const Icon(Icons.logout, color: Color(0xff667C8A))),
-              const SizedBox(width: 23)
-            ],
-          ),
+          // Row(
+          //   children: [
+          //     const Expanded(child: SizedBox(width: 16)),
+          //     GestureDetector(
+          //         onTap: () async {
+          //           // Get.toNamed(Routes.PROFILE, preventDuplicates: true);
+          //           UserRepository repository = UserRepository(
+          //               prefs: await SharedPreferences.getInstance());
+          //           await repository.logout();
+          //           SessionRepository.instance.setAccessToken(null);
+          //           Get.offAllNamed(Routes.AUTH);
+          //         },
+          //         child: const Icon(Icons.logout, color: Color(0xff667C8A))),
+          //     const SizedBox(width: 23)
+          //   ],
+          // ),
           Image.asset(
             'assets/logo.png',
             height: Get.width * 0.6,
@@ -160,7 +159,23 @@ class _CheckInViewState extends State<CheckInView> {
                       ),
                     );
                   }
+                }else{
+                  showTopSnackBar(
+                    context,
+                    CustomSnackBar.error(
+                      message:
+                      "Invalid QR.",
+                    ),
+                  );
                 }
+              }else{
+                showTopSnackBar(
+                  context,
+                  CustomSnackBar.info(
+                    message:
+                    "Check-in cancelled!",
+                  ),
+                );
               }
             },
             child: Container(

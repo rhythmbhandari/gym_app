@@ -4,10 +4,11 @@ import 'package:gym_app/app/data/repositories/user_repository.dart';
 import 'package:gym_app/app/routes/app_pages.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class SplashController extends GetxController with StateMixin<dynamic>{
+class SplashController extends GetxController with StateMixin<dynamic> {
   //TODO: Implement SplashController
 
   final count = 0.obs;
+
   @override
   void onInit() {
     loader();
@@ -15,15 +16,23 @@ class SplashController extends GetxController with StateMixin<dynamic>{
   }
 
   loader() async {
-
-    Future.delayed(const Duration(seconds: 3)).then((value) async{
-      SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    Future.delayed(const Duration(seconds: 3)).then((value) async {
+      SharedPreferences sharedPreferences =
+          await SharedPreferences.getInstance();
       UserRepository repository = UserRepository(prefs: sharedPreferences);
+      ;
+      final customerLogin = await repository.isCustomerLogin();
       final logged = await repository.isLoggedIn();
+      print("Customer login ? === $customerLogin");
       if (logged) {
         final token = await repository.getAccessToken();
         SessionRepository.instance.setAccessToken(token);
-        Get.offAndToNamed(Routes.HOME);
+        SessionRepository.instance.setCustomerLogin(customerLogin);
+        if (customerLogin) {
+          Get.offAndToNamed(Routes.HOME);
+        } else {
+          Get.offAndToNamed(Routes.GYM_SIDE);
+        }
       } else {
         Get.offAndToNamed(Routes.AUTH);
       }
@@ -31,8 +40,8 @@ class SplashController extends GetxController with StateMixin<dynamic>{
     });
   }
 
-
   @override
   void onClose() {}
+
   void increment() => count.value++;
 }

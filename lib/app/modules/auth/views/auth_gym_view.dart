@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:gym_app/app/config/theme_colors.dart';
+import 'package:gym_app/app/data/repositories/session_repository.dart';
+import 'package:gym_app/app/data/repositories/user_repository.dart';
 import 'package:gym_app/app/modules/auth/controllers/auth_controller.dart';
 import 'package:gym_app/app/modules/profile/controllers/profile_controller.dart';
 import 'package:gym_app/app/routes/app_pages.dart';
@@ -10,6 +12,7 @@ import 'package:gym_app/app/widgets/custom_snackbar.dart';
 import 'package:gym_app/app/widgets/email_input_textfield.dart';
 import 'package:gym_app/app/widgets/password_input_textfield.dart';
 import 'package:gym_app/app/widgets/top_snack_bar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthGymView extends GetView<AuthController> {
   static String id = '/auth_gym';
@@ -130,7 +133,7 @@ class AuthGymView extends GetView<AuthController> {
                               if (controller.validate()) {
                                 // print('here validate');
                                 final status =
-                                await controller.loginUser();
+                                await controller.loginGym();
                                 if (status) {
                                   showTopSnackBar(
                                     context,
@@ -138,8 +141,8 @@ class AuthGymView extends GetView<AuthController> {
                                       message: "Login successful",
                                     ),
                                   );
-                                  Get.offAllNamed(Routes.HOME);
-
+                                  SessionRepository.instance.setCustomerLogin(false);
+                                  Get.offAllNamed(Routes.GYM_SIDE);
                                   controller.loginButtonEnabled.value =
                                   true;
                                 } else {
