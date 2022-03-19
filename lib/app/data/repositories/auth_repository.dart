@@ -8,10 +8,11 @@ import 'session_repository.dart';
 
 class AuthRepository {
   static Future<bool> verifyLogin(String email, String password) async {
-    const url = '$baseUrl/accounts/auth/jwt/create/';
+    const url = '$baseUrl/accounts/auth/customer/jwt/create/';
     final body = jsonEncode({'email': email, 'password': password});
     try {
       final response = await NetworkHelper().postRequest(url, data: body);
+      print("Status code is ${response}");
       print("Status code is ${response.statusCode}");
       if (response.statusCode == 200) {
         final token = response.data['access'];
@@ -31,7 +32,7 @@ class AuthRepository {
   }
 
   static Future<bool> verifyGymLogin(String email, String password) async {
-    const url = '$baseUrl/accounts/auth/jwt/create/';
+    const url = '$baseUrl/accounts/auth/gym/jwt/create/';
     final body = jsonEncode({'email': email, 'password': password});
     try {
       final response = await NetworkHelper().postRequest(url, data: body);

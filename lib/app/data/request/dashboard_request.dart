@@ -8,7 +8,7 @@ import 'package:gym_app/app/data/network/network_helper.dart';
 import 'package:gym_app/app/data/repositories/session_repository.dart';
 
 class DashboardRequest {
-  static final  headersWithToken = {
+  static final headersWithToken = {
     'Content-Type': 'application/json',
     "Accept": "application/json",
     "Authorization": "JWT ${SessionRepository.instance.accessToken}"
@@ -18,7 +18,8 @@ class DashboardRequest {
     const url = '$baseUrl/payment/confirm-payment/';
     final body = jsonEncode({'token': token, 'amount': price});
     try {
-      final response = await NetworkHelper().postRequest(url, data: body, contentType: headersWithToken);
+      final response = await NetworkHelper()
+          .postRequest(url, data: body, contentType: headersWithToken);
       print("Status code is ${response.statusCode}");
       print("Response ${response}");
       if (response.statusCode == 200) {
@@ -36,11 +37,41 @@ class DashboardRequest {
     }
   }
 
+  static Future<bool> checkIn(String url) async {
+    // const url = '$baseUrl/payment/confirm-payment/';
+    // http://127.0.0.1:8000/gym/5/check-in/
+    var parts = url.split('8000');
+    var afterPort = parts[1].trim();
+    String newUrl = '$baseUrl$afterPort';
+    try {
+      final response = await NetworkHelper()
+          .postRequest(newUrl, contentType: headersWithToken);
+      print("Status code is ${response.statusCode}");
+      print("Response ${response}");
+      if (response.statusCode == 200) {
+        return true;
+      } else if (response.statusCode == 401) {
+        return Future.error('You do not have any subscriptions.');
+      } else {
+        return Future.error(response.data['message']);
+      }
+    } on SocketException {
+      return Future.error(
+          'Please check your internet connection and try again.');
+    } catch (e) {
+      return Future.error(e.toString());
+    }
+  }
+
   static Future<bool> buySubscription(String subscriptionId) async {
-    final url = '$baseUrl/customers/subscribe/$subscriptionId/';
+    final url = '$baseUrl/customers/subscribe/${SessionRepository.instance.customer.id}/';
+    print(url);
+    // final url = 'http://192.168.10.65:8000/customers/subscribe/2/';
+    final body = jsonEncode({"subscription": subscriptionId});
     print('Subscription $subscriptionId');
     try {
-      final response = await NetworkHelper().getRequest(url, contentType: headersWithToken);
+      final response = await NetworkHelper()
+          .patchRequest(url, data: body, contentType: headersWithToken);
       print("Response is $response");
       if (response.statusCode == 200) {
         return true;
@@ -61,8 +92,7 @@ class DashboardRequest {
     String url = '$baseUrl/subscriptions/subscription/';
     try {
       final response =
-      await NetworkHelper().getRequest(url, contentType:
-      headersWithToken);
+          await NetworkHelper().getRequest(url, contentType: headersWithToken);
       print(response);
       if (response.statusCode == 200) {
         List<Subscription> subscriptionList = (response.data as List)
@@ -71,7 +101,7 @@ class DashboardRequest {
         return subscriptionList;
       } else if (response.statusCode == 404) {
         return [];
-      }else {
+      } else {
         return Future.error(response.statusMessage);
       }
     } on SocketException {
@@ -86,17 +116,15 @@ class DashboardRequest {
     String url = '$baseUrl/gym/all-gyms/';
     try {
       final response =
-      await NetworkHelper().getRequest(url, contentType:
-      headersWithToken);
+          await NetworkHelper().getRequest(url, contentType: headersWithToken);
       print(response);
       if (response.statusCode == 200) {
-        List<Gym> gymList = (response.data as List)
-            .map((i) => Gym.fromJson(i))
-            .toList();
+        List<Gym> gymList =
+            (response.data as List).map((i) => Gym.fromJson(i)).toList();
         return gymList;
       } else if (response.statusCode == 404) {
         return [];
-      }else {
+      } else {
         return Future.error(response.statusMessage);
       }
     } on SocketException {

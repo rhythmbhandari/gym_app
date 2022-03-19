@@ -7,6 +7,8 @@ import 'package:gym_app/app/config/theme_colors.dart';
 import 'package:gym_app/app/data/repositories/session_repository.dart';
 import 'package:gym_app/app/data/repositories/user_repository.dart';
 import 'package:gym_app/app/routes/app_pages.dart';
+import 'package:gym_app/app/widgets/custom_snackbar.dart';
+import 'package:gym_app/app/widgets/top_snack_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../controllers/check_in_controller.dart';
@@ -35,13 +37,13 @@ class _CheckInViewState extends State<CheckInView> {
         .listen((barcode) => print(barcode));
   }
 
-  Future<void> scanQR() async {
+  Future<String> scanQR() async {
     String barcodeScanRes;
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
       barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
           '#ff6666', 'Cancel', true, ScanMode.QR);
-      print(barcodeScanRes);
+      print("Qr link is $barcodeScanRes");
     } on PlatformException {
       barcodeScanRes = 'Failed to get platform version.';
     }
@@ -49,11 +51,11 @@ class _CheckInViewState extends State<CheckInView> {
     // If the widget was removed from the tree while the asynchronous platform
     // message was in flight, we want to discard the reply rather than calling
     // setState to update our non-existent appearance.
-    if (!mounted) return;
-
-    setState(() {
-      _scanBarcode = barcodeScanRes;
-    });
+    if (!mounted)
+      setState(() {
+        _scanBarcode = barcodeScanRes;
+      });
+    return barcodeScanRes;
   }
 
   // Platform messages are asynchronous, so we initialize in an async method.
@@ -109,8 +111,7 @@ class _CheckInViewState extends State<CheckInView> {
                     SessionRepository.instance.setAccessToken(null);
                     Get.offAllNamed(Routes.AUTH);
                   },
-                  child: const Icon(Icons.logout,
-                      color: Color(0xff667C8A))),
+                  child: const Icon(Icons.logout, color: Color(0xff667C8A))),
               const SizedBox(width: 23)
             ],
           ),
@@ -135,24 +136,50 @@ class _CheckInViewState extends State<CheckInView> {
           ),
           const SizedBox(height: 37),
           GestureDetector(
-            onTap: () {
-              scanQR();
+            onTap: () async {
+              final url = await scanQR();
+              print('It has returned $url');
+              if (Uri.parse(url).isAbsolute) {
+                if (url.contains("check-in")) {
+                  print('It is valid gym check-in url');
+                  final status = await controller.initiateCheckIn(url);
+                  if(status){
+                    showTopSnackBar(
+                      context,
+                      CustomSnackBar.success(
+                        message:
+                        "Successfully checked in. Enjoy!",
+                      ),
+                    );
+                  }else{
+                    showTopSnackBar(
+                      context,
+                      CustomSnackBar.error(
+                        message:
+                        "${controller.authError}",
+                      ),
+                    );
+                  }
+                }
+              }
             },
             child: Container(
-              width: Get.width * 0.43,
+              width: Get.width * 0.8,
               padding: const EdgeInsets.symmetric(horizontal: 19, vertical: 22),
-              margin: const EdgeInsets.symmetric(horizontal: 19, vertical: 22),
+              margin: const EdgeInsets.symmetric(horizontal: 60, vertical: 22),
               decoration: BoxDecoration(
                 color: primaryColor,
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Icon(Icons.qr_code_scanner_rounded,
                       color: Colors.white),
                   const SizedBox(width: 13),
                   Text(
                     'Check-In',
+                    textAlign: TextAlign.center,
                     style: Get.textTheme.headline5.copyWith(
                         color: Colors.white,
                         fontFamily: 'Poppins',

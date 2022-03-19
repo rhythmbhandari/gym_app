@@ -80,12 +80,43 @@ class SubscriptionDetails extends GetView<SubscriptionController> {
                           ),
                           const Expanded(flex: 2, child: SizedBox()),
                           Center(
-                            child: Image.asset(
-                              'assets/dumb.png',
-                              height: Get.width * 0.5,
-                              width: Get.width * 1,
-                              fit: BoxFit.fill,
-                            ),
+                            child: Obx(() => controller
+                                        .subscriptionList[
+                                            controller.selectedIndex.value]
+                                        .image !=
+                                    null
+                                ? Image.network(
+                                    '${controller.subscriptionList[controller.selectedIndex.value].image}',
+                                    loadingBuilder: (BuildContext context,
+                                        Widget child,
+                                        ImageChunkEvent loadingProgress) {
+                                      if (loadingProgress == null) return child;
+                                      return Center(
+                                          child: CircularProgressIndicator(
+                                        value: loadingProgress
+                                                    .expectedTotalBytes !=
+                                                null
+                                            ? loadingProgress
+                                                    .cumulativeBytesLoaded /
+                                                loadingProgress
+                                                    .expectedTotalBytes
+                                            : null,
+                                      ));
+                                    },
+                                    errorBuilder: (BuildContext context,
+                                        Object exception,
+                                        StackTrace stackTrace) {
+                                      return Icon(Icons.error);
+                                    },
+                                    width: Get.width * 1,
+                                    fit: BoxFit.fill,
+                                  )
+                                : Image.asset(
+                                    'assets/dumb.png',
+                                    height: Get.width * 0.5,
+                                    width: Get.width * 1,
+                                    fit: BoxFit.fill,
+                                  )),
                           ),
                           const Expanded(flex: 3, child: SizedBox()),
                         ],
@@ -120,7 +151,7 @@ class SubscriptionDetails extends GetView<SubscriptionController> {
                         ),
                         const Expanded(child: SizedBox()),
                         GestureDetector(
-                          onTap: () {
+                          onTap: () async {
                             controller.loading.value = true;
                             var priceSplit = controller
                                 .subscriptionList[
@@ -148,6 +179,7 @@ class SubscriptionDetails extends GetView<SubscriptionController> {
                                   false, // Not mandatory; makes the mobile field not editable
                             );
                             // Get.toNamed(SubscriptionPayment.id, preventDuplicates: true);
+
                             KhaltiScope.of(context).pay(
                               config: config,
                               preferences: [PaymentPreference.khalti],
