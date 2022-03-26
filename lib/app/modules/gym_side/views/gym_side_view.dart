@@ -8,6 +8,8 @@ import 'package:gym_app/app/routes/app_pages.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../controllers/gym_side_controller.dart';
+import 'edit_gym.dart';
+import 'gym_history.dart';
 
 class GymSideView extends GetView<GymSideController> {
   @override
@@ -15,7 +17,7 @@ class GymSideView extends GetView<GymSideController> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'User Profile',
+          'Gym Profile',
           style: Get.textTheme.headline5.copyWith(
               color: Colors.black,
               fontFamily: 'Poppins',
@@ -40,6 +42,7 @@ class GymSideView extends GetView<GymSideController> {
                               controller.refreshValue.value = true;
                               await Future.wait([
                                 controller.getGymDetails(),
+                                controller.getCheckInHistory()
                               ]);
                               await controller.updateGymData();
                               controller.refreshValue.value = false;
@@ -49,8 +52,8 @@ class GymSideView extends GetView<GymSideController> {
                         const Expanded(child: SizedBox(width: 16)),
                         GestureDetector(
                             onTap: () async {
-                              // Get.toNamed(EditProfile.id,
-                              //     preventDuplicates: true);
+                              Get.toNamed(EditGym.id,
+                                  preventDuplicates: true);
                             },
                             child: const Icon(Icons.edit,
                                 color: Color(0xff667C8A))),
@@ -195,6 +198,45 @@ class GymSideView extends GetView<GymSideController> {
                                     )),
                               ),
                             ],
+                          ),
+                          SizedBox(
+                            height: 32,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Get.toNamed(GymHistory.id,
+                                  preventDuplicates: true);
+                            },
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  flex: 1,
+                                  child: Text(
+                                    'Total \nCheck-Ins',
+                                    textAlign: TextAlign.center,
+                                    style: Get.textTheme.headline5.copyWith(
+                                        color: Color(0xff435D6B),
+                                        fontFamily: 'Poppins',
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 14),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Obx(() => Text(
+                                    controller.historyList == null
+                                        ? 'XX'
+                                        : controller.historyList.isEmpty
+                                        ? 'XX'
+                                        : controller.historyList.length.toString(),
+                                    style: Get.textTheme.headline5.copyWith(
+                                        color: Color(0xff000000),
+                                        fontFamily: 'Poppins',
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 14),
+                                  )),
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),

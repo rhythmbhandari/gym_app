@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gym_app/app/config/theme_colors.dart';
+import 'package:gym_app/app/modules/gym_side/controllers/gym_side_controller.dart';
 import 'package:gym_app/app/modules/profile/controllers/profile_controller.dart';
 import 'package:gym_app/app/widgets/custom_snackbar.dart';
 import 'package:gym_app/app/widgets/email_input_textfield.dart';
@@ -11,11 +12,11 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-class EditProfile extends StatelessWidget {
-  ProfileController controller = Get.find();
-  static String id = '/edit';
+class EditGym extends StatelessWidget {
+  GymSideController controller = Get.find();
+  static String id = '/editGym';
 
-  EditProfile({Key key}) : super(key: key);
+  EditGym({Key key}) : super(key: key);
 
   final FocusNode nameNode = FocusNode();
   final FocusNode phoneNode = FocusNode();
@@ -193,7 +194,7 @@ class EditProfile extends StatelessWidget {
                         //         )),
                         Center(
                           child: GestureDetector(
-                            onTap: (){
+                            onTap: () {
                               _showPicker(context);
                             },
                             child: Image.asset(
@@ -224,7 +225,7 @@ class EditProfile extends StatelessWidget {
                           textInputType: TextInputType.name,
                           onChanged: (_) {
                             // controller.setUsernameError(null);
-                            // controller.checkLoginButtonEnabled();
+                            controller.checkSaveButton();
                           },
                           // onSubmit: (_) => node.requestFocus(passwordNode),
                           // errorText: controller.usernameError.value,
@@ -235,65 +236,7 @@ class EditProfile extends StatelessWidget {
                         ),
                         SizedBox(height: Get.height * 0.03),
                         Text(
-                          'Email',
-                          textAlign: TextAlign.center,
-                          style: Get.textTheme.headline5.copyWith(
-                              color: Colors.white,
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.w600,
-                              fontSize: 16),
-                        ),
-                        SizedBox(height: Get.height * 0.005),
-                        EmailInputField(
-                          focusNode: emailNode,
-                          hintText: 'Enter your email'.tr,
-                          labelText: 'Email'.tr,
-                          icon: Icons.email,
-                          enabled: false,
-                          textInputType: TextInputType.emailAddress,
-                          onChanged: (_) {
-                            // controller.setUsernameError(null);
-                            // controller.checkLoginButtonEnabled();
-                          },
-                          // onSubmit: (_) => node.requestFocus(passwordNode),
-                          // errorText: controller.usernameError.value,
-                          controller: controller.emailController.value,
-                          inputColor: const Color(0xffC4C4C4),
-                          radius: 0,
-                          focusedRadius: 0,
-                        ),
-                        SizedBox(height: Get.height * 0.03),
-                        Text(
-                          'Phone',
-                          textAlign: TextAlign.center,
-                          style: Get.textTheme.headline5.copyWith(
-                              color: Colors.white,
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.w600,
-                              fontSize: 16),
-                        ),
-                        SizedBox(height: Get.height * 0.005),
-                        EmailInputField(
-                          focusNode: phoneNode,
-                          hintText: 'Enter your Phone'.tr,
-                          labelText: 'Phone'.tr,
-                          icon: Icons.email,
-                          enabled: false,
-                          textInputType: TextInputType.phone,
-                          onChanged: (_) {
-                            // controller.setUsernameError(null);
-                            // controller.checkLoginButtonEnabled();
-                          },
-                          // onSubmit: (_) => node.requestFocus(passwordNode),
-                          // errorText: controller.usernameError.value,
-                          controller: controller.phoneController.value,
-                          inputColor: const Color(0xffC4C4C4),
-                          radius: 0,
-                          focusedRadius: 0,
-                        ),
-                        SizedBox(height: Get.height * 0.03),
-                        Text(
-                          'Address',
+                          'Description',
                           textAlign: TextAlign.center,
                           style: Get.textTheme.headline5.copyWith(
                               color: Colors.white,
@@ -310,11 +253,11 @@ class EditProfile extends StatelessWidget {
                           textInputType: TextInputType.streetAddress,
                           onChanged: (_) {
                             // controller.setUsernameError(null);
-                            // controller.checkLoginButtonEnabled();
+                            controller.checkSaveButton();
                           },
                           // onSubmit: (_) => node.requestFocus(passwordNode),
                           // errorText: controller.usernameError.value,
-                          controller: controller.addressController.value,
+                          controller: controller.descriptionController.value,
                           inputColor: const Color(0xffC4C4C4),
                           radius: 0,
                           focusedRadius: 0,
@@ -322,20 +265,31 @@ class EditProfile extends StatelessWidget {
                         SizedBox(height: Get.height * 0.03),
                         GestureDetector(
                           onTap: () async {
-                            final status = await controller.updateUserDetails();
-                            if (status) {
-                              print('Success');
-                              final resStatus = await controller.getUserDetails();
-                              print('Get user details $resStatus');
-                              controller.updateUserData();
-                              showTopSnackBar(
-                                context,
-                                CustomSnackBar.success(
-                                  message: "Profile updated successfully.",
-                                ),
-                              );
+                            if(controller.validateProfileSave()){
+                              final status = await controller.updateGymDetails();
+                              if (status) {
+                                print('Success');
+                                final resStatus =
+                                await controller.getGymDetails();
+                                print('Get user details $resStatus');
+                                controller.updateGymData();
+                                showTopSnackBar(
+                                  context,
+                                  CustomSnackBar.success(
+                                    message: "Profile updated successfully.",
+                                  ),
+                                );
 
-                              Get.back();
+                                Get.back();
+                            }else{
+                                showTopSnackBar(
+                                  context,
+                                  CustomSnackBar.error(
+                                    message: controller.errorMessage.value,
+                                  ),
+                                );
+                            }
+
                             } else {
                               print('Failed');
 

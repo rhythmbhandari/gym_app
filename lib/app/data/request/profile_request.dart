@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:gym_app/app/config/constants.dart';
@@ -147,16 +148,55 @@ class ProfileRequest {
   static Future<bool> updateUserDetail(ProfileUpdateRequest user) async {
     final url =
         '$baseUrl/accounts/profile/${SessionRepository.instance.user.id}/';
+    // var formData = dio.FormData.fromMap({
+    //   "name": user.name,
+    //   "address": user.address
+    //   // "image": user.image == null
+    //   //     ? null
+    //   //     : await dio.MultipartFile.fromFile(user.image.path),
+    // });
+
+    final body = jsonEncode({'name': user.name, 'address': user.address});
+
+    print(body);
+
+    try {
+      final response = await NetworkHelper()
+          .patchRequest(url, data: body, contentType: await SecureStorage.returnHeaderToken());
+      print(response);
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return Future.error('Profile cannot be updated.');
+      }
+    } on dio.DioError catch (e) {
+      return Future.error(e.response.data.toString());
+    } on SocketException {
+      return Future.error(
+          'Please check your internet connection and try again.');
+    } catch (e) {
+      return Future.error(e.toString());
+    }
+  }
+
+  static Future<bool> updateGymDetail(ProfileGymRequest user) async {
+
+    final url =
+        '$baseUrl/gym/profile/${SessionRepository.instance.gymProfile.id}/';
+
+    print(url);
     var formData = dio.FormData.fromMap({
-      "name": user.name,
-      "address": user.address,
+      "company_name": user.name,
+      "description": user.description,
       "image": user.image == null
           ? null
           : await dio.MultipartFile.fromFile(user.image.path),
     });
+
     try {
       final response = await NetworkHelper()
-          .putRequest(url, data: formData, contentType: await SecureStorage.returnHeaderMultipartToken());
+          .patchRequest(url, data: formData, contentType: await SecureStorage.returnHeaderMultipartToken());
+      print("Response is $response");
       if (response.statusCode == 200) {
         return true;
       } else {

@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:gym_app/app/data/repositories/session_repository.dart';
 import 'package:gym_app/app/data/repositories/user_repository.dart';
 import 'package:gym_app/app/routes/app_pages.dart';
+import 'package:gym_app/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashController extends GetxController with StateMixin<dynamic> {
@@ -20,15 +21,11 @@ class SplashController extends GetxController with StateMixin<dynamic> {
       SharedPreferences sharedPreferences =
           await SharedPreferences.getInstance();
       UserRepository repository = UserRepository(prefs: sharedPreferences);
-      ;
-      final customerLogin = await repository.isCustomerLogin();
       final logged = await repository.isLoggedIn();
-      print("Customer login ? === $customerLogin");
       if (logged) {
         final token = await repository.getAccessToken();
         SessionRepository.instance.setAccessToken(token);
-        SessionRepository.instance.setCustomerLogin(customerLogin);
-        if (customerLogin) {
+        if (await storage.read(key: "login_type") == "customer") {
           Get.offAndToNamed(Routes.HOME);
         } else {
           Get.offAndToNamed(Routes.GYM_SIDE);

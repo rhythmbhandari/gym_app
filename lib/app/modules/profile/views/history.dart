@@ -23,6 +23,7 @@ class CheckInHistory extends StatelessWidget {
                       const Expanded(child: SizedBox(width: 16)),
                       GestureDetector(
                           onTap: () async {
+                            print(controller.historyList);
                             controller.historyRefreshValue.value = true;
                             await controller.getCheckInHistory();
                             controller.historyRefreshValue.value = false;
@@ -33,7 +34,7 @@ class CheckInHistory extends StatelessWidget {
                     ],
                   ),
                   Expanded(
-                    child: controller.historyList != null
+                    child: controller.historyList != null && controller.historyList.isNotEmpty
                         ? ListView.builder(
                             shrinkWrap: true,
                             physics: const BouncingScrollPhysics(),

@@ -20,7 +20,9 @@ class AuthRepository {
         final token = response.data['access'];
         final refresh = response.data['refresh'];
         String key = "access_token";
+        String loginType = "login_type";
         await storage.write(key: key, value: token);
+        await storage.write(key: loginType, value: "customer");
         SessionRepository.instance.setRefreshToken(refresh);
         SessionRepository.instance.setAccessToken(token);
         return true;
@@ -50,7 +52,9 @@ class AuthRepository {
         final token = response.data['access'];
         final refresh = response.data['refresh'];
         String key = "access_token";
+        String loginType = "login_type";
         await storage.write(key: key, value: token);
+        await storage.write(key: loginType, value: "gym");
         SessionRepository.instance.setRefreshToken(refresh);
         SessionRepository.instance.setAccessToken(token);
         return true;

@@ -151,21 +151,20 @@ class ProfileController extends GetxController {
   }
 
   Future<bool> updateUserDetails() async {
-    File image;
-    if (_imageFile != null) {
-      final Directory dir = await getApplicationDocumentsDirectory();
-      String dirPath = dir.path;
-      Uuid uuid = Uuid();
-      String first = uuid.v4();
-      String second = uuid.v1();
-      final String filePath = '$dirPath/$first$second.jpg';
-      image = await _imageFile.copy(filePath);
-    }
+    // File image;
+    // if (_imageFile != null) {
+    //   final Directory dir = await getApplicationDocumentsDirectory();
+    //   String dirPath = dir.path;
+    //   Uuid uuid = Uuid();
+    //   String first = uuid.v4();
+    //   String second = uuid.v1();
+    //   final String filePath = '$dirPath/$first$second.jpg';
+    //   image = await _imageFile.copy(filePath);
+    // }
 
     ProfileUpdateRequest user = ProfileUpdateRequest(
         name: nameController.value.text,
-        address: addressController.value.text,
-        image: image);
+        address: addressController.value.text);
 
     final status =
         await ProfileRequest.updateUserDetail(user).catchError((error) {

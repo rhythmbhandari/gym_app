@@ -113,6 +113,7 @@ class AuthController extends GetxController {
     UserRepository userRepository = UserRepository(prefs: sharedPreferences);
     userRepository.login(SessionRepository.instance.accessToken, SessionRepository.instance.refreshToken);
     await userRepository.setCustomerLogin(false);
+    print('Customer login is ${await userRepository.isCustomerLogin()}');
     hideProgressBar();
     return true;
   }

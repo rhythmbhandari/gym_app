@@ -2,8 +2,16 @@ import 'dart:io';
 
 class ProfileUpdateRequest {
   String name;
-  File image;
+  // File image;
   String address;
 
-  ProfileUpdateRequest({this.image, this.name, this.address});
+  ProfileUpdateRequest({this.name, this.address});
+}
+
+class ProfileGymRequest {
+  String name;
+  File image;
+  String description;
+
+  ProfileGymRequest({this.name, this.description, this.image});
 }
