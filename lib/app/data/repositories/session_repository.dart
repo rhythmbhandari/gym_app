@@ -1,3 +1,4 @@
+import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:gym_app/app/data/model/customer.dart';
 import 'package:gym_app/app/data/model/gym_profile.dart';
 import 'package:gym_app/app/data/model/subscription.dart';
@@ -11,7 +12,8 @@ class SessionRepository {
 
   static SessionRepository get instance => _instance;
 
-  String _accessToken;
+  final _accessToken = ''.obs;
+  final token = ''.obs;
   String _refreshToken;
   Customer _customer;
   User _user;
@@ -49,9 +51,9 @@ class SessionRepository {
     _customer = customer;
   }
 
-  String get accessToken => _accessToken;
+  String get accessToken => _accessToken.value;
 
-  void setAccessToken(String accessToken) => _accessToken = accessToken;
+  void setAccessToken(String accessToken) => _accessToken.value = accessToken;
 
   String get refreshToken => _refreshToken;
 

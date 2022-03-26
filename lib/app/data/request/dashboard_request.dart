@@ -5,21 +5,17 @@ import 'package:gym_app/app/config/constants.dart';
 import 'package:gym_app/app/data/model/gym.dart';
 import 'package:gym_app/app/data/model/subscription.dart';
 import 'package:gym_app/app/data/network/network_helper.dart';
+import 'package:gym_app/app/data/repositories/secure_storage.dart';
 import 'package:gym_app/app/data/repositories/session_repository.dart';
 
 class DashboardRequest {
-  static final headersWithToken = {
-    'Content-Type': 'application/json',
-    "Accept": "application/json",
-    "Authorization": "JWT ${SessionRepository.instance.accessToken}"
-  };
 
   static Future<bool> serverVerification(String token, int price) async {
     const url = '$baseUrl/payment/confirm-payment/';
     final body = jsonEncode({'token': token, 'amount': price});
     try {
       final response = await NetworkHelper()
-          .postRequest(url, data: body, contentType: headersWithToken);
+          .postRequest(url, data: body, contentType: await SecureStorage.returnHeaderToken());
       print("Status code is ${response.statusCode}");
       print("Response ${response}");
       if (response.statusCode == 200) {
@@ -45,7 +41,7 @@ class DashboardRequest {
     String newUrl = '$baseUrl$afterPort';
     try {
       final response = await NetworkHelper()
-          .postRequest(newUrl, contentType: headersWithToken);
+          .postRequest(newUrl, contentType: await SecureStorage.returnHeaderToken());
       print("Status code is ${response.statusCode}");
       print("Response ${response}");
       if (response.statusCode == 200) {
@@ -71,7 +67,7 @@ class DashboardRequest {
     print('Subscription $subscriptionId');
     try {
       final response = await NetworkHelper()
-          .patchRequest(url, data: body, contentType: headersWithToken);
+          .patchRequest(url, data: body, contentType: await SecureStorage.returnHeaderToken());
       print("Response is $response");
       if (response.statusCode == 200) {
         return true;
@@ -92,7 +88,7 @@ class DashboardRequest {
     String url = '$baseUrl/subscriptions/subscription/';
     try {
       final response =
-          await NetworkHelper().getRequest(url, contentType: headersWithToken);
+          await NetworkHelper().getRequest(url, contentType: await SecureStorage.returnHeaderToken());
       print(response);
       if (response.statusCode == 200) {
         List<Subscription> subscriptionList = (response.data as List)
@@ -116,7 +112,7 @@ class DashboardRequest {
     String url = '$baseUrl/gym/all-gyms/';
     try {
       final response =
-          await NetworkHelper().getRequest(url, contentType: headersWithToken);
+          await NetworkHelper().getRequest(url, contentType: await SecureStorage.returnHeaderToken());
       print(response);
       if (response.statusCode == 200) {
         List<Gym> gymList =

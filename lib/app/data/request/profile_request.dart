@@ -7,28 +7,24 @@ import 'package:gym_app/app/data/model/gym_profile.dart';
 import 'package:gym_app/app/data/model/profile_update.dart';
 import 'package:gym_app/app/data/model/user.dart';
 import 'package:gym_app/app/data/network/network_helper.dart';
+import 'package:gym_app/app/data/repositories/secure_storage.dart';
 import 'package:gym_app/app/data/repositories/session_repository.dart';
 
 import 'package:dio/dio.dart' as dio;
+import 'package:gym_app/main.dart';
 
 class ProfileRequest {
-  static final headersWithToken = {
-    'Content-Type': 'application/json',
-    "Accept": "application/json",
-    "Authorization": "JWT ${SessionRepository.instance.accessToken}"
-  };
 
-  static final multipartWithToken = {
-    "Content-Type": "multipart/form-data",
-    "Accept": "application/json",
-    "Authorization": "JWT ${SessionRepository.instance.accessToken}"
-  };
+
+
 
   static Future<GymProfile> getGymProfile() async {
+
+
     String url = '$baseUrl/gym/profile/';
     try {
       final response =
-      await NetworkHelper().getRequest(url, contentType: headersWithToken);
+      await NetworkHelper().getRequest(url, contentType: await SecureStorage.returnHeaderToken());
       print('Response $response');
       if (response.statusCode == 200) {
         print(response.data);
@@ -50,10 +46,11 @@ class ProfileRequest {
   }
 
   static Future<User> getUserDetail() async {
+
     String url = '$baseUrl/accounts/profile/';
     try {
       final response =
-          await NetworkHelper().getRequest(url, contentType: headersWithToken);
+          await NetworkHelper().getRequest(url, contentType: await SecureStorage.returnHeaderToken());
       print('Response $response');
       if (response.statusCode == 200) {
         print(response.data);
@@ -78,7 +75,7 @@ class ProfileRequest {
     String url = '$baseUrl/customers/profile/';
     try {
       final response =
-          await NetworkHelper().getRequest(url, contentType: headersWithToken);
+          await NetworkHelper().getRequest(url, contentType: await SecureStorage.returnHeaderToken());
       print('Response $response');
       if (response.statusCode == 200) {
         print(response.data);
@@ -103,7 +100,7 @@ class ProfileRequest {
     String url = '$baseUrl/customers/subscribe/';
     try {
       final response =
-          await NetworkHelper().getRequest(url, contentType: headersWithToken);
+          await NetworkHelper().getRequest(url, contentType: await SecureStorage.returnHeaderToken());
       print('Response of subscription $response');
       print("response data is ${response.statusCode}");
       if (response.statusCode == 200) {
@@ -127,7 +124,7 @@ class ProfileRequest {
     String url = '$baseUrl/gym/all-check-ins/';
     try {
       final response =
-          await NetworkHelper().getRequest(url, contentType: headersWithToken);
+          await NetworkHelper().getRequest(url, contentType: await SecureStorage.returnHeaderToken());
       print('Response of subscription $response');
       print("response data is ${response.statusCode}");
       if (response.statusCode == 200) {
@@ -159,7 +156,7 @@ class ProfileRequest {
     });
     try {
       final response = await NetworkHelper()
-          .putRequest(url, data: formData, contentType: multipartWithToken);
+          .putRequest(url, data: formData, contentType: await SecureStorage.returnHeaderMultipartToken());
       if (response.statusCode == 200) {
         return true;
       } else {

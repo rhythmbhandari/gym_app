@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'package:get/get.dart';
 import 'package:khalti_flutter/khalti_flutter.dart';
 
 import 'app/routes/app_pages.dart';
+
+final storage = new FlutterSecureStorage();
 
 void main() {
   runApp(

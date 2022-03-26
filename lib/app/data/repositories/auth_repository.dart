@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:gym_app/app/config/constants.dart';
 import 'package:gym_app/app/data/network/network_helper.dart';
+import 'package:gym_app/main.dart';
 
 import 'session_repository.dart';
 
@@ -18,6 +19,8 @@ class AuthRepository {
         SessionRepository.instance.setAccessToken(null);
         final token = response.data['access'];
         final refresh = response.data['refresh'];
+        String key = "access_token";
+        await storage.write(key: key, value: token);
         SessionRepository.instance.setRefreshToken(refresh);
         SessionRepository.instance.setAccessToken(token);
         return true;
@@ -46,6 +49,8 @@ class AuthRepository {
         SessionRepository.instance.setAccessToken(null);
         final token = response.data['access'];
         final refresh = response.data['refresh'];
+        String key = "access_token";
+        await storage.write(key: key, value: token);
         SessionRepository.instance.setRefreshToken(refresh);
         SessionRepository.instance.setAccessToken(token);
         return true;
