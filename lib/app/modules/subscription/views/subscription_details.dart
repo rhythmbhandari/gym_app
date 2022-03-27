@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gym_app/app/config/theme_colors.dart';
 import 'package:gym_app/app/data/repositories/session_repository.dart';
+import 'package:gym_app/app/modules/profile/controllers/profile_controller.dart';
 import 'package:gym_app/app/modules/subscription/controllers/subscription_controller.dart';
 import 'package:gym_app/app/modules/subscription/views/subscription_payment.dart';
 import 'package:gym_app/app/routes/app_pages.dart';
@@ -12,7 +13,10 @@ import 'package:khalti_flutter/khalti_flutter.dart';
 class SubscriptionDetails extends GetView<SubscriptionController> {
   static String id = '/detail';
 
-  const SubscriptionDetails({Key key}) : super(key: key);
+
+  final ProfileController profileController = Get.find();
+
+  SubscriptionDetails({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -209,6 +213,7 @@ class SubscriptionDetails extends GetView<SubscriptionController> {
                                   print('Successfully verified');
                                   final response = await controller.subscribe();
                                   if (response) {
+
                                     showTopSnackBar(
                                       context,
                                       CustomSnackBar.success(
@@ -216,6 +221,15 @@ class SubscriptionDetails extends GetView<SubscriptionController> {
                                       ),
                                     );
                                     Get.offAndToNamed(Routes.HOME);
+                                    profileController.refreshValue.value = true;
+                                    await Future.wait([
+                                      profileController.getUserDetails(),
+                                      profileController.getCustomerDetails(),
+                                      profileController.getSubscriptionDetails(),
+                                      profileController.getCheckInHistory(),
+                                    ]);
+                                    await profileController.updateUserData();
+                                    profileController.refreshValue.value = false;
                                     controller.loading.value = false;
                                   } else {
                                     showTopSnackBar(

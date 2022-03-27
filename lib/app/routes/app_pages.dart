@@ -88,11 +88,11 @@ class AppPages {
     ),
     GetPage(
       name: SubscriptionPayment.id,
-      page: () => const SubscriptionPayment(),
+      page: () =>  SubscriptionPayment(),
     ),
     GetPage(
       name: GymDetails.id,
-      page: () => const GymDetails(),
+      page: () =>  GymDetails(),
     ),
     GetPage(
       name: AuthCustomerView.id,

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:gym_app/app/modules/profile/controllers/profile_controller.dart';
 import 'package:gym_app/app/modules/subscription/controllers/subscription_controller.dart';
 
 class SubscriptionPayment extends GetView<SubscriptionController> {
   static String id = '/payment';
 
-  const SubscriptionPayment({Key key}) : super(key: key);
+
+  SubscriptionPayment({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
