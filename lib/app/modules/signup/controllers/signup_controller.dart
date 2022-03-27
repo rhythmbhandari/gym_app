@@ -22,6 +22,7 @@ class SignupController extends GetxController {
 
   String username, password, address, email, phone;
   String authError = '';
+  String errorMessage = '';
   final usernameError = ''.obs;
   final emailError = ''.obs;
   final addressError = ''.obs;
@@ -70,24 +71,24 @@ class SignupController extends GetxController {
     address = addressInputController.text;
     phone = phoneInputController.text;
     if (username.isEmpty) {
-      print('Username cannot be empty.');
+      errorMessage = 'Username cannot be empty.';
       setUsernameError('Username cannot be empty.');
     } else if (!RegExp(
             r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
         .hasMatch(email)) {
-      print('Email format is not correct');
+      errorMessage = 'Email format is not correct';
       setEmailError('Email format is not correct');
     } else if (phone.length != 10) {
-      print('Phone number format is not correct');
+      errorMessage = 'Phone number format is not correct';
       setPhoneError('Password and Re-enter password do not match.');
     } else if (!RegExp(r'^-?(([0-9]*)|(([0-9]*)\.([0-9]*)))$')
         .hasMatch(phone)) {
-      setPhoneError('Phone must contain numeric value');
+      errorMessage = 'Phone must contain numeric value';
     } else if (password.length < 8) {
-      print('Password must contain at least 8 characters.');
+      errorMessage = 'Password must contain at least 8 characters.';
       setPasswordError('Password must contain at least 8 characters.');
     } else if (address.length < 5) {
-      print('Please enter a valid address.');
+      errorMessage = 'Please enter a valid address.';
       setAddressError('Please enter a valid address.');
     } else {
       isValid = true;

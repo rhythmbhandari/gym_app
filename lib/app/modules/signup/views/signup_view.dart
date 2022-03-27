@@ -30,7 +30,7 @@ class SignupView extends GetView<SignupController> {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 36),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(height: Get.height * 0.08),
                     Text(
@@ -43,221 +43,165 @@ class SignupView extends GetView<SignupController> {
                     ),
                     SizedBox(height: Get.height * 0.04),
                     Text(
-                      'Enter your Username and Password',
+                      'Enter your personal details',
                       style: Get.textTheme.headline5.copyWith(
                           color: Colors.white,
                           fontFamily: 'Poppins',
                           fontWeight: FontWeight.w500,
                           fontSize: 13),
                     ),
-                    SizedBox(height: Get.height * 0.14),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Name',
-                          style: Get.textTheme.headline5.copyWith(
-                              color: Colors.white,
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.w600,
-                              fontSize: 16),
-                        ),
-                        SizedBox(width: 20),
-                        Flexible(
-                          child: ConstrainedBox(
-                            constraints:
-                                const BoxConstraints.tightFor(height: 30),
-                            child: EmailInputField(
-                              focusNode: usernameNode,
-                              hintText: 'Enter your username'.tr,
-                              labelText: 'Username'.tr,
-                              icon: Icons.email,
-                              textInputType: TextInputType.name,
-                              onChanged: (_) {
-                                controller.setUsernameError(null);
-                                controller.checkSignUpButtonEnabled();
-                              },
-                              onSubmit: (_) => node.requestFocus(emailNode),
-                              errorText: controller.usernameError.value,
-                              controller: controller.usernameInputController,
-                              inputColor: const Color(0xffC4C4C4),
-                              radius: 0,
-                              focusedRadius: 0,
-                            ),
-                          ),
-                        ),
-                      ],
+                    SizedBox(height: Get.height * 0.08),
+                    Text(
+                      'Name',
+                      style: Get.textTheme.headline5.copyWith(
+                          color: Colors.white,
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16),
                     ),
-                    SizedBox(height: Get.height * 0.05),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Email',
-                          textAlign: TextAlign.right,
-                          style: Get.textTheme.headline5.copyWith(
-                              color: Colors.white,
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.w600,
-                              fontSize: 16),
-                        ),
-                        const SizedBox(width: 20),
-                        Flexible(
-                          child: ConstrainedBox(
-                            constraints:
-                                const BoxConstraints.tightFor(height: 30),
-                            child: EmailInputField(
-                              focusNode: emailNode,
-                              hintText: 'Enter your email'.tr,
-                              labelText: 'Email'.tr,
-                              icon: Icons.email,
-                              textInputType: TextInputType.emailAddress,
-                              onChanged: (_) {
-                                controller.setEmailError(null);
-                                controller.checkSignUpButtonEnabled();
-                              },
-                              onSubmit: (_) => node.requestFocus(phoneNode),
-                              errorText: controller.emailError.value,
-                              controller: controller.emailInputController,
-                              inputColor: const Color(0xffC4C4C4),
-                              radius: 0,
-                              focusedRadius: 0,
-                            ),
-                          ),
-                        ),
-                      ],
+                    SizedBox(height: Get.height * 0.005),
+                    EmailInputField(
+                      focusNode: usernameNode,
+                      hintText: 'Enter your username'.tr,
+                      labelText: 'Username'.tr,
+                      icon: Icons.email,
+                      textInputType: TextInputType.name,
+                      onChanged: (_) {
+                        controller.setUsernameError(null);
+                        controller.checkSignUpButtonEnabled();
+                      },
+                      onSubmit: (_) => node.requestFocus(emailNode),
+                      errorText: controller.usernameError.value,
+                      controller: controller.usernameInputController,
+                      inputColor: const Color(0xffC4C4C4),
+                      radius: 0,
+                      focusedRadius: 0,
                     ),
-                    SizedBox(height: Get.height * 0.05),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Phone',
-                          textAlign: TextAlign.right,
-                          style: Get.textTheme.headline5.copyWith(
-                              color: Colors.white,
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.w600,
-                              fontSize: 16),
-                        ),
-                        const SizedBox(width: 20),
-                        Flexible(
-                          child: ConstrainedBox(
-                            constraints:
-                                const BoxConstraints.tightFor(height: 30),
-                            child: EmailInputField(
-                              focusNode: phoneNode,
-                              hintText: 'Enter your email'.tr,
-                              labelText: 'Email'.tr,
-                              icon: Icons.email,
-                              textInputType: TextInputType.phone,
-                              onChanged: (_) {
-                                controller.setPhoneError(null);
-                                controller.checkSignUpButtonEnabled();
-                              },
-                              onSubmit: (_) => node.requestFocus(addressNode),
-                              errorText: controller.phoneError.value,
-                              controller: controller.phoneInputController,
-                              inputColor: const Color(0xffC4C4C4),
-                              radius: 0,
-                              focusedRadius: 0,
-                            ),
-                          ),
-                        ),
-                      ],
+                    SizedBox(height: Get.height * 0.03),
+                    Text(
+                      'Email',
+                      style: Get.textTheme.headline5.copyWith(
+                          color: Colors.white,
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16),
                     ),
-                    SizedBox(height: Get.height * 0.05),
-                    Row(
-                      children: [
-                        Text(
-                          'Address',
-                          style: Get.textTheme.headline5.copyWith(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w600,
-                              fontFamily: 'Poppins',
-                              fontSize: 16),
-                        ),
-                        const SizedBox(width: 20),
-                        Flexible(
-                          child: ConstrainedBox(
-                            constraints:
-                                const BoxConstraints.tightFor(height: 30),
-                            child: EmailInputField(
-                              focusNode: addressNode,
-                              hintText: 'Enter your username'.tr,
-                              labelText: 'Username'.tr,
-                              icon: Icons.email,
-                              textInputType: TextInputType.streetAddress,
-                              onChanged: (_) {
-                                controller.setAddressError(null);
-                                controller.checkSignUpButtonEnabled();
-                              },
-                              onSubmit: (_) => node.requestFocus(passwordNode),
-                              errorText: controller.addressError.value,
-                              controller: controller.addressInputController,
-                              inputColor: const Color(0xffC4C4C4),
-                              radius: 0,
-                              focusedRadius: 0,
-                            ),
-                          ),
-                        ),
-                      ],
+                    SizedBox(height: Get.height * 0.005),
+                    EmailInputField(
+                      focusNode: emailNode,
+                      hintText: 'Enter your email'.tr,
+                      labelText: 'Email'.tr,
+                      icon: Icons.email,
+                      textInputType: TextInputType.emailAddress,
+                      onChanged: (_) {
+                        controller.setEmailError(null);
+                        controller.checkSignUpButtonEnabled();
+                      },
+                      onSubmit: (_) => node.requestFocus(phoneNode),
+                      errorText: controller.emailError.value,
+                      controller: controller.emailInputController,
+                      inputColor: const Color(0xffC4C4C4),
+                      radius: 0,
+                      focusedRadius: 0,
                     ),
-                    SizedBox(height: Get.height * 0.05),
-                    Row(
-                      children: [
-                        Text(
-                          'Password ',
-                          textAlign: TextAlign.right,
-                          style: Get.textTheme.headline5.copyWith(
-                              color: Colors.white,
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.w600,
-                              fontSize: 16),
-                        ),
-                        const SizedBox(width: 20),
-                        Flexible(
-                          child: ConstrainedBox(
-                            constraints:
-                                const BoxConstraints.tightFor(height: 30),
-                            child: Obx(() => PasswordTextField(
-                                  textInputType: TextInputType.visiblePassword,
-                                  labelText: 'Password'.tr,
-                                  hintText: 'Enter password'.tr,
-                                  focusNode: passwordNode,
-                                  onChanged: (_) {
-                                    controller.checkSignUpButtonEnabled();
-                                    controller.setPasswordError(null);
-                                  },
-                                  onSubmit: (_) => node.unfocus(),
-                                  suffix: IconButton(
-                                      icon: Icon(
-                                        controller.passwordInvisible.value
-                                            ? Icons.visibility_off
-                                            : Icons.visibility,
-                                        size: 18,
-                                      ),
-                                      color: passwordNode.hasFocus
-                                          ? primaryColor
-                                          : passwordNode.hasFocus &&
-                                                  controller.passwordError !=
-                                                      null
-                                              ? Colors.red
-                                              : Colors.grey,
-                                      onPressed: () => controller
-                                          .changePasswordVisibility(!controller
-                                              .passwordInvisible.value)),
-                                  obscureText:
-                                      controller.passwordInvisible.value,
-                                  errorText: controller.passwordError.value,
-                                  controller:
-                                      controller.passwordInputController,
-                                )),
-                          ),
-                        ),
-                      ],
+                    SizedBox(height: Get.height * 0.03),
+                    Text(
+                      'Phone',
+                      style: Get.textTheme.headline5.copyWith(
+                          color: Colors.white,
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16),
                     ),
-                    SizedBox(height: Get.height * 0.05),
+                    SizedBox(height: Get.height * 0.005),
+                    EmailInputField(
+                      focusNode: phoneNode,
+                      hintText: 'Enter your email'.tr,
+                      labelText: 'Email'.tr,
+                      icon: Icons.email,
+                      textInputType: TextInputType.phone,
+                      onChanged: (_) {
+                        controller.setPhoneError(null);
+                        controller.checkSignUpButtonEnabled();
+                      },
+                      onSubmit: (_) => node.requestFocus(addressNode),
+                      errorText: controller.phoneError.value,
+                      controller: controller.phoneInputController,
+                      inputColor: const Color(0xffC4C4C4),
+                      radius: 0,
+                      focusedRadius: 0,
+                    ),
+                    SizedBox(height: Get.height * 0.03),
+                    Text(
+                      'Address',
+                      style: Get.textTheme.headline5.copyWith(
+                          color: Colors.white,
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16),
+                    ),
+                    SizedBox(height: Get.height * 0.005),
+                    EmailInputField(
+                      focusNode: addressNode,
+                      hintText: 'Enter your username'.tr,
+                      labelText: 'Username'.tr,
+                      icon: Icons.email,
+                      textInputType: TextInputType.streetAddress,
+                      onChanged: (_) {
+                        controller.setAddressError(null);
+                        controller.checkSignUpButtonEnabled();
+                      },
+                      onSubmit: (_) => node.requestFocus(passwordNode),
+                      errorText: controller.addressError.value,
+                      controller: controller.addressInputController,
+                      inputColor: const Color(0xffC4C4C4),
+                      radius: 0,
+                      focusedRadius: 0,
+                    ),
+                    SizedBox(height: Get.height * 0.03),
+                    Text(
+                      'Password',
+                      style: Get.textTheme.headline5.copyWith(
+                          color: Colors.white,
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16),
+                    ),
+                    SizedBox(height: Get.height * 0.005),
+                    Obx(() => PasswordTextField(
+                      textInputType: TextInputType.visiblePassword,
+                      labelText: 'Password'.tr,
+                      hintText: 'Enter password'.tr,
+                      focusNode: passwordNode,
+                      onChanged: (_) {
+                        controller.checkSignUpButtonEnabled();
+                        controller.setPasswordError(null);
+                      },
+                      onSubmit: (_) => node.unfocus(),
+                      suffix: IconButton(
+                          icon: Icon(
+                            controller.passwordInvisible.value
+                                ? Icons.visibility_off
+                                : Icons.visibility,
+                            size: 18,
+                          ),
+                          color: passwordNode.hasFocus
+                              ? primaryColor
+                              : passwordNode.hasFocus &&
+                              controller.passwordError !=
+                                  null
+                              ? Colors.red
+                              : Colors.grey,
+                          onPressed: () => controller
+                              .changePasswordVisibility(!controller
+                              .passwordInvisible.value)),
+                      obscureText:
+                      controller.passwordInvisible.value,
+                      errorText: controller.passwordError.value,
+                      controller:
+                      controller.passwordInputController,
+                    )),
+                    SizedBox(height: Get.height * 0.08),
                     SizedBox(
                       width: 150,
                       child: Obx(() => CustomButton(
@@ -292,7 +236,7 @@ class SignupView extends GetView<SignupController> {
                                             context,
                                             CustomSnackBar.error(
                                               message:
-                                              "Login Failed!",
+                                              "${controller.authError}",
                                             ));
                                       }
                                     } else {
@@ -300,9 +244,9 @@ class SignupView extends GetView<SignupController> {
                                       true;
                                       showTopSnackBar(
                                           context,
-                                          CustomSnackBar.success(
+                                          CustomSnackBar.error(
                                             message:
-                                            "Validation error. Please check again",
+                                            "${controller.errorMessage}",
                                           ));
                                     }
                                   }
