@@ -27,6 +27,7 @@ class ProfileController extends GetxController {
   final refreshValue = false.obs;
   final historyRefreshValue = false.obs;
   final historyList = [].obs;
+  final imagePath = ''.obs;
 
   final nameController = TextEditingController().obs;
   final emailController = TextEditingController().obs;
@@ -85,6 +86,12 @@ class ProfileController extends GetxController {
       phone.value = SessionRepository.instance.user.phone;
       phoneController.value.text = phone.value;
       address.value = SessionRepository.instance.user.address;
+      addressController.value.text = address.value;
+      if(SessionRepository.instance.user.image != null){
+        imagePath.value = SessionRepository.instance.user.image;
+      }else{
+        imagePath.value = '';
+      }
       // addressController.value.text = address.value
       // if(SessionRepository.instance.user.image){}
     }
@@ -151,20 +158,21 @@ class ProfileController extends GetxController {
   }
 
   Future<bool> updateUserDetails() async {
-    // File image;
-    // if (_imageFile != null) {
-    //   final Directory dir = await getApplicationDocumentsDirectory();
-    //   String dirPath = dir.path;
-    //   Uuid uuid = Uuid();
-    //   String first = uuid.v4();
-    //   String second = uuid.v1();
-    //   final String filePath = '$dirPath/$first$second.jpg';
-    //   image = await _imageFile.copy(filePath);
-    // }
+    File image;
+    if (_imageFile != null) {
+      final Directory dir = await getApplicationDocumentsDirectory();
+      String dirPath = dir.path;
+      Uuid uuid = Uuid();
+      String first = uuid.v4();
+      String second = uuid.v1();
+      final String filePath = '$dirPath/$first$second.jpg';
+      image = await _imageFile.copy(filePath);
+    }
 
     ProfileUpdateRequest user = ProfileUpdateRequest(
         name: nameController.value.text,
-        address: addressController.value.text);
+        address: addressController.value.text,
+        image: image);
 
     final status =
         await ProfileRequest.updateUserDetail(user).catchError((error) {

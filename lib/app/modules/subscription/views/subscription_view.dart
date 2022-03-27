@@ -44,11 +44,11 @@ class SubscriptionView extends GetView<SubscriptionController> {
                     ],
                   ),
                   Expanded(
-                    child: controller.subscriptionList != null ?ListView.builder(
+                    child: controller.subscriptionList != null && controller.subscriptionList.isNotEmpty? ListView.builder(
                       shrinkWrap: true,
                       physics: const BouncingScrollPhysics(),
                       padding:
-                          const EdgeInsets.only(left: 60, top: 20, right: 60),
+                          const EdgeInsets.only(left: 16, top: 20, right: 16),
                       itemBuilder: (context, index) {
                         return GestureDetector(
                           onTap: () {

@@ -44,10 +44,10 @@ class GymView extends GetView<GymController> {
               ],
             ),
             Expanded(
-              child: controller.gymList != null ?ListView.builder(
+              child: controller.gymList != null && controller.gymList.isNotEmpty ?ListView.builder(
                 shrinkWrap: true,
                 physics: const BouncingScrollPhysics(),
-                padding: const EdgeInsets.only(left: 60, top: 20, right: 60),
+                padding: const EdgeInsets.only(left: 16, top: 20, right: 16),
                 itemBuilder: (context, index) {
                   return GestureDetector(
                     onTap: (){
@@ -61,8 +61,7 @@ class GymView extends GetView<GymController> {
                     },
                     child: GymWidget(
                       name: controller.gymList[index].companyName,
-                      description: controller.gymList[index].description.toString(),
-                      phone: "98********",
+                      description: controller.gymList[index].description.toString()
                     ),
                   );
                 },
@@ -110,12 +109,12 @@ class GymWidget extends StatelessWidget {
       {Key key,
         @required this.name,
         @required this.description,
-        @required this.phone})
+         this.time})
       : super(key: key);
 
   final String name;
   // final String location;
-  final String phone;
+  final String time;
   final String description;
 
   @override
@@ -143,8 +142,29 @@ class GymWidget extends StatelessWidget {
                         fontWeight: FontWeight.w500,
                         fontSize: 14),
                   ))),
-          Container(
+          time == null ? Container() :Container(
             padding: const EdgeInsets.symmetric(horizontal: 0),
+            child: Row(
+              children: [
+                const SizedBox(width: 16),
+                Expanded(
+                  flex: 3,
+                  child: Text(
+                    "Check in at: \n$time",
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: Get.textTheme.headline5.copyWith(
+                        color: Colors.black,
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 8),
             child: Row(
               children: [
                 const SizedBox(width: 16),
@@ -164,6 +184,7 @@ class GymWidget extends StatelessWidget {
               ],
             ),
           ),
+
           const SizedBox(height: 8),
         ],
       ),

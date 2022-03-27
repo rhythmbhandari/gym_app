@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:gym_app/app/config/constants.dart';
 import 'package:gym_app/app/config/theme_colors.dart';
 import 'package:gym_app/app/modules/profile/controllers/profile_controller.dart';
 import 'package:gym_app/app/widgets/custom_snackbar.dart';
@@ -85,7 +86,7 @@ class EditProfile extends StatelessWidget {
     File croppedImage = await ImageCropper().cropImage(
         sourcePath: filePath,
         androidUiSettings: AndroidUiSettings(
-          toolbarColor: Get.theme.accentColor,
+          toolbarColor: primaryColor,
           toolbarWidgetColor: Colors.white,
           hideBottomControls: true,
         ),
@@ -140,72 +141,61 @@ class EditProfile extends StatelessWidget {
                         SizedBox(
                           height: Get.height * 0.032,
                         ),
-                        // GetBuilder<ProfileController>(
-                        //     builder: (controller) => GestureDetector(
-                        //           onTap: () {
-                        //             _showPicker(context);
-                        //           }
-                        //           child: Container(
-                        //     height: Get.width * 0.5,
-                        //       width: Get.width,
-                        //       child: Center(
-                        //           child: Container(
-                        //             decoration: BoxDecoration(
-                        //               color: Colors.grey,
-                        //               borderRadius: BorderRadius.circular(Get.width * 0.2),
-                        //             ),
-                        //             height: Get.width * 0.35,
-                        //             width: Get.width * 0.35,
-                        //             child: controller.imageFile != null
-                        //                 ? ClipRRect(
-                        //               borderRadius: BorderRadius.circular(Get.width * 0.2),
-                        //               child: Image.file(controller.imageFile,
-                        //                   height: Get.width * 0.35,
-                        //                   width: Get.width * 0.35,
-                        //                   fit: BoxFit.cover),
-                        //             )
-                        //                 : controller. == null
-                        //                 ? Icon(
-                        //               Icons.add_a_photo_rounded,
-                        //               color: Colors.grey[800],
-                        //             )
-                        //                 : Stack(
-                        //               children: [
-                        //                 ClipRRect(
-                        //                   borderRadius: BorderRadius.circular(10),
-                        //                   child: CachedNetworkImage(
-                        //                     imageUrl: '$BASE_URL/${user.imagePath}',
-                        //                     fit: BoxFit.cover,
-                        //                   ),
-                        //                 ),
-                        //                 Align(
-                        //                   alignment: Alignment.bottomRight,
-                        //                   child: Icon(
-                        //                     Icons.add_a_photo_rounded,
-                        //                     color: Colors.black,
-                        //                     size: 35,
-                        //                   ),
-                        //                 )
-                        //               ],
-                        //             ),
-                        //           )),
-                        //     ),
-                        //         )),
-                        Center(
-                          child: GestureDetector(
-                            onTap: (){
-                              _showPicker(context);
-                            },
-                            child: Image.asset(
+                      GetBuilder<ProfileController>(
+                        builder: (controller) => GestureDetector(
+                          onTap: () {
+                            _showPicker(context);
+                          },
+                          child: Container(
+                            height: Get.width * 0.5,
+                            width: Get.width,
+                            child: Center(
+                                child: Container(
+                                  height: Get.width * 0.35,
+                                  width: Get.width * 0.35,
+                                  child: controller.imageFile != null
+                                      ? ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: Image.file(controller.imageFile,
+                                        height: Get.width * 0.35,
+                                        width: Get.width * 0.35,
+                                        fit: BoxFit.cover),
+                                  )
+                                      : controller.imagePath == null
+                                      ? Icon(
+                                    Icons.add_a_photo_rounded,
+                                    color: Colors.grey[800],
+                                  )
+                                      : Stack(
+                                    children: [
+                                      controller.imagePath.value == null && controller.imagePath.value != '' ?ClipRRect(
+                                        borderRadius: BorderRadius.circular(10),
+                                        child: Image.network(
+                                          '${controller.imagePath}',
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ) : Image.asset(
                               'assets/profile.png',
                               height: Get.width * 0.3,
                               width: Get.width * 0.3,
                               fit: BoxFit.fill,
                               color: Colors.white,
                             ),
+                                      Align(
+                                        alignment: Alignment.bottomRight,
+                                        child: Icon(
+                                          Icons.add_a_photo_rounded,
+                                          color: Colors.black,
+                                          size: 35,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                )),
                           ),
                         ),
-                        SizedBox(height: Get.height * 0.03),
+                      ),
+                        SizedBox(height: Get.height * 0.02),
                         Text(
                           'Name',
                           textAlign: TextAlign.center,

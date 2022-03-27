@@ -155,21 +155,21 @@ class ProfileRequest {
   static Future<bool> updateUserDetail(ProfileUpdateRequest user) async {
     final url =
         '$baseUrl/accounts/profile/${SessionRepository.instance.user.id}/';
-    // var formData = dio.FormData.fromMap({
-    //   "name": user.name,
-    //   "address": user.address
-    //   // "image": user.image == null
-    //   //     ? null
-    //   //     : await dio.MultipartFile.fromFile(user.image.path),
-    // });
+    var formData = dio.FormData.fromMap({
+      "name": user.name,
+      "address": user.address,
+      "image": user.image == null
+          ? null
+          : await dio.MultipartFile.fromFile(user.image.path),
+    });
 
-    final body = jsonEncode({'name': user.name, 'address': user.address});
+    // final body = jsonEncode({'name': user.name, 'address': user.address});
 
-    print(body);
+    // print(body);
 
     try {
       final response = await NetworkHelper()
-          .patchRequest(url, data: body, contentType: await SecureStorage.returnHeaderToken());
+          .patchRequest(url, data: formData, contentType: await SecureStorage.returnHeaderToken());
       print(response);
       if (response.statusCode == 200) {
         return true;

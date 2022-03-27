@@ -70,14 +70,52 @@ class ProfileView extends GetView<ProfileController> {
                     SizedBox(
                       height: Get.height * 0.032,
                     ),
-                    Center(
-                      child: Image.asset(
-                        'assets/profile.png',
-                        height: Get.width * 0.3,
-                        width: Get.width * 0.3,
-                        fit: BoxFit.fill,
-                      ),
+                    Obx(() => controller.imagePath.value !=
+                        null && controller.imagePath.value != ''
+                        ? ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                          child: Image.network(
+                      '${controller.imagePath.value}',
+                      loadingBuilder: (BuildContext context,
+                            Widget child,
+                            ImageChunkEvent loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return Center(
+                              child: CircularProgressIndicator(
+                                value: loadingProgress
+                                    .expectedTotalBytes !=
+                                    null
+                                    ? loadingProgress
+                                    .cumulativeBytesLoaded /
+                                    loadingProgress
+                                        .expectedTotalBytes
+                                    : null,
+                              ));
+                      },
+                      errorBuilder: (BuildContext context,
+                            Object exception,
+                            StackTrace stackTrace) {
+                          return Icon(Icons.error);
+                      },
+                      height: Get.width * 0.3,
+                      width: Get.width * 0.3,
+                      fit: BoxFit.fill,
                     ),
+                        )
+                        : Image.asset(
+                      'assets/profile.png',
+                      height: Get.width * 0.3,
+                      width: Get.width * 0.3,
+                      fit: BoxFit.fill,
+                    )),
+                    // Center(
+                    //   child: Image.asset(
+                    //     'assets/profile.png',
+                    //     height: Get.width * 0.3,
+                    //     width: Get.width * 0.3,
+                    //     fit: BoxFit.fill,
+                    //   ),
+                    // ),
                     SizedBox(
                       height: Get.height * 0.02,
                     ),

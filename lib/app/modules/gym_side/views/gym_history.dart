@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:gym_app/app/config/theme_colors.dart';
 import 'package:gym_app/app/modules/gym/views/gym_view.dart';
 import 'package:gym_app/app/modules/gym_side/controllers/gym_side_controller.dart';
-import 'package:gym_app/app/modules/profile/controllers/profile_controller.dart';
+import 'package:intl/intl.dart';
 
 class GymHistory extends StatelessWidget {
   GymSideController controller = Get.find();
@@ -40,17 +40,15 @@ class GymHistory extends StatelessWidget {
                 shrinkWrap: true,
                 physics: const BouncingScrollPhysics(),
                 padding: const EdgeInsets.only(
-                    left: 60, top: 20, right: 60),
+                    left: 16, top: 20, right: 16),
                 itemBuilder: (context, index) {
                   return GymWidget(
                     name: controller
-                        .historyList[index].customer.subscriptionDetails.name.toString(),
+                        .historyList[index].customerName.toString(),
                     description: controller
-                        .historyList[index].customer.description
+                        .historyList[index].customer.subscriptionDetails.description
                         .toString(),
-                    phone: controller.historyList[index].gym
-                        .addressDetail.address
-                        .toString(),
+                      time: DateFormat('yyyy-MM-dd hh:mm: a').format(controller.historyList[index].checkInAt).toString()
                   );
                 },
                 itemCount: controller.historyList.length,

@@ -192,20 +192,20 @@ class EditGym extends StatelessWidget {
                         //           )),
                         //     ),
                         //         )),
-                        Center(
-                          child: GestureDetector(
-                            onTap: () {
-                              _showPicker(context);
-                            },
-                            child: Image.asset(
-                              'assets/profile.png',
-                              height: Get.width * 0.3,
-                              width: Get.width * 0.3,
-                              fit: BoxFit.fill,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
+                        // Center(
+                        //   child: GestureDetector(
+                        //     onTap: () {
+                        //       _showPicker(context);
+                        //     },
+                        //     child: Image.asset(
+                        //       'assets/profile.png',
+                        //       height: Get.width * 0.3,
+                        //       width: Get.width * 0.3,
+                        //       fit: BoxFit.fill,
+                        //       color: Colors.white,
+                        //     ),
+                        //   ),
+                        // ),
                         SizedBox(height: Get.height * 0.03),
                         Text(
                           'Name',
