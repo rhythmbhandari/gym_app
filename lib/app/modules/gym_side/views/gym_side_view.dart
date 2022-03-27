@@ -157,7 +157,8 @@ class GymSideView extends GetView<GymSideController> {
                                               controller.description.value == ""
                                           ? "XX"
                                           : controller.description.value,
-                                      maxLines: 2,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
                                       style: Get.textTheme.headline5.copyWith(
                                           color: Color(0xff000000),
                                           fontFamily: 'Poppins',

@@ -103,13 +103,20 @@ class ProfileRequest {
       final response =
           await NetworkHelper().getRequest(url, contentType: await SecureStorage.returnHeaderToken());
       print('Response of subscription $response');
-      print("response data is ${response.statusCode}");
+      print("response status code is == ${response.statusCode}");
       if (response.statusCode == 200) {
-        final subscriptionName =
-            response.data[0]["subscription_details"]["name"];
-        SessionRepository.instance.setSubscribed(subscriptionName);
-        // print(subscription);
-        return subscriptionName;
+
+        if(response.data[0]["subscription_details"] == null){
+          final subscriptionName = '';
+          print('We are here');
+          SessionRepository.instance.setSubscribed(null);
+          return null;
+        }else{
+          final subscriptionName =
+          response.data[0]["subscription_details"]["name"];
+          SessionRepository.instance.setSubscribed(subscriptionName);
+          return subscriptionName;
+        }
       } else {
         return Future.error(response.statusMessage);
       }

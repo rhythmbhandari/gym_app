@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:gym_app/app/config/theme_colors.dart';
 import 'package:gym_app/app/data/repositories/session_repository.dart';
 import 'package:gym_app/app/data/repositories/user_repository.dart';
+import 'package:gym_app/app/modules/profile/controllers/profile_controller.dart';
 import 'package:gym_app/app/routes/app_pages.dart';
 import 'package:gym_app/app/widgets/custom_snackbar.dart';
 import 'package:gym_app/app/widgets/top_snack_bar.dart';
@@ -22,6 +23,7 @@ class CheckInView extends StatefulWidget {
 
 class _CheckInViewState extends State<CheckInView> {
   final CheckInController controller = Get.find();
+  final ProfileController profileController = Get.find();
 
   String _scanBarcode = 'Unknown';
 
@@ -150,6 +152,15 @@ class _CheckInViewState extends State<CheckInView> {
                         "Successfully checked in. Enjoy!",
                       ),
                     );
+                    profileController.refreshValue.value = true;
+                    await Future.wait([
+                      profileController.getUserDetails(),
+                      profileController.getCustomerDetails(),
+                      profileController.getSubscriptionDetails(),
+                      profileController.getCheckInHistory(),
+                    ]);
+                    await profileController.updateUserData();
+                    profileController.refreshValue.value = false;
                   }else{
                     showTopSnackBar(
                       context,

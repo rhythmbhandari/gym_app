@@ -151,7 +151,9 @@ class GymWidget extends StatelessWidget {
                 Expanded(
                   flex: 3,
                   child: Text(
-                    "Description:\n$description\n$phone",
+                    "Description:\n$description",
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                     style: Get.textTheme.headline5.copyWith(
                         color: Colors.black,
                         fontFamily: 'Poppins',
