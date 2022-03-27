@@ -175,25 +175,6 @@ class AuthGymView extends GetView<AuthController> {
                           )),
                         ),
                         SizedBox(height: Get.height * 0.05),
-                        Row(
-                          children: [
-                            const Expanded(child: SizedBox()),
-                            GestureDetector(
-                              onTap: () {
-                                Get.toNamed(Routes.SIGNUP, preventDuplicates: true);
-                                node.unfocus();
-                              },
-                              child: Text(
-                                "Don't have an account Yet? signup",
-                                style: Get.textTheme.headline5.copyWith(
-                                    color: Colors.white,
-                                    fontFamily: 'Poppins',
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 13),
-                              ),
-                            ),
-                          ],
-                        ),
                       ],
                     ),
                   )
