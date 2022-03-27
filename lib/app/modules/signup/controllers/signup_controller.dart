@@ -64,7 +64,6 @@ class SignupController extends GetxController {
 
   bool validate() {
     bool isValid = false;
-    print('here');
     username = usernameInputController.text;
     email = emailInputController.text;
     password = passwordInputController.text;

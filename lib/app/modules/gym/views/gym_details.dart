@@ -117,8 +117,6 @@ class GymDetails extends GetView<GymController> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        print(controller.gymList[controller.selectedIndex.value]
-                            .locationMap);
                         if (controller.gymList[controller.selectedIndex.value]
                                 .locationMap ==
                             null) {

@@ -112,7 +112,6 @@ class ProfileController extends GetxController {
     var response = await ProfileRequest.getUserDetail().catchError((error) {
       authError.value = error;
     });
-    print('get user profile $response');
     if (response == null) {
       return false;
     }
@@ -124,7 +123,6 @@ class ProfileController extends GetxController {
         await ProfileRequest.getCustomerDetails().catchError((error) {
       authError.value = error;
     });
-    print('get customer profile $response');
     if (response == null) {
       return false;
     }
@@ -136,7 +134,6 @@ class ProfileController extends GetxController {
         await ProfileRequest.getSubscriptionDetails().catchError((error) {
       authError.value = error;
     });
-    print('get subscription profile $response');
     if (response == null) {
       return false;
     }
@@ -147,7 +144,6 @@ class ProfileController extends GetxController {
     var response = await ProfileRequest.getCheckInHistory().catchError((error) {
       authError.value = error;
     });
-    print('get checkin profile $response');
     if (response == null) {
       return false;
     } else if (response.isEmpty) {

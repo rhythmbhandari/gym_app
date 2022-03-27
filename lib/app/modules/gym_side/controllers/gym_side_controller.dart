@@ -51,7 +51,6 @@ class GymSideController extends GetxController {
   }
 
   updateGymData() {
-    print('he');
 
     if (SessionRepository.instance.gymProfile != null) {
       companyName.value = SessionRepository.instance.gymProfile.companyName;
@@ -71,7 +70,6 @@ class GymSideController extends GetxController {
     var response = await ProfileRequest.getGymProfile().catchError((error) {
       authError.value = error;
     });
-    print('get user profile $response');
     if (response == null) {
       refreshValue.value = false;
       return false;
@@ -84,7 +82,6 @@ class GymSideController extends GetxController {
     var response = await ProfileRequest.getCheckInHistory().catchError((error) {
       authError.value = error;
     });
-    print('get checkin profile $response');
     if (response == null) {
       return false;
     } else if (response.isEmpty) {
@@ -142,7 +139,6 @@ class GymSideController extends GetxController {
         description: descriptionController.value.text,
         image: image);
 
-    print(user);
 
     final status =
     await ProfileRequest.updateGymDetail(user).catchError((error) {

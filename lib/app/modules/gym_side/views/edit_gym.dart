@@ -268,10 +268,8 @@ class EditGym extends StatelessWidget {
                             if(controller.validateProfileSave()){
                               final status = await controller.updateGymDetails();
                               if (status) {
-                                print('Success');
                                 final resStatus =
                                 await controller.getGymDetails();
-                                print('Get user details $resStatus');
                                 controller.updateGymData();
                                 showTopSnackBar(
                                   context,
@@ -291,7 +289,6 @@ class EditGym extends StatelessWidget {
                             }
 
                             } else {
-                              print('Failed');
 
                               showTopSnackBar(
                                 context,

@@ -131,7 +131,6 @@ class AuthGymView extends GetView<AuthController> {
                                 ? () async {
                               controller.loginButtonEnabled.value = false;
                               if (controller.validate()) {
-                                // print('here validate');
                                 final status =
                                 await controller.loginGym();
                                 if (status) {

@@ -44,7 +44,6 @@ class _CheckInViewState extends State<CheckInView> {
     try {
       barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
           '#ff6666', 'Cancel', true, ScanMode.QR);
-      print("Qr link is $barcodeScanRes");
     } on PlatformException {
       barcodeScanRes = 'Failed to get platform version.';
     }
@@ -66,7 +65,6 @@ class _CheckInViewState extends State<CheckInView> {
     try {
       barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
           '#ff6666', 'Cancel', true, ScanMode.BARCODE);
-      print(barcodeScanRes);
     } on PlatformException {
       barcodeScanRes = 'Failed to get platform version.';
     }
@@ -139,10 +137,8 @@ class _CheckInViewState extends State<CheckInView> {
           GestureDetector(
             onTap: () async {
               final url = await scanQR();
-              print('It has returned $url');
               if (Uri.parse(url).isAbsolute) {
                 if (url.contains("check-in")) {
-                  print('It is valid gym check-in url');
                   final status = await controller.initiateCheckIn(url);
                   if(status){
                     showTopSnackBar(

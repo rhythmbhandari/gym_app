@@ -73,7 +73,6 @@ class AuthController extends GetxController {
 
   Future<bool> loginUser() async {
     showProgressBar();
-    print('here');
     final status = await AuthRepository.verifyLogin(username, password)
         .catchError((error) {
       if (error.contains('full header')) {
@@ -96,7 +95,6 @@ class AuthController extends GetxController {
 
   Future<bool> loginGym() async {
     showProgressBar();
-    print('here');
     final status = await AuthRepository.verifyGymLogin(username, password)
         .catchError((error) {
       if (error.contains('full header')) {
@@ -113,7 +111,6 @@ class AuthController extends GetxController {
     UserRepository userRepository = UserRepository(prefs: sharedPreferences);
     userRepository.login(SessionRepository.instance.accessToken, SessionRepository.instance.refreshToken);
     await userRepository.setCustomerLogin(false);
-    print('Customer login is ${await userRepository.isCustomerLogin()}');
     hideProgressBar();
     return true;
   }

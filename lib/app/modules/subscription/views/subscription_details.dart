@@ -199,18 +199,13 @@ class SubscriptionDetails extends GetView<SubscriptionController> {
                               config: config,
                               preferences: [PaymentPreference.khalti],
                               onSuccess: (successModel) async {
-                                print(successModel);
                                 // Perform Server Verification
-                                print({
-                                  'token': successModel.token,
-                                  'amount': successModel.amount
-                                });
+
                                 final status =
                                     await controller.requestVerification(
                                         successModel.token,
                                         successModel.amount);
                                 if (status) {
-                                  print('Successfully verified');
                                   final response = await controller.subscribe();
                                   if (response) {
 
@@ -242,7 +237,6 @@ class SubscriptionDetails extends GetView<SubscriptionController> {
                                     controller.loading.value = false;
                                   }
                                 } else {
-                                  print('Failed');
                                   showTopSnackBar(
                                     context,
                                     CustomSnackBar.error(

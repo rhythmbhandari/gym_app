@@ -47,7 +47,6 @@ class SubscriptionController extends GetxController {
         .catchError((error) {
       this.error = error;
     }).then((value) {
-      print('Value is $value');
       if (value is! bool) {
         returnValue = false;
         return;
@@ -70,7 +69,6 @@ class SubscriptionController extends GetxController {
         .catchError((error) {
       this.error = error;
     }).then((value) {
-      print('Value is $value');
       if (value is! bool) {
         returnValue = false;
         return;

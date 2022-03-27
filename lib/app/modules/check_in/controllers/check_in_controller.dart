@@ -13,8 +13,6 @@ class CheckInController extends GetxController {
   }
 
   Future<bool> initiateCheckIn(String url) async {
-    // showProgressBar();
-    print('here');
     final status = await DashboardRequest.checkIn(url).catchError((error) {
       authError.value = error;
     });

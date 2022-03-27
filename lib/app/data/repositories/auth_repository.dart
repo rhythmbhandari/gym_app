@@ -13,8 +13,6 @@ class AuthRepository {
     final body = jsonEncode({'email': email, 'password': password});
     try {
       final response = await NetworkHelper().postRequest(url, data: body);
-      print("Status code is ${response}");
-      print("Status code is ${response.statusCode}");
       if (response.statusCode == 200) {
         SessionRepository.instance.setAccessToken(null);
         final token = response.data['access'];
@@ -41,12 +39,10 @@ class AuthRepository {
   }
 
   static Future<bool> verifyGymLogin(String email, String password) async {
-    print('here');
     const url = '$baseUrl/accounts/auth/gym/jwt/create/';
     final body = jsonEncode({'email': email, 'password': password});
     try {
       final response = await NetworkHelper().postRequest(url, data: body);
-      print("Status code is ${response.statusCode}");
       if (response.statusCode == 200) {
         SessionRepository.instance.setAccessToken(null);
         final token = response.data['access'];

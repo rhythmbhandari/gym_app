@@ -16,8 +16,6 @@ class DashboardRequest {
     try {
       final response = await NetworkHelper()
           .postRequest(url, data: body, contentType: await SecureStorage.returnHeaderToken());
-      print("Status code is ${response.statusCode}");
-      print("Response ${response}");
       if (response.statusCode == 200) {
         return true;
       } else if (response.statusCode == 400) {
@@ -42,8 +40,6 @@ class DashboardRequest {
     try {
       final response = await NetworkHelper()
           .postRequest(newUrl, contentType: await SecureStorage.returnHeaderToken());
-      print("Status code is ${response.statusCode}");
-      print("Response ${response}");
       if (response.statusCode == 200) {
         return true;
       } else if (response.statusCode == 401) {
@@ -61,14 +57,10 @@ class DashboardRequest {
 
   static Future<bool> buySubscription(String subscriptionId) async {
     final url = '$baseUrl/customers/subscribe/${SessionRepository.instance.customer.id}/';
-    print(url);
-    // final url = 'http://192.168.10.65:8000/customers/subscribe/2/';
     final body = jsonEncode({"subscription": subscriptionId});
-    print('Subscription $subscriptionId');
     try {
       final response = await NetworkHelper()
           .patchRequest(url, data: body, contentType: await SecureStorage.returnHeaderToken());
-      print("Response is $response");
       if (response.statusCode == 200) {
         return true;
       } else if (response.statusCode == 400) {
@@ -89,7 +81,6 @@ class DashboardRequest {
     try {
       final response =
           await NetworkHelper().getRequest(url, contentType: await SecureStorage.returnHeaderToken());
-      print(response);
       if (response.statusCode == 200) {
         List<Subscription> subscriptionList = (response.data as List)
             .map((i) => Subscription.fromJson(i))
@@ -113,7 +104,6 @@ class DashboardRequest {
     try {
       final response =
           await NetworkHelper().getRequest(url, contentType: await SecureStorage.returnHeaderToken());
-      print(response);
       if (response.statusCode == 200) {
         List<Gym> gymList =
             (response.data as List).map((i) => Gym.fromJson(i)).toList();

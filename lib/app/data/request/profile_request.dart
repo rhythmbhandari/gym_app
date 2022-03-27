@@ -26,13 +26,10 @@ class ProfileRequest {
     try {
       final response =
       await NetworkHelper().getRequest(url, contentType: await SecureStorage.returnHeaderToken());
-      print('Response $response');
       if (response.statusCode == 200) {
-        print(response.data);
         List<GymProfile> profileList =
         (response.data as List).map((i) => GymProfile.fromJson(i)).toList();
         GymProfile gym = profileList[0];
-        print("success");
         SessionRepository.instance.setGymProfile(gym);
         return gym;
       } else {
@@ -52,13 +49,10 @@ class ProfileRequest {
     try {
       final response =
           await NetworkHelper().getRequest(url, contentType: await SecureStorage.returnHeaderToken());
-      print('Response $response');
       if (response.statusCode == 200) {
-        print(response.data);
         List<User> userList =
             (response.data as List).map((i) => User.fromJson(i)).toList();
         User user = userList[0];
-        print("success");
         SessionRepository.instance.setUser(user);
         return user;
       } else {
@@ -77,13 +71,10 @@ class ProfileRequest {
     try {
       final response =
           await NetworkHelper().getRequest(url, contentType: await SecureStorage.returnHeaderToken());
-      print('Response $response');
       if (response.statusCode == 200) {
-        print(response.data);
         List<c.Customer> customerList =
             (response.data as List).map((i) => c.Customer.fromJson(i)).toList();
         c.Customer customer = customerList[0];
-        print("success");
         SessionRepository.instance.setCustomer(customer);
         return customer;
       } else {
@@ -102,13 +93,8 @@ class ProfileRequest {
     try {
       final response =
           await NetworkHelper().getRequest(url, contentType: await SecureStorage.returnHeaderToken());
-      print('Response of subscription $response');
-      print("response status code is == ${response.statusCode}");
       if (response.statusCode == 200) {
-
         if(response.data[0]["subscription_details"] == null){
-          final subscriptionName = '';
-          print('We are here');
           SessionRepository.instance.setSubscribed(null);
           return null;
         }else{
@@ -133,13 +119,9 @@ class ProfileRequest {
     try {
       final response =
           await NetworkHelper().getRequest(url, contentType: await SecureStorage.returnHeaderToken());
-      print('Response of subscription $response');
-      print("response data is ${response.statusCode}");
       if (response.statusCode == 200) {
         List<Subscribed> subscribedList =
             (response.data as List).map((i) => Subscribed.fromJson(i)).toList();
-        // print(subscribedList[0].gym.addressDetail.district);
-        print(subscribedList);
         return subscribedList;
       } else {
         return Future.error(response.statusMessage);
@@ -163,14 +145,10 @@ class ProfileRequest {
           : await dio.MultipartFile.fromFile(user.image.path),
     });
 
-    // final body = jsonEncode({'name': user.name, 'address': user.address});
-
-    // print(body);
 
     try {
       final response = await NetworkHelper()
           .patchRequest(url, data: formData, contentType: await SecureStorage.returnHeaderToken());
-      print(response);
       if (response.statusCode == 200) {
         return true;
       } else {
@@ -191,7 +169,6 @@ class ProfileRequest {
     final url =
         '$baseUrl/gym/profile/${SessionRepository.instance.gymProfile.id}/';
 
-    print(url);
     var formData = dio.FormData.fromMap({
       "company_name": user.name,
       "description": user.description,
@@ -203,7 +180,6 @@ class ProfileRequest {
     try {
       final response = await NetworkHelper()
           .patchRequest(url, data: formData, contentType: await SecureStorage.returnHeaderMultipartToken());
-      print("Response is $response");
       if (response.statusCode == 200) {
         return true;
       } else {

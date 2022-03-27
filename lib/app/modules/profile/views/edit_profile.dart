@@ -314,9 +314,7 @@ class EditProfile extends StatelessWidget {
                           onTap: () async {
                             final status = await controller.updateUserDetails();
                             if (status) {
-                              print('Success');
                               final resStatus = await controller.getUserDetails();
-                              print('Get user details $resStatus');
                               controller.updateUserData();
                               showTopSnackBar(
                                 context,
@@ -327,7 +325,6 @@ class EditProfile extends StatelessWidget {
 
                               Get.back();
                             } else {
-                              print('Failed');
 
                               showTopSnackBar(
                                 context,

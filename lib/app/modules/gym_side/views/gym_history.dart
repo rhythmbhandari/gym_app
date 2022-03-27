@@ -24,7 +24,6 @@ class GymHistory extends StatelessWidget {
                 const Expanded(child: SizedBox(width: 16)),
                 GestureDetector(
                     onTap: () async {
-                      print(controller.historyList);
                       controller.historyRefreshValue.value = true;
                       await controller.getCheckInHistory();
                       controller.historyRefreshValue.value = false;

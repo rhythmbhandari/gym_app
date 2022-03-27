@@ -16,18 +16,13 @@ class ProfileView extends GetView<ProfileController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: GestureDetector(
-          onTap: () {
-            print(SessionRepository.instance.accessToken);
-          },
-          child: Text(
-            'User Profile',
-            style: Get.textTheme.headline5.copyWith(
-                color: Colors.black,
-                fontFamily: 'Poppins',
-                fontWeight: FontWeight.w600,
-                fontSize: 16),
-          ),
+        title: Text(
+          'User Profile',
+          style: Get.textTheme.headline5.copyWith(
+              color: Colors.black,
+              fontFamily: 'Poppins',
+              fontWeight: FontWeight.w600,
+              fontSize: 16),
         ),
         centerTitle: true,
         backgroundColor: Colors.white.withOpacity(0),
