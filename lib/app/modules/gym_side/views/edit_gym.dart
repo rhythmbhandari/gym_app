@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gym_app/app/config/theme_colors.dart';
 import 'package:gym_app/app/modules/gym_side/controllers/gym_side_controller.dart';
-import 'package:gym_app/app/modules/profile/controllers/profile_controller.dart';
 import 'package:gym_app/app/widgets/custom_snackbar.dart';
 import 'package:gym_app/app/widgets/custom_input_textfield.dart';
 import 'package:gym_app/app/widgets/top_snack_bar.dart';
@@ -13,7 +12,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class EditGym extends StatelessWidget {
-  GymSideController controller = Get.find();
+  final GymSideController controller = Get.find();
   static String id = '/editGym';
 
   EditGym({Key key}) : super(key: key);
@@ -141,71 +140,6 @@ class EditGym extends StatelessWidget {
                         SizedBox(
                           height: Get.height * 0.032,
                         ),
-                        // GetBuilder<ProfileController>(
-                        //     builder: (controller) => GestureDetector(
-                        //           onTap: () {
-                        //             _showPicker(context);
-                        //           }
-                        //           child: Container(
-                        //     height: Get.width * 0.5,
-                        //       width: Get.width,
-                        //       child: Center(
-                        //           child: Container(
-                        //             decoration: BoxDecoration(
-                        //               color: Colors.grey,
-                        //               borderRadius: BorderRadius.circular(Get.width * 0.2),
-                        //             ),
-                        //             height: Get.width * 0.35,
-                        //             width: Get.width * 0.35,
-                        //             child: controller.imageFile != null
-                        //                 ? ClipRRect(
-                        //               borderRadius: BorderRadius.circular(Get.width * 0.2),
-                        //               child: Image.file(controller.imageFile,
-                        //                   height: Get.width * 0.35,
-                        //                   width: Get.width * 0.35,
-                        //                   fit: BoxFit.cover),
-                        //             )
-                        //                 : controller. == null
-                        //                 ? Icon(
-                        //               Icons.add_a_photo_rounded,
-                        //               color: Colors.grey[800],
-                        //             )
-                        //                 : Stack(
-                        //               children: [
-                        //                 ClipRRect(
-                        //                   borderRadius: BorderRadius.circular(10),
-                        //                   child: CachedNetworkImage(
-                        //                     imageUrl: '$BASE_URL/${user.imagePath}',
-                        //                     fit: BoxFit.cover,
-                        //                   ),
-                        //                 ),
-                        //                 Align(
-                        //                   alignment: Alignment.bottomRight,
-                        //                   child: Icon(
-                        //                     Icons.add_a_photo_rounded,
-                        //                     color: Colors.black,
-                        //                     size: 35,
-                        //                   ),
-                        //                 )
-                        //               ],
-                        //             ),
-                        //           )),
-                        //     ),
-                        //         )),
-                        // Center(
-                        //   child: GestureDetector(
-                        //     onTap: () {
-                        //       _showPicker(context);
-                        //     },
-                        //     child: Image.asset(
-                        //       'assets/profile.png',
-                        //       height: Get.width * 0.3,
-                        //       width: Get.width * 0.3,
-                        //       fit: BoxFit.fill,
-                        //       color: Colors.white,
-                        //     ),
-                        //   ),
-                        // ),
                         SizedBox(height: Get.height * 0.03),
                         Text(
                           'Name',
@@ -219,9 +153,6 @@ class EditGym extends StatelessWidget {
                         SizedBox(height: Get.height * 0.005),
                         CustomInputField(
                           focusNode: nameNode,
-                          hintText: 'Enter your email'.tr,
-                          labelText: 'Email'.tr,
-                          icon: Icons.email,
                           textInputType: TextInputType.name,
                           onChanged: (_) {
                             // controller.setUsernameError(null);
@@ -247,9 +178,6 @@ class EditGym extends StatelessWidget {
                         SizedBox(height: Get.height * 0.005),
                         CustomInputField(
                           focusNode: addressNode,
-                          hintText: 'Enter your address'.tr,
-                          labelText: 'Address'.tr,
-                          icon: Icons.email,
                           textInputType: TextInputType.streetAddress,
                           onChanged: (_) {
                             // controller.setUsernameError(null);
@@ -273,7 +201,7 @@ class EditGym extends StatelessWidget {
                                 controller.updateGymData();
                                 showTopSnackBar(
                                   context,
-                                  CustomSnackBar.success(
+                                  const CustomSnackBar.success(
                                     message: "Profile updated successfully.",
                                   ),
                                 );

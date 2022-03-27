@@ -127,7 +127,7 @@ class GymSideController extends GetxController {
     if (_imageFile != null) {
       final Directory dir = await getApplicationDocumentsDirectory();
       String dirPath = dir.path;
-      Uuid uuid = Uuid();
+      Uuid uuid = const Uuid();
       String first = uuid.v4();
       String second = uuid.v1();
       final String filePath = '$dirPath/$first$second.jpg';

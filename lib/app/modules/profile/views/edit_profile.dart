@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:gym_app/app/config/constants.dart';
 import 'package:gym_app/app/config/theme_colors.dart';
 import 'package:gym_app/app/modules/profile/controllers/profile_controller.dart';
 import 'package:gym_app/app/widgets/custom_snackbar.dart';
@@ -13,7 +12,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class EditProfile extends StatelessWidget {
-  ProfileController controller = Get.find();
+  final ProfileController controller = Get.find();
   static String id = '/edit';
 
   EditProfile({Key key}) : super(key: key);
@@ -85,7 +84,7 @@ class EditProfile extends StatelessWidget {
   cropPickedImage(filePath) async {
     File croppedImage = await ImageCropper().cropImage(
         sourcePath: filePath,
-        androidUiSettings: AndroidUiSettings(
+        androidUiSettings: const AndroidUiSettings(
           toolbarColor: primaryColor,
           toolbarWidgetColor: Colors.white,
           hideBottomControls: true,
@@ -146,11 +145,11 @@ class EditProfile extends StatelessWidget {
                           onTap: () {
                             _showPicker(context);
                           },
-                          child: Container(
+                          child: SizedBox(
                             height: Get.width * 0.5,
                             width: Get.width,
                             child: Center(
-                                child: Container(
+                                child: SizedBox(
                                   height: Get.width * 0.35,
                                   width: Get.width * 0.35,
                                   child: controller.imageFile != null
@@ -181,7 +180,7 @@ class EditProfile extends StatelessWidget {
                               fit: BoxFit.fill,
                               color: Colors.white,
                             ),
-                                      Align(
+                                      const Align(
                                         alignment: Alignment.bottomRight,
                                         child: Icon(
                                           Icons.add_a_photo_rounded,
@@ -208,16 +207,9 @@ class EditProfile extends StatelessWidget {
                         SizedBox(height: Get.height * 0.005),
                         CustomInputField(
                           focusNode: nameNode,
-                          hintText: 'Enter your email'.tr,
-                          labelText: 'Email'.tr,
-                          icon: Icons.email,
                           textInputType: TextInputType.name,
                           onChanged: (_) {
-                            // controller.setUsernameError(null);
-                            // controller.checkLoginButtonEnabled();
                           },
-                          // onSubmit: (_) => node.requestFocus(passwordNode),
-                          // errorText: controller.usernameError.value,
                           controller: controller.nameController.value,
                           inputColor: const Color(0xffC4C4C4),
                           radius: 0,
@@ -236,17 +228,10 @@ class EditProfile extends StatelessWidget {
                         SizedBox(height: Get.height * 0.005),
                         CustomInputField(
                           focusNode: emailNode,
-                          hintText: 'Enter your email'.tr,
-                          labelText: 'Email'.tr,
-                          icon: Icons.email,
                           enabled: false,
                           textInputType: TextInputType.emailAddress,
                           onChanged: (_) {
-                            // controller.setUsernameError(null);
-                            // controller.checkLoginButtonEnabled();
                           },
-                          // onSubmit: (_) => node.requestFocus(passwordNode),
-                          // errorText: controller.usernameError.value,
                           controller: controller.emailController.value,
                           inputColor: const Color(0xffC4C4C4),
                           radius: 0,
@@ -265,17 +250,10 @@ class EditProfile extends StatelessWidget {
                         SizedBox(height: Get.height * 0.005),
                         CustomInputField(
                           focusNode: phoneNode,
-                          hintText: 'Enter your Phone'.tr,
-                          labelText: 'Phone'.tr,
-                          icon: Icons.email,
                           enabled: false,
                           textInputType: TextInputType.phone,
                           onChanged: (_) {
-                            // controller.setUsernameError(null);
-                            // controller.checkLoginButtonEnabled();
                           },
-                          // onSubmit: (_) => node.requestFocus(passwordNode),
-                          // errorText: controller.usernameError.value,
                           controller: controller.phoneController.value,
                           inputColor: const Color(0xffC4C4C4),
                           radius: 0,
@@ -294,16 +272,9 @@ class EditProfile extends StatelessWidget {
                         SizedBox(height: Get.height * 0.005),
                         CustomInputField(
                           focusNode: addressNode,
-                          hintText: 'Enter your address'.tr,
-                          labelText: 'Address'.tr,
-                          icon: Icons.email,
                           textInputType: TextInputType.streetAddress,
                           onChanged: (_) {
-                            // controller.setUsernameError(null);
-                            // controller.checkLoginButtonEnabled();
                           },
-                          // onSubmit: (_) => node.requestFocus(passwordNode),
-                          // errorText: controller.usernameError.value,
                           controller: controller.addressController.value,
                           inputColor: const Color(0xffC4C4C4),
                           radius: 0,
@@ -318,7 +289,7 @@ class EditProfile extends StatelessWidget {
                               controller.updateUserData();
                               showTopSnackBar(
                                 context,
-                                CustomSnackBar.success(
+                                const CustomSnackBar.success(
                                   message: "Profile updated successfully.",
                                 ),
                               );

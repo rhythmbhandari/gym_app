@@ -12,6 +12,8 @@ import 'edit_gym.dart';
 import 'gym_history.dart';
 
 class GymSideView extends GetView<GymSideController> {
+  const GymSideView({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +38,7 @@ class GymSideView extends GetView<GymSideController> {
                   children: [
                     Row(
                       children: [
-                        SizedBox(width: 23),
+                        const SizedBox(width: 23),
                         GestureDetector(
                             onTap: () async {
                               controller.refreshValue.value = true;
@@ -88,7 +90,7 @@ class GymSideView extends GetView<GymSideController> {
                       },
                       errorBuilder: (BuildContext context,
                           Object exception, StackTrace stackTrace) {
-                        return Icon(Icons.error);
+                        return const Icon(Icons.error);
                       },
                       width: Get.width * 0.65,
                       fit: BoxFit.fill,
@@ -97,10 +99,10 @@ class GymSideView extends GetView<GymSideController> {
                       height: Get.height * 0.02,
                     ),
                     Container(
-                      margin: EdgeInsets.symmetric(horizontal: 22),
-                      padding: EdgeInsets.symmetric(vertical: 31),
+                      margin: const EdgeInsets.symmetric(horizontal: 22),
+                      padding: const EdgeInsets.symmetric(vertical: 31),
                       decoration: BoxDecoration(
-                          color: Color(0xffE5E5E5).withOpacity(0.4),
+                          color: const Color(0xffE5E5E5).withOpacity(0.4),
                           borderRadius: BorderRadius.circular(0)),
                       child: Column(
                         children: [
@@ -111,7 +113,7 @@ class GymSideView extends GetView<GymSideController> {
                                   'User Name:',
                                   textAlign: TextAlign.center,
                                   style: Get.textTheme.headline5.copyWith(
-                                      color: Color(0xff435D6B),
+                                      color: const Color(0xff435D6B),
                                       fontFamily: 'Poppins',
                                       fontWeight: FontWeight.w400,
                                       fontSize: 14),
@@ -133,7 +135,7 @@ class GymSideView extends GetView<GymSideController> {
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 32,
                           ),
                           Row(
@@ -143,7 +145,7 @@ class GymSideView extends GetView<GymSideController> {
                                   'Description:',
                                   textAlign: TextAlign.center,
                                   style: Get.textTheme.headline5.copyWith(
-                                      color: Color(0xff435D6B),
+                                      color: const Color(0xff435D6B),
                                       fontFamily: 'Poppins',
                                       fontWeight: FontWeight.w400,
                                       fontSize: 14),
@@ -160,7 +162,7 @@ class GymSideView extends GetView<GymSideController> {
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: Get.textTheme.headline5.copyWith(
-                                          color: Color(0xff000000),
+                                          color: const Color(0xff000000),
                                           fontFamily: 'Poppins',
                                           fontWeight: FontWeight.w400,
                                           fontSize: 14),
@@ -168,7 +170,7 @@ class GymSideView extends GetView<GymSideController> {
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 32,
                           ),
                           Row(
@@ -178,7 +180,7 @@ class GymSideView extends GetView<GymSideController> {
                                   'Total \nEarning:',
                                   textAlign: TextAlign.center,
                                   style: Get.textTheme.headline5.copyWith(
-                                      color: Color(0xff435D6B),
+                                      color: const Color(0xff435D6B),
                                       fontFamily: 'Poppins',
                                       fontWeight: FontWeight.w400,
                                       fontSize: 14),
@@ -192,7 +194,7 @@ class GymSideView extends GetView<GymSideController> {
                                               ? 'XX'
                                               : controller.totalEarning.value,
                                       style: Get.textTheme.headline5.copyWith(
-                                          color: Color(0xff000000),
+                                          color: const Color(0xff000000),
                                           fontFamily: 'Poppins',
                                           fontWeight: FontWeight.w400,
                                           fontSize: 14),
@@ -200,7 +202,7 @@ class GymSideView extends GetView<GymSideController> {
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 32,
                           ),
                           GestureDetector(
@@ -216,7 +218,7 @@ class GymSideView extends GetView<GymSideController> {
                                     'Total \nCheck-Ins',
                                     textAlign: TextAlign.center,
                                     style: Get.textTheme.headline5.copyWith(
-                                        color: Color(0xff435D6B),
+                                        color: const Color(0xff435D6B),
                                         fontFamily: 'Poppins',
                                         fontWeight: FontWeight.w400,
                                         fontSize: 14),
@@ -230,7 +232,7 @@ class GymSideView extends GetView<GymSideController> {
                                         ? 'XX'
                                         : controller.historyList.length.toString(),
                                     style: Get.textTheme.headline5.copyWith(
-                                        color: Color(0xff000000),
+                                        color: const Color(0xff000000),
                                         fontFamily: 'Poppins',
                                         fontWeight: FontWeight.w400,
                                         fontSize: 14),

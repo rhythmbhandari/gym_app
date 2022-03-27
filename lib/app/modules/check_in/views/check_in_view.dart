@@ -4,13 +4,9 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 import 'package:get/get.dart';
 import 'package:gym_app/app/config/theme_colors.dart';
-import 'package:gym_app/app/data/repositories/session_repository.dart';
-import 'package:gym_app/app/data/repositories/user_repository.dart';
 import 'package:gym_app/app/modules/profile/controllers/profile_controller.dart';
-import 'package:gym_app/app/routes/app_pages.dart';
 import 'package:gym_app/app/widgets/custom_snackbar.dart';
 import 'package:gym_app/app/widgets/top_snack_bar.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../controllers/check_in_controller.dart';
 
@@ -51,10 +47,11 @@ class _CheckInViewState extends State<CheckInView> {
     // If the widget was removed from the tree while the asynchronous platform
     // message was in flight, we want to discard the reply rather than calling
     // setState to update our non-existent appearance.
-    if (!mounted)
+    if (!mounted) {
       setState(() {
         _scanBarcode = barcodeScanRes;
       });
+    }
     return barcodeScanRes;
   }
 
@@ -143,7 +140,7 @@ class _CheckInViewState extends State<CheckInView> {
                   if(status){
                     showTopSnackBar(
                       context,
-                      CustomSnackBar.success(
+                      const CustomSnackBar.success(
                         message:
                         "Successfully checked in. Enjoy!",
                       ),
@@ -169,7 +166,7 @@ class _CheckInViewState extends State<CheckInView> {
                 }else{
                   showTopSnackBar(
                     context,
-                    CustomSnackBar.error(
+                    const CustomSnackBar.error(
                       message:
                       "Invalid QR.",
                     ),
@@ -178,7 +175,7 @@ class _CheckInViewState extends State<CheckInView> {
               }else{
                 showTopSnackBar(
                   context,
-                  CustomSnackBar.info(
+                  const CustomSnackBar.info(
                     message:
                     "Check-in cancelled!",
                   ),

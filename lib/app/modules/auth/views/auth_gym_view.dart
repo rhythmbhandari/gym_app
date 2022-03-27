@@ -3,16 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gym_app/app/config/theme_colors.dart';
 import 'package:gym_app/app/data/repositories/session_repository.dart';
-import 'package:gym_app/app/data/repositories/user_repository.dart';
 import 'package:gym_app/app/modules/auth/controllers/auth_controller.dart';
-import 'package:gym_app/app/modules/profile/controllers/profile_controller.dart';
 import 'package:gym_app/app/routes/app_pages.dart';
 import 'package:gym_app/app/widgets/custom_button.dart';
 import 'package:gym_app/app/widgets/custom_snackbar.dart';
 import 'package:gym_app/app/widgets/custom_input_textfield.dart';
 import 'package:gym_app/app/widgets/password_input_textfield.dart';
 import 'package:gym_app/app/widgets/top_snack_bar.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthGymView extends GetView<AuthController> {
   static String id = '/auth_gym';
@@ -67,9 +64,6 @@ class AuthGymView extends GetView<AuthController> {
                         SizedBox(height: Get.height * 0.005),
                         CustomInputField(
                           focusNode: usernameNode,
-                          hintText: 'Enter your email'.tr,
-                          labelText: 'Email'.tr,
-                          icon: Icons.email,
                           textInputType: TextInputType.emailAddress,
                           onChanged: (_) {
                             controller.setUsernameError(null);

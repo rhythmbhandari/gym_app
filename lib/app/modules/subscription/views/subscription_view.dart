@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:gym_app/app/config/theme_colors.dart';
-import 'package:gym_app/app/routes/app_pages.dart';
-
 import '../controllers/subscription_controller.dart';
 import 'subscription_details.dart';
 
 class SubscriptionView extends GetView<SubscriptionController> {
+  const SubscriptionView({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,7 +71,7 @@ class SubscriptionView extends GetView<SubscriptionController> {
                       itemCount: controller.subscriptionList.length,
                     ): Center(
                       child: Container(
-                        padding: EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(16),
                         child: Text(
                           'Subscriptions are unavailable.',
                           textAlign: TextAlign.center,
@@ -153,7 +153,7 @@ class SubscriptionWidget extends StatelessWidget {
                 Expanded(
                   flex: 3,
                   child: Text(
-                    "$description",
+                    description,
                     style: Get.textTheme.headline5.copyWith(
                         color: Colors.black,
                         fontFamily: 'Poppins',

@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:gym_app/app/config/theme_colors.dart';
 import 'package:gym_app/app/data/repositories/session_repository.dart';
 import 'package:gym_app/app/modules/auth/controllers/auth_controller.dart';
-import 'package:gym_app/app/modules/profile/controllers/profile_controller.dart';
 import 'package:gym_app/app/routes/app_pages.dart';
 import 'package:gym_app/app/widgets/custom_button.dart';
 import 'package:gym_app/app/widgets/custom_snackbar.dart';
@@ -54,7 +53,7 @@ class AuthCustomerView extends GetView<AuthController> {
                     ),
                     SizedBox(height: Get.height * 0.09),
                     Text(
-                      'Email         ',
+                      'Email',
                       style: Get.textTheme.headline5.copyWith(
                           color: Colors.white,
                           fontFamily: 'Poppins',
@@ -64,9 +63,6 @@ class AuthCustomerView extends GetView<AuthController> {
                     SizedBox(height: Get.height * 0.005),
                     CustomInputField(
                       focusNode: usernameNode,
-                      hintText: 'Enter your email'.tr,
-                      labelText: 'Email'.tr,
-                      icon: Icons.email,
                       textInputType: TextInputType.emailAddress,
                       onChanged: (_) {
                         controller.setUsernameError(null);

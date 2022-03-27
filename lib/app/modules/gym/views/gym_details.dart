@@ -3,7 +3,6 @@ import 'package:flutter_web_browser/flutter_web_browser.dart';
 import 'package:get/get.dart';
 import 'package:gym_app/app/config/theme_colors.dart';
 import 'package:gym_app/app/modules/gym/controllers/gym_controller.dart';
-import 'package:gym_app/app/modules/subscription/views/subscription_payment.dart';
 import 'package:gym_app/app/widgets/custom_snackbar.dart';
 import 'package:gym_app/app/widgets/top_snack_bar.dart';
 
@@ -100,7 +99,7 @@ class GymDetails extends GetView<GymController> {
                               },
                               errorBuilder: (BuildContext context,
                                   Object exception, StackTrace stackTrace) {
-                                return Icon(Icons.error);
+                                return const Icon(Icons.error);
                               },
                               width: Get.width * 1,
                               fit: BoxFit.fill,
@@ -122,7 +121,7 @@ class GymDetails extends GetView<GymController> {
                             null) {
                           showTopSnackBar(
                             context,
-                            CustomSnackBar.error(
+                            const CustomSnackBar.error(
                               message: "Gym location is not available.",
                             ),
                           );

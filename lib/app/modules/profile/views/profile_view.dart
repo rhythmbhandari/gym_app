@@ -12,6 +12,8 @@ import 'edit_profile.dart';
 import 'history.dart';
 
 class ProfileView extends GetView<ProfileController> {
+  const ProfileView({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +38,7 @@ class ProfileView extends GetView<ProfileController> {
                   children: [
                     Row(
                       children: [
-                        SizedBox(width: 23),
+                        const SizedBox(width: 23),
                         GestureDetector(
                             onTap: () async {
                               controller.refreshValue.value = true;
@@ -70,7 +72,7 @@ class ProfileView extends GetView<ProfileController> {
                         ? ClipRRect(
                       borderRadius: BorderRadius.circular(10),
                           child: Image.network(
-                      '${controller.imagePath.value}',
+                      controller.imagePath.value,
                       loadingBuilder: (BuildContext context,
                             Widget child,
                             ImageChunkEvent loadingProgress) {
@@ -90,7 +92,7 @@ class ProfileView extends GetView<ProfileController> {
                       errorBuilder: (BuildContext context,
                             Object exception,
                             StackTrace stackTrace) {
-                          return Icon(Icons.error);
+                          return const Icon(Icons.error);
                       },
                       height: Get.width * 0.3,
                       width: Get.width * 0.3,
@@ -115,10 +117,10 @@ class ProfileView extends GetView<ProfileController> {
                       height: Get.height * 0.02,
                     ),
                     Container(
-                      margin: EdgeInsets.symmetric(horizontal: 22),
-                      padding: EdgeInsets.symmetric(vertical: 31),
+                      margin: const EdgeInsets.symmetric(horizontal: 22),
+                      padding: const EdgeInsets.symmetric(vertical: 31),
                       decoration: BoxDecoration(
-                          color: Color(0xffE5E5E5).withOpacity(0.4),
+                          color: const Color(0xffE5E5E5).withOpacity(0.4),
                           borderRadius: BorderRadius.circular(0)),
                       child: Column(
                         children: [
@@ -129,7 +131,7 @@ class ProfileView extends GetView<ProfileController> {
                                   'User Name:',
                                   textAlign: TextAlign.center,
                                   style: Get.textTheme.headline5.copyWith(
-                                      color: Color(0xff435D6B),
+                                      color: const Color(0xff435D6B),
                                       fontFamily: 'Poppins',
                                       fontWeight: FontWeight.w400,
                                       fontSize: 14),
@@ -151,7 +153,7 @@ class ProfileView extends GetView<ProfileController> {
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 32,
                           ),
                           Row(
@@ -161,7 +163,7 @@ class ProfileView extends GetView<ProfileController> {
                                   'Subscription:',
                                   textAlign: TextAlign.center,
                                   style: Get.textTheme.headline5.copyWith(
-                                      color: Color(0xff435D6B),
+                                      color: const Color(0xff435D6B),
                                       fontFamily: 'Poppins',
                                       fontWeight: FontWeight.w400,
                                       fontSize: 14),
@@ -178,7 +180,7 @@ class ProfileView extends GetView<ProfileController> {
                                           : controller.subscription.value,
                                       maxLines: 2,
                                       style: Get.textTheme.headline5.copyWith(
-                                          color: Color(0xff000000),
+                                          color: const Color(0xff000000),
                                           fontFamily: 'Poppins',
                                           fontWeight: FontWeight.w400,
                                           fontSize: 14),
@@ -186,7 +188,7 @@ class ProfileView extends GetView<ProfileController> {
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 32,
                           ),
                           Row(
@@ -196,7 +198,7 @@ class ProfileView extends GetView<ProfileController> {
                                   'Remaining \nCheck-Ins:',
                                   textAlign: TextAlign.center,
                                   style: Get.textTheme.headline5.copyWith(
-                                      color: Color(0xff435D6B),
+                                      color: const Color(0xff435D6B),
                                       fontFamily: 'Poppins',
                                       fontWeight: FontWeight.w400,
                                       fontSize: 14),
@@ -213,7 +215,7 @@ class ProfileView extends GetView<ProfileController> {
                                               : controller
                                                   .remainingCheckIns.value,
                                       style: Get.textTheme.headline5.copyWith(
-                                          color: Color(0xff000000),
+                                          color: const Color(0xff000000),
                                           fontFamily: 'Poppins',
                                           fontWeight: FontWeight.w400,
                                           fontSize: 14),
@@ -221,7 +223,7 @@ class ProfileView extends GetView<ProfileController> {
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 32,
                           ),
                           GestureDetector(
@@ -236,7 +238,7 @@ class ProfileView extends GetView<ProfileController> {
                                   'Total \nCheck-Ins:',
                                   textAlign: TextAlign.center,
                                   style: Get.textTheme.headline5.copyWith(
-                                      color: Color(0xff435D6B),
+                                      color: const Color(0xff435D6B),
                                       fontFamily: 'Poppins',
                                       fontWeight: FontWeight.w400,
                                       fontSize: 14),
@@ -251,7 +253,7 @@ class ProfileView extends GetView<ProfileController> {
                                                 : controller
                                                     .totalCheckIns.value,
                                         style: Get.textTheme.headline5.copyWith(
-                                            color: Color(0xff000000),
+                                            color: const Color(0xff000000),
                                             fontFamily: 'Poppins',
                                             fontWeight: FontWeight.w400,
                                             fontSize: 14),

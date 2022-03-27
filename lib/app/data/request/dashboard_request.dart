@@ -32,8 +32,6 @@ class DashboardRequest {
   }
 
   static Future<bool> checkIn(String url) async {
-    // const url = '$baseUrl/payment/confirm-payment/';
-    // http://127.0.0.1:8000/gym/5/check-in/
     var parts = url.split('8000');
     var afterPort = parts[1].trim();
     String newUrl = '$baseUrl$afterPort';

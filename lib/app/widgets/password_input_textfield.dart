@@ -13,7 +13,7 @@ class PasswordTextField extends StatefulWidget {
   final TextInputType _textInputType;
   final TextEditingController _controller;
 
-  PasswordTextField({
+  const PasswordTextField({Key key,
     @required FocusNode focusNode,
     @required String hintText,
     @required String labelText,
@@ -34,7 +34,7 @@ class PasswordTextField extends StatefulWidget {
         _controller = controller,
         _errorText = errorText,
         _textInputType = textInputType,
-        _obscureText = obscureText;
+        _obscureText = obscureText, super(key: key);
 
   @override
   _PasswordFieldState createState() => _PasswordFieldState();
@@ -59,9 +59,9 @@ class _PasswordFieldState extends State<PasswordTextField> {
         controller: widget._controller,
         decoration: InputDecoration(
           filled: true,
-          fillColor: Color(0xffC4C4C4),
+          fillColor: const Color(0xffC4C4C4),
           // labelText: widget._labelText,
-          contentPadding: EdgeInsets.symmetric(vertical: 14, horizontal: 14),
+          contentPadding: const EdgeInsets.symmetric(vertical: 14, horizontal: 14),
           // errorText: widget._errorText,
           labelStyle: Get.textTheme.headline5.copyWith(
             color: widget._focusNode.hasFocus && widget._errorText != null
@@ -79,21 +79,21 @@ class _PasswordFieldState extends State<PasswordTextField> {
           suffixIcon: widget._suffix,
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(0),
-            borderSide: BorderSide(color: primaryColor, width: 1.2),
+            borderSide: const BorderSide(color: primaryColor, width: 1.2),
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(0),
-            borderSide: BorderSide(
+            borderSide: const BorderSide(
               color: Colors.grey,
               width: 1.2,
             ),
           ),
           border: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.grey),
+            borderSide: const BorderSide(color: Colors.grey),
             borderRadius: BorderRadius.circular(0),
           ),
           disabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.grey),
+            borderSide: const BorderSide(color: Colors.grey),
             borderRadius: BorderRadius.circular(0),
           ),
         ));

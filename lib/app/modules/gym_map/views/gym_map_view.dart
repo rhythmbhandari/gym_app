@@ -6,6 +6,8 @@ import 'package:gym_app/app/routes/app_pages.dart';
 import '../controllers/gym_map_controller.dart';
 
 class GymMapView extends GetView<GymMapController> {
+  const GymMapView({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

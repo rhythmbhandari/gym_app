@@ -15,7 +15,7 @@ class CustomSnackBar extends StatefulWidget {
     @required this.message,
     this.icon = const Icon(
       Icons.sentiment_satisfied_alt,
-      color: const Color(0x15000000),
+      color: Color(0x15000000),
       size: 120,
     ),
     this.textStyle = const TextStyle(
@@ -33,7 +33,7 @@ class CustomSnackBar extends StatefulWidget {
     @required this.message,
     this.icon = const Icon(
       Icons.sentiment_neutral,
-      color: const Color(0x15000000),
+      color: Color(0x15000000),
       size: 120,
     ),
     this.textStyle = const TextStyle(
@@ -51,7 +51,7 @@ class CustomSnackBar extends StatefulWidget {
     @required this.message,
     this.icon = const Icon(
       Icons.error_outline,
-      color: const Color(0x15000000),
+      color: Color(0x15000000),
       size: 120,
     ),
     this.textStyle = const TextStyle(

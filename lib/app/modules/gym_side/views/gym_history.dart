@@ -6,7 +6,7 @@ import 'package:gym_app/app/modules/gym_side/controllers/gym_side_controller.dar
 import 'package:intl/intl.dart';
 
 class GymHistory extends StatelessWidget {
-  GymSideController controller = Get.find();
+  final GymSideController controller = Get.find();
   static String id = '/gymhistory';
 
   GymHistory({Key key}) : super(key: key);
@@ -18,7 +18,7 @@ class GymHistory extends StatelessWidget {
         child: Obx(() => !controller.historyRefreshValue.value
             ? Column(
           children: [
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Row(
               children: [
                 const Expanded(child: SizedBox(width: 16)),
@@ -54,7 +54,7 @@ class GymHistory extends StatelessWidget {
               )
                   : Center(
                 child: Container(
-                  padding: EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(16),
                   child: Text(
                     'No check-in history.',
                     textAlign: TextAlign.center,

@@ -15,10 +15,8 @@ class CustomInputField extends StatefulWidget {
   final double _radius;
   final double _focusedRadius;
 
-  CustomInputField({
+  const CustomInputField({Key key,
     @required FocusNode focusNode,
-    @required String hintText,
-    @required String labelText,
     bool enabled,
     Function onTap,
     @required TextInputType textInputType,
@@ -28,7 +26,6 @@ class CustomInputField extends StatefulWidget {
     String errorText,
     @required TextEditingController controller,
     @required Function onChanged,
-    IconData icon,
     double radius,
   })
       : _focusNode = focusNode,
@@ -41,7 +38,7 @@ class CustomInputField extends StatefulWidget {
         _onTap = onTap,
         _enabled = enabled,
         _errorText = errorText,
-        _textInputType = textInputType;
+        _textInputType = textInputType, super(key: key);
 
   @override
   _CustomInputFieldState createState() => _CustomInputFieldState();
@@ -61,14 +58,14 @@ class _CustomInputFieldState extends State<CustomInputField> {
         onChanged: widget._onChanged,
         onSubmitted: widget._onSubmit,
         cursorColor: primaryColor,
-        onTap: widget._onTap == null? (){}: widget._onTap,
+        onTap: widget._onTap ?? (){},
         style: TextStyle(
             color: Colors.grey[700],
             fontFamily: 'Poppins',
             fontSize: 16),
         decoration: InputDecoration(
           //
-          contentPadding: EdgeInsets.symmetric(vertical: 14, horizontal: 14),
+          contentPadding: const EdgeInsets.symmetric(vertical: 14, horizontal: 14),
           filled: true,
           fillColor: widget._inputColor,
           // errorText: widget._errorText,
@@ -81,7 +78,7 @@ class _CustomInputFieldState extends State<CustomInputField> {
                 ? Colors.grey
                 : Colors.red,
           ),
-          enabled: widget._enabled == null ? true : widget._enabled,
+          enabled: widget._enabled ?? true,
           floatingLabelBehavior: FloatingLabelBehavior.never,
           hintStyle: Get.textTheme.headline5.copyWith(
               color: Colors.grey[500],
@@ -89,7 +86,7 @@ class _CustomInputFieldState extends State<CustomInputField> {
               fontSize: 18),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(widget._focusedRadius),
-            borderSide: BorderSide(color: primaryColor, width: 1.2),
+            borderSide: const BorderSide(color: primaryColor, width: 1.2),
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(widget._radius),

@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:gym_app/app/config/theme_colors.dart';
-import 'package:gym_app/app/routes/app_pages.dart';
 
 import '../controllers/gym_controller.dart';
 import 'gym_details.dart';
 
 class GymView extends GetView<GymController> {
+  const GymView({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,7 +69,7 @@ class GymView extends GetView<GymController> {
                 itemCount: controller.gymList.length,
               ): Center(
                 child: Container(
-                  padding: EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(16),
                   child: Text(
                     'Gyms are unavailable.',
                     textAlign: TextAlign.center,
@@ -135,7 +136,7 @@ class GymWidget extends StatelessWidget {
               const EdgeInsets.symmetric(horizontal: 7.43, vertical: 6.42),
               child: Center(
                   child: Text(
-                    '$name',
+                    name,
                     style: Get.textTheme.headline5.copyWith(
                         color: Colors.white,
                         fontFamily: 'Poppins',

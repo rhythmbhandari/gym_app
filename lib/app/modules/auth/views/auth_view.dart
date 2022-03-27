@@ -1,17 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:gym_app/app/config/theme_colors.dart';
-import 'package:gym_app/app/modules/profile/controllers/profile_controller.dart';
-import 'package:gym_app/app/routes/app_pages.dart';
 import 'package:gym_app/app/widgets/custom_button.dart';
-import 'package:gym_app/app/widgets/custom_snackbar.dart';
-import 'package:gym_app/app/widgets/custom_input_textfield.dart';
-import 'package:gym_app/app/widgets/password_input_textfield.dart';
-import 'package:gym_app/app/widgets/top_snack_bar.dart';
-
-import '../controllers/auth_controller.dart';
 import 'auth_customer_view.dart';
 import 'auth_gym_view.dart';
 
@@ -22,7 +13,6 @@ class AuthView extends GetView {
 
   @override
   Widget build(BuildContext context) {
-    final node = FocusScope.of(context);
     return Scaffold(
         backgroundColor: primaryColor,
         body: SafeArea(
@@ -70,11 +60,11 @@ class AuthView extends GetView {
                                   onPressed: () {
                                     Get.toNamed(AuthGymView.id, preventDuplicates: true);                                  },
                                   text: 'Gym',
-                                  backgroundColor:  Color(0xff6779BA),
+                                  backgroundColor:  const Color(0xff6779BA),
                                 ),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 20,
                         ),
                         Expanded(

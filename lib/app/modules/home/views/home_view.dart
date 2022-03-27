@@ -5,8 +5,6 @@ import 'package:gym_app/app/config/theme_colors.dart';
 import 'package:gym_app/app/modules/check_in/views/check_in_view.dart';
 import 'package:gym_app/app/modules/gym/controllers/gym_controller.dart';
 import 'package:gym_app/app/modules/gym/views/gym_view.dart';
-import 'package:gym_app/app/modules/gym_map/views/gym_map_view.dart';
-import 'package:gym_app/app/modules/profile/controllers/profile_controller.dart';
 import 'package:gym_app/app/modules/profile/views/profile_view.dart';
 import 'package:gym_app/app/modules/subscription/controllers/subscription_controller.dart';
 import 'package:gym_app/app/modules/subscription/views/subscription_view.dart';
@@ -14,6 +12,8 @@ import 'package:gym_app/app/modules/subscription/views/subscription_view.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends StatefulWidget {
+  const HomeView({Key key}) : super(key: key);
+
   @override
   _HomeViewState createState() => _HomeViewState();
 }
@@ -29,9 +29,9 @@ class _HomeViewState extends State<HomeView> {
 
   final List<Widget> pages = [
     SubscriptionView(),
-    GymView(),
+    const GymView(),
     // GymMapView(),
-    CheckInView(),
+    const CheckInView(),
     ProfileView(),
   ];
 

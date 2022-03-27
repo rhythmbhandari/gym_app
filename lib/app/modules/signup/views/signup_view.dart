@@ -18,6 +18,8 @@ class SignupView extends GetView<SignupController> {
   final FocusNode addressNode = FocusNode();
   final FocusNode phoneNode = FocusNode();
 
+  SignupView({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final node = FocusScope.of(context);
@@ -62,9 +64,6 @@ class SignupView extends GetView<SignupController> {
                     SizedBox(height: Get.height * 0.005),
                     CustomInputField(
                       focusNode: usernameNode,
-                      hintText: 'Enter your username'.tr,
-                      labelText: 'Username'.tr,
-                      icon: Icons.email,
                       textInputType: TextInputType.name,
                       onChanged: (_) {
                         controller.setUsernameError(null);
@@ -89,9 +88,6 @@ class SignupView extends GetView<SignupController> {
                     SizedBox(height: Get.height * 0.005),
                     CustomInputField(
                       focusNode: emailNode,
-                      hintText: 'Enter your email'.tr,
-                      labelText: 'Email'.tr,
-                      icon: Icons.email,
                       textInputType: TextInputType.emailAddress,
                       onChanged: (_) {
                         controller.setEmailError(null);
@@ -116,9 +112,6 @@ class SignupView extends GetView<SignupController> {
                     SizedBox(height: Get.height * 0.005),
                     CustomInputField(
                       focusNode: phoneNode,
-                      hintText: 'Enter your email'.tr,
-                      labelText: 'Email'.tr,
-                      icon: Icons.email,
                       textInputType: TextInputType.phone,
                       onChanged: (_) {
                         controller.setPhoneError(null);
@@ -143,9 +136,6 @@ class SignupView extends GetView<SignupController> {
                     SizedBox(height: Get.height * 0.005),
                     CustomInputField(
                       focusNode: addressNode,
-                      hintText: 'Enter your username'.tr,
-                      labelText: 'Username'.tr,
-                      icon: Icons.email,
                       textInputType: TextInputType.streetAddress,
                       onChanged: (_) {
                         controller.setAddressError(null);
@@ -220,7 +210,7 @@ class SignupView extends GetView<SignupController> {
                                         //     .updateUserData());
                                         showTopSnackBar(
                                             context,
-                                            CustomSnackBar.success(
+                                            const CustomSnackBar.success(
                                               message:
                                                   "Thank you for registering.",
                                             ));
@@ -236,7 +226,7 @@ class SignupView extends GetView<SignupController> {
                                             context,
                                             CustomSnackBar.error(
                                               message:
-                                              "${controller.authError}",
+                                              controller.authError,
                                             ));
                                       }
                                     } else {
@@ -246,7 +236,7 @@ class SignupView extends GetView<SignupController> {
                                           context,
                                           CustomSnackBar.error(
                                             message:
-                                            "${controller.errorMessage}",
+                                            controller.errorMessage,
                                           ));
                                     }
                                   }

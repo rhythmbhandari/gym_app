@@ -15,7 +15,7 @@ class SplashView extends GetView<SplashController> {
               (_) {
             return Container();
           },
-          onLoading: SplashContainer(),
+          onLoading: const SplashContainer(),
         ),
       ),
     );

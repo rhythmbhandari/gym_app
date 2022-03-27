@@ -115,9 +115,6 @@ class AuthController extends GetxController {
     return true;
   }
 
-  // Future<void> saveToken() async {
-  //   await _userRepository.login(SessionRepository.instance.accessToken);
-  // }
 
   @override
   void onClose() {}

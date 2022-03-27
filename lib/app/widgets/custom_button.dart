@@ -9,14 +9,14 @@ class CustomButton extends StatelessWidget {
   final Color textColor;
   final double radius;
 
-  CustomButton({@required this.onPressed, this.textColor = Colors.white,@required this.text, this.radius = 15,this.backgroundColor = const Color(0xff004252)});
+  const CustomButton({Key key, @required this.onPressed, this.textColor = Colors.white,@required this.text, this.radius = 15,this.backgroundColor = const Color(0xff004252)}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ButtonStyle(
         padding: MaterialStateProperty.all<EdgeInsets>(
-          EdgeInsets.all(16),
+          const EdgeInsets.all(16),
         ),
         shape: MaterialStateProperty.all<OutlinedBorder>(RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(radius),

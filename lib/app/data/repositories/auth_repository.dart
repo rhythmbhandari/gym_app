@@ -84,8 +84,6 @@ class AuthRepository {
     try {
       final response = await NetworkHelper().postRequest(url, data: body);
       if (response.statusCode == 201) {
-        // final token = response.data['token'];
-        // SessionRepository.instance.setAccessToken(token);
         return true;
       } else if(response.statusCode == 400){
         return Future.error("This email has already been registered.");

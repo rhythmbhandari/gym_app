@@ -6,7 +6,7 @@ import 'package:gym_app/app/modules/profile/controllers/profile_controller.dart'
 import 'package:intl/intl.dart';
 
 class CheckInHistory extends StatelessWidget {
-  ProfileController controller = Get.find();
+  final ProfileController controller = Get.find();
   static String id = '/history';
 
   CheckInHistory({Key key}) : super(key: key);
@@ -18,7 +18,7 @@ class CheckInHistory extends StatelessWidget {
         child: Obx(() => !controller.historyRefreshValue.value
             ? Column(
                 children: [
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Row(
                     children: [
                       const Expanded(child: SizedBox(width: 16)),
@@ -54,7 +54,7 @@ class CheckInHistory extends StatelessWidget {
                           )
                         : Center(
                             child: Container(
-                              padding: EdgeInsets.all(16),
+                              padding: const EdgeInsets.all(16),
                               child: Text(
                                 'No check-in history.',
                                 textAlign: TextAlign.center,
