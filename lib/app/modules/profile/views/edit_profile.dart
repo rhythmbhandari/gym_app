@@ -6,7 +6,7 @@ import 'package:gym_app/app/config/constants.dart';
 import 'package:gym_app/app/config/theme_colors.dart';
 import 'package:gym_app/app/modules/profile/controllers/profile_controller.dart';
 import 'package:gym_app/app/widgets/custom_snackbar.dart';
-import 'package:gym_app/app/widgets/email_input_textfield.dart';
+import 'package:gym_app/app/widgets/custom_input_textfield.dart';
 import 'package:gym_app/app/widgets/top_snack_bar.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
@@ -206,7 +206,7 @@ class EditProfile extends StatelessWidget {
                               fontSize: 16),
                         ),
                         SizedBox(height: Get.height * 0.005),
-                        EmailInputField(
+                        CustomInputField(
                           focusNode: nameNode,
                           hintText: 'Enter your email'.tr,
                           labelText: 'Email'.tr,
@@ -234,7 +234,7 @@ class EditProfile extends StatelessWidget {
                               fontSize: 16),
                         ),
                         SizedBox(height: Get.height * 0.005),
-                        EmailInputField(
+                        CustomInputField(
                           focusNode: emailNode,
                           hintText: 'Enter your email'.tr,
                           labelText: 'Email'.tr,
@@ -263,7 +263,7 @@ class EditProfile extends StatelessWidget {
                               fontSize: 16),
                         ),
                         SizedBox(height: Get.height * 0.005),
-                        EmailInputField(
+                        CustomInputField(
                           focusNode: phoneNode,
                           hintText: 'Enter your Phone'.tr,
                           labelText: 'Phone'.tr,
@@ -292,7 +292,7 @@ class EditProfile extends StatelessWidget {
                               fontSize: 16),
                         ),
                         SizedBox(height: Get.height * 0.005),
-                        EmailInputField(
+                        CustomInputField(
                           focusNode: addressNode,
                           hintText: 'Enter your address'.tr,
                           labelText: 'Address'.tr,

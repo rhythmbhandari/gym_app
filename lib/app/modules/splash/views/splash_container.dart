@@ -8,7 +8,7 @@ class SplashContainer extends StatelessWidget {
 
     return Center(
       child: Image.asset(
-        'assets/logo.png',
+        'assets/logo1.png',
         height: Get.width * 0.4,
         width: Get.width * 0.5,
         fit: BoxFit.fill,

@@ -2,14 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gym_app/app/config/theme_colors.dart';
 
-class EmailInputField extends StatefulWidget {
+class CustomInputField extends StatefulWidget {
   final FocusNode _focusNode;
-  final String _hintText;
-  final String _labelText;
   final Function _onTap;
   final Function _onSubmit;
   final bool _enabled;
-  final IconData _icon;
   final TextInputType _textInputType;
   final Function _onChanged;
   final String _errorText;
@@ -18,7 +15,7 @@ class EmailInputField extends StatefulWidget {
   final double _radius;
   final double _focusedRadius;
 
-  EmailInputField({
+  CustomInputField({
     @required FocusNode focusNode,
     @required String hintText,
     @required String labelText,
@@ -35,9 +32,6 @@ class EmailInputField extends StatefulWidget {
     double radius,
   })
       : _focusNode = focusNode,
-        _hintText = hintText,
-        _labelText = labelText,
-        _icon = icon,
         _focusedRadius = focusedRadius,
         _onSubmit = onSubmit,
         _inputColor = inputColor,
@@ -50,10 +44,10 @@ class EmailInputField extends StatefulWidget {
         _textInputType = textInputType;
 
   @override
-  _EmailInputFieldState createState() => _EmailInputFieldState();
+  _CustomInputFieldState createState() => _CustomInputFieldState();
 }
 
-class _EmailInputFieldState extends State<EmailInputField> {
+class _CustomInputFieldState extends State<CustomInputField> {
   @override
   Widget build(BuildContext context) {
     widget._focusNode.addListener(() {
@@ -89,21 +83,10 @@ class _EmailInputFieldState extends State<EmailInputField> {
           ),
           enabled: widget._enabled == null ? true : widget._enabled,
           floatingLabelBehavior: FloatingLabelBehavior.never,
-          // hintText: widget._hintText,
           hintStyle: Get.textTheme.headline5.copyWith(
               color: Colors.grey[500],
               fontFamily: 'Poppins',
               fontSize: 18),
-          // suffixIcon: Icon(
-          //   widget._icon,
-          //   color: widget._focusNode.hasFocus && widget._errorText != null
-          //       ? Colors.red
-          //       : widget._focusNode.hasFocus //widget._errorText == null
-          //           ? primaryTextColor
-          //           : widget._errorText == null
-          //               ? Colors.grey
-          //               : Colors.red,
-          // ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(widget._focusedRadius),
             borderSide: BorderSide(color: primaryColor, width: 1.2),

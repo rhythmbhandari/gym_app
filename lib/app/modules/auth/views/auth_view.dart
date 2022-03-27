@@ -7,7 +7,7 @@ import 'package:gym_app/app/modules/profile/controllers/profile_controller.dart'
 import 'package:gym_app/app/routes/app_pages.dart';
 import 'package:gym_app/app/widgets/custom_button.dart';
 import 'package:gym_app/app/widgets/custom_snackbar.dart';
-import 'package:gym_app/app/widgets/email_input_textfield.dart';
+import 'package:gym_app/app/widgets/custom_input_textfield.dart';
 import 'package:gym_app/app/widgets/password_input_textfield.dart';
 import 'package:gym_app/app/widgets/top_snack_bar.dart';
 

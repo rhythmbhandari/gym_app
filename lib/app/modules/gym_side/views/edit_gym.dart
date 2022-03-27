@@ -6,7 +6,7 @@ import 'package:gym_app/app/config/theme_colors.dart';
 import 'package:gym_app/app/modules/gym_side/controllers/gym_side_controller.dart';
 import 'package:gym_app/app/modules/profile/controllers/profile_controller.dart';
 import 'package:gym_app/app/widgets/custom_snackbar.dart';
-import 'package:gym_app/app/widgets/email_input_textfield.dart';
+import 'package:gym_app/app/widgets/custom_input_textfield.dart';
 import 'package:gym_app/app/widgets/top_snack_bar.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
@@ -217,7 +217,7 @@ class EditGym extends StatelessWidget {
                               fontSize: 16),
                         ),
                         SizedBox(height: Get.height * 0.005),
-                        EmailInputField(
+                        CustomInputField(
                           focusNode: nameNode,
                           hintText: 'Enter your email'.tr,
                           labelText: 'Email'.tr,
@@ -245,7 +245,7 @@ class EditGym extends StatelessWidget {
                               fontSize: 16),
                         ),
                         SizedBox(height: Get.height * 0.005),
-                        EmailInputField(
+                        CustomInputField(
                           focusNode: addressNode,
                           hintText: 'Enter your address'.tr,
                           labelText: 'Address'.tr,

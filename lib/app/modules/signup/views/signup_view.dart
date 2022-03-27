@@ -5,7 +5,7 @@ import 'package:gym_app/app/config/theme_colors.dart';
 import 'package:gym_app/app/routes/app_pages.dart';
 import 'package:gym_app/app/widgets/custom_button.dart';
 import 'package:gym_app/app/widgets/custom_snackbar.dart';
-import 'package:gym_app/app/widgets/email_input_textfield.dart';
+import 'package:gym_app/app/widgets/custom_input_textfield.dart';
 import 'package:gym_app/app/widgets/password_input_textfield.dart';
 import 'package:gym_app/app/widgets/top_snack_bar.dart';
 
@@ -60,7 +60,7 @@ class SignupView extends GetView<SignupController> {
                           fontSize: 16),
                     ),
                     SizedBox(height: Get.height * 0.005),
-                    EmailInputField(
+                    CustomInputField(
                       focusNode: usernameNode,
                       hintText: 'Enter your username'.tr,
                       labelText: 'Username'.tr,
@@ -87,7 +87,7 @@ class SignupView extends GetView<SignupController> {
                           fontSize: 16),
                     ),
                     SizedBox(height: Get.height * 0.005),
-                    EmailInputField(
+                    CustomInputField(
                       focusNode: emailNode,
                       hintText: 'Enter your email'.tr,
                       labelText: 'Email'.tr,
@@ -114,7 +114,7 @@ class SignupView extends GetView<SignupController> {
                           fontSize: 16),
                     ),
                     SizedBox(height: Get.height * 0.005),
-                    EmailInputField(
+                    CustomInputField(
                       focusNode: phoneNode,
                       hintText: 'Enter your email'.tr,
                       labelText: 'Email'.tr,
@@ -141,7 +141,7 @@ class SignupView extends GetView<SignupController> {
                           fontSize: 16),
                     ),
                     SizedBox(height: Get.height * 0.005),
-                    EmailInputField(
+                    CustomInputField(
                       focusNode: addressNode,
                       hintText: 'Enter your username'.tr,
                       labelText: 'Username'.tr,
