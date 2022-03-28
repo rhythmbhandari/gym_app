@@ -61,7 +61,7 @@ class GymView extends GetView<GymController> {
                       Get.toNamed(GymDetails.id, preventDuplicates: true);
                     },
                     child: GymWidget(
-                      name: controller.gymList[index].companyName,
+                      name: controller.gymList[index].companyName.toString(),
                       description: controller.gymList[index].description.toString()
                     ),
                   );

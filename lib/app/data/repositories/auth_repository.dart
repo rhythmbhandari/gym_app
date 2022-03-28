@@ -66,6 +66,7 @@ class AuthRepository {
     final body = jsonEncode({'email': email});
     try {
       final response = await NetworkHelper().postRequest(url, data: body);
+      print('Response is $response');
       if (response.statusCode == 200) {
         return true;
       } else if (response.statusCode == 401) {
@@ -73,6 +74,33 @@ class AuthRepository {
             'Invalid request. Please contact support.');
       } else if (response.statusCode == 400) {
         return Future.error('Please enter registered email');
+      } else {
+        return Future.error('Invalid');
+      }
+    } on SocketException {
+      return Future.error(
+          'Please check your internet connection and try again.');
+    } catch (e) {
+      return Future.error(e.toString());
+    }
+  }
+
+  static Future<bool> changePassword(String password, String confirmPassword, String otp) async {
+    const url = '$baseUrl/accounts/reset-password-form/';
+    final body = jsonEncode({
+      "otp": otp,
+      "password": password,
+      "confirm_password": confirmPassword
+    });
+    try {
+      final response = await NetworkHelper().postRequest(url, data: body);
+      if (response.statusCode == 200) {
+        return true;
+      } else if (response.statusCode == 401) {
+        return Future.error(
+            'Invalid request. Please contact support.');
+      } else if (response.statusCode == 400) {
+        return Future.error('Please enter correct Otp.');
       } else {
         return Future.error('Invalid');
       }

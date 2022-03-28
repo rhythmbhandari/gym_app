@@ -17,15 +17,23 @@ class AuthController extends GetxController {
   TextEditingController usernameInputController = TextEditingController();
   TextEditingController emailInputController = TextEditingController();
   TextEditingController passwordInputController = TextEditingController();
+  TextEditingController otpController = TextEditingController();
+  TextEditingController newPasswordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
 
-  String username, password, email;
+  String username, password, email, otp, newPassword, confirmPassword;
   final authError = ''.obs;
   final usernameError = ''.obs;
   final forgotError = ''.obs;
   final passwordError = ''.obs;
+  final newPasswordError = ''.obs;
   final passwordInvisible = true.obs;
+  final newPasswordInvisible = true.obs;
+  final confirmPasswordInvisible = true.obs;
   final loginButtonEnabled = false.obs;
   final forgetButtonEnabled = false.obs;
+  final otpButtonEnabled = false.obs;
+  final changeButtonEnabled = false.obs;
 
   final count = 0.obs;
 
@@ -47,6 +55,12 @@ class AuthController extends GetxController {
 
   void changePasswordVisibility(bool status) =>
       passwordInvisible.value = status;
+
+  void changeNewPasswordVisibility(bool status) =>
+      newPasswordInvisible.value = status;
+
+  void changeConfirmPasswordVisibility(bool status) =>
+      confirmPasswordInvisible.value = status;
 
   bool validate() {
     bool isValid = false;
@@ -81,6 +95,35 @@ class AuthController extends GetxController {
     return isValid;
   }
 
+  bool validateOtp() {
+    bool isValid = false;
+    otp = otpController.text;
+    if (otp.isEmpty) {
+      forgotError.value = 'OTP cannot be empty.';
+    } else if (otp.length != 6) {
+      forgotError.value = 'Invalid OTP.';
+    } else {
+      isValid = true;
+    }
+    return isValid;
+  }
+
+  bool validateChangePassword() {
+    bool isValid = false;
+    newPassword = newPasswordController.text;
+    confirmPassword = confirmPasswordController.text;
+    if (newPassword != confirmPassword){
+      newPasswordError.value = 'Passwords do not match.';
+    } else if (newPassword.length < 7) {
+      newPasswordError.value = 'Password must contain at least 8 characters.';
+    } else if (confirmPassword.length < 7) {
+      newPasswordError.value = 'Confirm password must contain at least 8 characters.';
+    } else {
+      isValid = true;
+    }
+    return isValid;
+  }
+
   checkLoginButtonEnabled() {
     username = usernameInputController.text;
     password = passwordInputController.text;
@@ -95,11 +138,26 @@ class AuthController extends GetxController {
         (email.length > 3) ? forgetButtonEnabled.value = true : false;
   }
 
+  checkOTPButtonEnabled() {
+    otp = otpController.text;
+    otpButtonEnabled.value =
+        (otp.length > 3) ? otpButtonEnabled.value = true : false;
+  }
+
+  checkChangePasswordEnabled() {
+    password = passwordInputController.text;
+    confirmPassword = confirmPasswordController.text;
+    changeButtonEnabled.value =
+        (confirmPassword.length > 4 && password.length > 4)
+            ? changeButtonEnabled.value = true
+            : false;
+  }
+
   Future<bool> loginUser() async {
     showProgressBar();
     final status = await AuthRepository.verifyLogin(username, password)
         .catchError((error) {
-        authError.value = error;
+      authError.value = error;
     });
     if (status == null) {
       return false;
@@ -116,7 +174,7 @@ class AuthController extends GetxController {
     showProgressBar();
     final status = await AuthRepository.verifyGymLogin(username, password)
         .catchError((error) {
-        authError.value = error;
+      authError.value = error;
     });
     if (status == null) {
       return false;
@@ -134,6 +192,18 @@ class AuthController extends GetxController {
     final status =
         await AuthRepository.resetPassword(email).catchError((error) {
       forgotError.value = error;
+    });
+    if (status == null) {
+      return false;
+    }
+    return true;
+  }
+
+  Future<bool> changePassword() async {
+    showProgressBar();
+    final status =
+    await AuthRepository.changePassword(newPassword, confirmPassword, otp).catchError((error) {
+      newPasswordError.value = error;
     });
     if (status == null) {
       return false;

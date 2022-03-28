@@ -102,6 +102,7 @@ class DashboardRequest {
     try {
       final response =
           await NetworkHelper().getRequest(url, contentType: await SecureStorage.returnHeaderToken());
+      print(response);
       if (response.statusCode == 200) {
         List<Gym> gymList =
             (response.data as List).map((i) => Gym.fromJson(i)).toList();

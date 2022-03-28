@@ -7,6 +7,8 @@ import '../modules/auth/bindings/auth_binding.dart';
 import '../modules/auth/views/auth_customer_view.dart';
 import '../modules/auth/views/auth_gym_view.dart';
 import '../modules/auth/views/auth_view.dart';
+import '../modules/auth/views/change_password.dart';
+import '../modules/auth/views/forgot_otp.dart';
 import '../modules/check_in/bindings/check_in_binding.dart';
 import '../modules/check_in/views/check_in_view.dart';
 import '../modules/gym/bindings/gym_binding.dart';
@@ -126,6 +128,14 @@ class AppPages {
       name: ForgetPassword.id,
       page: () => ForgetPassword(),
       binding: AuthBinding(),
+    ),
+    GetPage(
+      name: ForgetOtp.id,
+      page: () => ForgetOtp(),
+    ),
+    GetPage(
+      name: ChangePassword.id,
+      page: () => ChangePassword(),
     ),
     GetPage(
       name: _Paths.GYM_SIDE,
