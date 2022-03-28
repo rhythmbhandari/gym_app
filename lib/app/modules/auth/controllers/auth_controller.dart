@@ -15,14 +15,17 @@ class AuthController extends GetxController {
   SharedPreferences _sharedPreferences;
 
   TextEditingController usernameInputController = TextEditingController();
+  TextEditingController emailInputController = TextEditingController();
   TextEditingController passwordInputController = TextEditingController();
 
-  String username, password;
+  String username, password, email;
   final authError = ''.obs;
   final usernameError = ''.obs;
+  final forgotError = ''.obs;
   final passwordError = ''.obs;
   final passwordInvisible = true.obs;
   final loginButtonEnabled = false.obs;
+  final forgetButtonEnabled = false.obs;
 
   final count = 0.obs;
 
@@ -63,12 +66,33 @@ class AuthController extends GetxController {
     return isValid;
   }
 
+  bool validateForget() {
+    bool isValid = false;
+    email = emailInputController.text;
+    if (email.isEmpty) {
+      forgotError.value = 'Email cannot be empty.';
+    } else if (!RegExp(
+            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+        .hasMatch(email)) {
+      forgotError.value = 'Invalid Email Address.';
+    } else {
+      isValid = true;
+    }
+    return isValid;
+  }
+
   checkLoginButtonEnabled() {
     username = usernameInputController.text;
     password = passwordInputController.text;
     loginButtonEnabled.value = (username.length > 3 && password.length > 4)
         ? loginButtonEnabled.value = true
         : false;
+  }
+
+  checkForgetPasswordEnabled() {
+    email = emailInputController.text;
+    forgetButtonEnabled.value =
+        (email.length > 3) ? forgetButtonEnabled.value = true : false;
   }
 
   Future<bool> loginUser() async {
@@ -87,7 +111,8 @@ class AuthController extends GetxController {
     }
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     UserRepository userRepository = UserRepository(prefs: sharedPreferences);
-    userRepository.login(SessionRepository.instance.accessToken, SessionRepository.instance.refreshToken);
+    userRepository.login(SessionRepository.instance.accessToken,
+        SessionRepository.instance.refreshToken);
     await userRepository.setCustomerLogin(true);
     hideProgressBar();
     return true;
@@ -99,7 +124,7 @@ class AuthController extends GetxController {
         .catchError((error) {
       if (error.contains('full header')) {
         authError.value =
-        'Internet failed to establish proper connection. Try again.';
+            'Internet failed to establish proper connection. Try again.';
       } else {
         authError.value = error;
       }
@@ -109,12 +134,24 @@ class AuthController extends GetxController {
     }
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     UserRepository userRepository = UserRepository(prefs: sharedPreferences);
-    userRepository.login(SessionRepository.instance.accessToken, SessionRepository.instance.refreshToken);
+    userRepository.login(SessionRepository.instance.accessToken,
+        SessionRepository.instance.refreshToken);
     await userRepository.setCustomerLogin(false);
     hideProgressBar();
     return true;
   }
 
+  Future<bool> forgetPassword() async {
+    showProgressBar();
+    final status =
+        await AuthRepository.resetPassword(email).catchError((error) {
+      forgotError.value = error;
+    });
+    if (status == null) {
+      return false;
+    }
+    return true;
+  }
 
   @override
   void onClose() {}

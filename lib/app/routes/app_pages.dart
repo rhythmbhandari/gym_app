@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:gym_app/app/modules/auth/views/forgot_password.dart';
 import 'package:gym_app/app/modules/gym_side/views/edit_gym.dart';
 import 'package:gym_app/app/modules/gym_side/views/gym_history.dart';
 
@@ -120,6 +121,11 @@ class AppPages {
     GetPage(
       name: EditGym.id,
       page: () => EditGym(),
+    ),
+    GetPage(
+      name: ForgetPassword.id,
+      page: () => ForgetPassword(),
+      binding: AuthBinding(),
     ),
     GetPage(
       name: _Paths.GYM_SIDE,

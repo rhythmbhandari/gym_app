@@ -70,6 +70,29 @@ class AuthRepository {
     }
   }
 
+  static Future<bool> resetPassword(String email) async {
+    const url = '$baseUrl/accounts/forget-password/';
+    final body = jsonEncode({'email': email});
+    try {
+      final response = await NetworkHelper().postRequest(url, data: body);
+      if (response.statusCode == 200) {
+        return true;
+      } else if (response.statusCode == 401) {
+        return Future.error(
+            'Invalid request. Please contact support.');
+      } else if (response.statusCode == 400) {
+        return Future.error('Please enter registered email');
+      } else {
+        return Future.error('Invalid');
+      }
+    } on SocketException {
+      return Future.error(
+          'Please check your internet connection and try again.');
+    } catch (e) {
+      return Future.error(e.toString());
+    }
+  }
+
   static Future<bool> registerUser(String username, String email,
       String password, String address, String phone) async {
     const url = '$baseUrl/accounts/register-customer/';

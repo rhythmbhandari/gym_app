@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:gym_app/app/config/theme_colors.dart';
+import 'package:gym_app/app/routes/app_pages.dart';
 import 'package:gym_app/app/widgets/custom_button.dart';
 import 'auth_customer_view.dart';
 import 'auth_gym_view.dart';
+import 'forgot_password.dart';
 
 class AuthView extends GetView {
 
@@ -81,6 +83,24 @@ class AuthView extends GetView {
                       ],
                     ),
                     SizedBox(height: Get.height * 0.1),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Get.toNamed(ForgetPassword.id, preventDuplicates: true);
+                          },
+                          child: Text(
+                            "Forgot Password?",
+                            style: Get.textTheme.headline5.copyWith(
+                                color: Colors.white,
+                                fontFamily: 'Poppins',
+                                fontWeight: FontWeight.w500,
+                                fontSize: 13),
+                          ),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               )
