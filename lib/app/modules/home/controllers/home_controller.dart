@@ -1,15 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:gym_app/app/data/repositories/session_repository.dart';
 import 'package:gym_app/app/data/repositories/user_repository.dart';
-import 'package:gym_app/app/modules/check_in/views/check_in_view.dart';
 import 'package:gym_app/app/modules/gym/controllers/gym_controller.dart';
-import 'package:gym_app/app/modules/gym/views/gym_view.dart';
-import 'package:gym_app/app/modules/gym_map/views/gym_map_view.dart';
 import 'package:gym_app/app/modules/profile/controllers/profile_controller.dart';
-import 'package:gym_app/app/modules/profile/views/profile_view.dart';
 import 'package:gym_app/app/modules/subscription/controllers/subscription_controller.dart';
-import 'package:gym_app/app/modules/subscription/views/subscription_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeController extends GetxController {
@@ -45,9 +39,7 @@ class HomeController extends GetxController {
   initializeData() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     UserRepository userRepository = UserRepository(prefs: sharedPreferences);
-
     userDataRepository = SessionRepository.instance;
-    userDataRepository.setAccessToken(userDataRepository.accessToken);
   }
 
   @override

@@ -12,9 +12,6 @@ class SessionRepository {
 
   static SessionRepository get instance => _instance;
 
-  final _accessToken = ''.obs;
-  final token = ''.obs;
-  String _refreshToken;
   Customer _customer;
   User _user;
   String _subscription;
@@ -50,13 +47,5 @@ class SessionRepository {
   void setCustomer(Customer customer) {
     _customer = customer;
   }
-
-  String get accessToken => _accessToken.value;
-
-  void setAccessToken(String accessToken) => _accessToken.value = accessToken;
-
-  String get refreshToken => _refreshToken;
-
-  void setRefreshToken(String refreshToken) => _refreshToken = refreshToken;
 
 }

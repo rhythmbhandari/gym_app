@@ -23,8 +23,6 @@ class SplashController extends GetxController with StateMixin<dynamic> {
       UserRepository repository = UserRepository(prefs: sharedPreferences);
       final logged = await repository.isLoggedIn();
       if (logged) {
-        final token = await repository.getAccessToken();
-        SessionRepository.instance.setAccessToken(token);
         if (await storage.read(key: "login_type") == "customer") {
           Get.offAndToNamed(Routes.HOME);
         } else {

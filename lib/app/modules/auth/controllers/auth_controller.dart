@@ -99,20 +99,14 @@ class AuthController extends GetxController {
     showProgressBar();
     final status = await AuthRepository.verifyLogin(username, password)
         .catchError((error) {
-      if (error.contains('full header')) {
-        authError.value =
-            'Internet failed to establish proper connection. Try again.';
-      } else {
         authError.value = error;
-      }
     });
     if (status == null) {
       return false;
     }
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     UserRepository userRepository = UserRepository(prefs: sharedPreferences);
-    userRepository.login(SessionRepository.instance.accessToken,
-        SessionRepository.instance.refreshToken);
+    userRepository.login();
     await userRepository.setCustomerLogin(true);
     hideProgressBar();
     return true;
@@ -122,20 +116,14 @@ class AuthController extends GetxController {
     showProgressBar();
     final status = await AuthRepository.verifyGymLogin(username, password)
         .catchError((error) {
-      if (error.contains('full header')) {
-        authError.value =
-            'Internet failed to establish proper connection. Try again.';
-      } else {
         authError.value = error;
-      }
     });
     if (status == null) {
       return false;
     }
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     UserRepository userRepository = UserRepository(prefs: sharedPreferences);
-    userRepository.login(SessionRepository.instance.accessToken,
-        SessionRepository.instance.refreshToken);
+    userRepository.login();
     await userRepository.setCustomerLogin(false);
     hideProgressBar();
     return true;

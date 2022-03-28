@@ -252,7 +252,6 @@ class GymSideView extends GetView<GymSideController> {
                         UserRepository repository = UserRepository(
                             prefs: await SharedPreferences.getInstance());
                         await repository.logout();
-                        SessionRepository.instance.setAccessToken(null);
                         Get.offAllNamed(Routes.AUTH);
                       },
                       child: Container(
